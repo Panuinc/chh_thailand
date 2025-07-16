@@ -21,14 +21,14 @@ module.exports = {
 
         light: {
           background: "#ffffff",
-          border: "#11181C",
+          border: "#e4e4e7",
           text: "#11181C",
           default: "#e4e4e7",
         },
 
         dark: {
           background: "#000000",
-          border: "#ECEDEE",
+          border: "#3f3f46",
           text: "#ECEDEE",
           default: "#3f3f46",
         },
