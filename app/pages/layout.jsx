@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,14 +9,25 @@ import {
   AlignJustify,
   Bell,
   Computer,
+  Key,
   LayoutDashboard,
   Search,
   Settings,
   User,
   Warehouse,
+  X,
 } from "lucide-react";
 
-function Header() {
+const sidebarItems = [
+  { icon: LayoutDashboard, label: "Over View", href: "/pages/overview" },
+  { icon: User, label: "Human", href: "/pages/human" },
+  { icon: Computer, label: "Technology", href: "/pages/technology" },
+  { icon: Warehouse, label: "Warehouse", href: "/pages/warehouse" },
+  { icon: Settings, label: "Setting", href: "/pages/setting" },
+  { icon: Key, label: "Sign Out", href: "/pages/Key" },
+];
+
+function Header({ onMobileMenuToggle }) {
   return (
     <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-2 border-dark border-dashed">
       <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
@@ -43,12 +55,12 @@ function Header() {
         </div>
       </div>
       <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
-        <div className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 border-2 border-dark border-dashed bg-default rounded-full">
+        <button
+          onClick={onMobileMenuToggle}
+          className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 border-2 border-dark border-dashed bg-default rounded-full"
+        >
           <AlignJustify />
-        </div>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-default rounded-full">
-          <Settings />
-        </div>
+        </button>
         <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-default rounded-full">
           <Bell />
         </div>
@@ -65,13 +77,6 @@ function Header() {
     </div>
   );
 }
-
-const sidebarItems = [
-  { icon: LayoutDashboard, label: "Over View", href: "/pages/overview" },
-  { icon: User, label: "Human", href: "/pages/human" },
-  { icon: Computer, label: "Technology", href: "/pages/technology" },
-  { icon: Warehouse, label: "Warehouse", href: "/pages/warehouse" },
-];
 
 function Sidebar() {
   const pathname = usePathname();
@@ -93,8 +98,7 @@ function Sidebar() {
           >
             <Link href={item.href} className="w-full flex justify-center">
               <div
-                className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed rounded-full
-                ${
+                className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed rounded-full ${
                   isActive
                     ? "bg-dark text-white"
                     : "bg-default hover:bg-dark hover:text-white"
@@ -110,18 +114,62 @@ function Sidebar() {
   );
 }
 
+function MobileSidebar({ onClose }) {
+  const pathname = usePathname();
+
+  return (
+    <div className="fixed top-0 left-0 w-64 h-full z-50 bg-white border-2 border-dark border-dashed p-2 flex flex-col gap-2">
+      <button className="self-end mb-2" onClick={onClose}>
+        <X />
+      </button>
+      {sidebarItems.map((item, index) => {
+        const Icon = item.icon;
+        const isActive = pathname === item.href;
+
+        return (
+          <Link
+            key={index}
+            href={item.href}
+            onClick={onClose}
+            className="w-full flex justify-start items-center p-2 gap-2 border-2 border-dark border-dashed"
+          >
+            <div
+              className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed rounded-full ${
+                isActive
+                  ? "bg-dark text-white"
+                  : "bg-default hover:bg-dark hover:text-white"
+              }`}
+            >
+              <Icon />
+            </div>
+            <span className="text-sm text-dark font-semibold">
+              {item.label}
+            </span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
 function Content({ children }) {
   return (
-    <div className="flex flex-col items-center justify-start w-full xl:w-[95%] h-full p-2 gap-2 border-2 border-dark border-dashed overflow-auto">
+    <div className="flex flex-col items-center justify-start w-full xl:w-[95%] h-full p-2 gap-2 border-4 border-dark overflow-auto">
       {children}
     </div>
   );
 }
+
 export default function PagesLayout({ children }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-        <Header />
+        <Header onMobileMenuToggle={() => setIsMobileMenuOpen(true)} />
+        {isMobileMenuOpen && (
+          <MobileSidebar onClose={() => setIsMobileMenuOpen(false)} />
+        )}
         <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
           <Sidebar />
           <Content>{children}</Content>
