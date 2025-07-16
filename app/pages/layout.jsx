@@ -77,16 +77,16 @@ function TopBar({ theme, toggleTheme }) {
         <AlignLeft />
       </div>
       <div className="xl:flex hidden items-center justify-center w-full h-full p-2 gap-2"></div>
-      <div className="flex items-center justify-center aspect-square h-full p-2 gap-2">
+      <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default shadow-md rounded-full">
         <Bell />
       </div>
       <button
         onClick={toggleTheme}
-        className="flex items-center justify-center aspect-square h-full p-2 gap-2"
+        className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default shadow-md rounded-full"
       >
         {theme === "light" ? <Moon /> : <Sun />}
       </button>
-      <div className="flex items-center justify-start w-80 h-full p-2 gap-2">
+      <div className="flex items-center justify-start w-80 h-full p-2 gap-2 bg-default shadow-md rounded-full">
         Imag
       </div>
     </div>
@@ -103,13 +103,13 @@ function Sidebar({ collapsed, toggleSidebar }) {
       <div className="flex flex-row items-center justify-center w-full p-2 gap-2">
         <button
           onClick={toggleSidebar}
-          className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-2 shadow-md rounded-full"
+          className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default shadow-md rounded-full"
         >
           <ChevronLeft />
         </button>
         {!collapsed && (
           <div className="flex items-center justify-start w-full h-full p-2 gap-2">
-            Header
+            FirstName + Lastname + Email
           </div>
         )}
       </div>
