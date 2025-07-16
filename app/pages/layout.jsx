@@ -36,6 +36,24 @@ export default function PagesLayout({ children }) {
     setIsSidebarCollapsed((prev) => !prev);
   };
 
+  const menuItems = [
+    {
+      icon: <ChartLine />,
+      label: "Over View",
+      hasDropdown: false,
+    },
+    {
+      icon: <User />,
+      label: "Human",
+      hasDropdown: true,
+    },
+    {
+      icon: <Computer />,
+      label: "Information Technology",
+      hasDropdown: true,
+    },
+  ];
+
   return (
     <div className="flex flex-col items-center justify-center w-full h-full gap-2">
       <div className="flex flex-row items-center justify-between w-full p-2 gap-2 border-custom">
@@ -87,48 +105,26 @@ export default function PagesLayout({ children }) {
           </div>
 
           <div className="flex flex-col items-center justify-start w-full h-full gap-2">
-            <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
-              <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
-                <ChartLine />
-              </div>
-              {!isSidebarCollapsed && (
-                <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
-                  Over View
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
-              <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
-                <User />
-              </div>
-              {!isSidebarCollapsed && (
-                <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
-                  Human
-                </div>
-              )}
-              {!isSidebarCollapsed && (
+            {menuItems.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom"
+              >
                 <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
-                  <ChevronDown />
+                  {item.icon}
                 </div>
-              )}
-            </div>
-
-            <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
-              <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
-                <Computer />
+                {!isSidebarCollapsed && (
+                  <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
+                    {item.label}
+                  </div>
+                )}
+                {!isSidebarCollapsed && item.hasDropdown && (
+                  <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
+                    <ChevronDown />
+                  </div>
+                )}
               </div>
-              {!isSidebarCollapsed && (
-                <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
-                  Information Technology
-                </div>
-              )}
-              {!isSidebarCollapsed && (
-                <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
-                  <ChevronDown />
-                </div>
-              )}
-            </div>
+            ))}
           </div>
 
           <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
