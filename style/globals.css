@@ -15,11 +15,11 @@ body {
   color: theme("colors.dark.text");
 }
 
-.border_custom {
+.border-custom {
   border: 2px dashed theme("colors.light.border");
 }
 
-.dark .border_custom {
+.dark .border-custom {
   border: 2px dashed theme("colors.dark.border");
 }
 
