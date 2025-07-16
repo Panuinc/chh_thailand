@@ -17,6 +17,7 @@ import {
 
 export default function PagesLayout({ children }) {
   const [theme, setTheme] = useState("light");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -29,6 +30,10 @@ export default function PagesLayout({ children }) {
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed((prev) => !prev);
   };
 
   return (
@@ -46,9 +51,7 @@ export default function PagesLayout({ children }) {
         <div className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
           <AlignLeft />
         </div>
-        <div className="xl:flex hidden items-center justify-center w-full h-full p-2 gap-2">
-          {" "}
-        </div>
+        <div className="xl:flex hidden items-center justify-center w-full h-full p-2 gap-2"></div>
         <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
           <Bell />
         </div>
@@ -64,57 +67,87 @@ export default function PagesLayout({ children }) {
       </div>
 
       <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-custom">
-        <div className="xl:flex hidden flex-col items-center justify-between w-full xl:w-3/12 h-full p-2 gap-2 border-custom overflow-auto">
+        <div
+          className={`xl:flex hidden flex-col items-center justify-between w-full ${
+            isSidebarCollapsed ? "xl:w-1/12" : "xl:w-3/12"
+          } h-full p-2 gap-2 border-custom overflow-auto`}
+        >
           <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
-            <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
+            <button
+              onClick={toggleSidebar}
+              className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom"
+            >
               <ChevronLeft />
-            </div>
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-custom">
-              Header
-            </div>
+            </button>
+            {!isSidebarCollapsed && (
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-custom">
+                Header
+              </div>
+            )}
           </div>
+
           <div className="flex flex-col items-center justify-start w-full h-full gap-2">
             <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
               <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
                 <ChartLine />
               </div>
-              <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
-                Over View
-              </div>
+              {!isSidebarCollapsed && (
+                <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
+                  Over View
+                </div>
+              )}
             </div>
+
             <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
               <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
                 <User />
               </div>
-              <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
-                Human
-              </div>
-              <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
-                <ChevronDown />
-              </div>
+              {!isSidebarCollapsed && (
+                <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
+                  Human
+                </div>
+              )}
+              {!isSidebarCollapsed && (
+                <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
+                  <ChevronDown />
+                </div>
+              )}
             </div>
+
             <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
               <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
                 <Computer />
               </div>
-              <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
-                Information Technology
-              </div>
-              <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
-                <ChevronDown />
-              </div>
+              {!isSidebarCollapsed && (
+                <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-custom">
+                  Information Technology
+                </div>
+              )}
+              {!isSidebarCollapsed && (
+                <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
+                  <ChevronDown />
+                </div>
+              )}
             </div>
           </div>
+
           <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-custom">
             <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border-custom">
               <Key />
             </div>
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-custom">
-              Sign Out
-            </div>
+            {!isSidebarCollapsed && (
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-custom">
+                Sign Out
+              </div>
+            )}
           </div>
         </div>
-        <div className="flex flex-col items-center justify-start w-full xl:w-9/12 h-full p-2 gap-2 border-custom overflow-auto">
+
+        <div
+          className={`flex flex-col items-center justify-start w-full ${
+            isSidebarCollapsed ? "xl:w-11/12" : "xl:w-9/12"
+          } h-full p-2 gap-2 border-custom overflow-auto`}
+        >
           {children}
         </div>
       </div>
