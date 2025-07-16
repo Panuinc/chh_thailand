@@ -1,9 +1,10 @@
-import React from 'react'
+import UISingIn from "@/components/signin/UISingIn";
+import React from "react";
 
-export default function page() {
+export default function signin() {
   return (
-    <div>
-      
-    </div>
-  )
+    <>
+      <UISingIn />
+    </>
+  );
 }
