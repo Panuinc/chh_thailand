@@ -41,7 +41,7 @@ function Header({ onMobileMenuToggle }) {
           />
         </div>
       </div>
-      <div className="xl:flex hidden flex-row items-center justify-end w-full h-full p-2 gap-2">
+      <div className="lg:flex hidden flex-row items-center justify-end w-full h-full p-2 gap-2">
         <div className="flex items-center justify-center w-full h-full p-2 gap-2">
           <Input
             name="password"
@@ -57,7 +57,7 @@ function Header({ onMobileMenuToggle }) {
       <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
         <button
           onClick={onMobileMenuToggle}
-          className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default rounded-full"
+          className="lg:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default rounded-full"
         >
           <AlignJustify />
         </button>
@@ -82,7 +82,7 @@ function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="xl:flex hidden flex-col items-center justify-start xl:w-[5%] h-full p-2 gap-2 overflow-auto">
+    <div className="lg:flex hidden flex-col items-center justify-start lg:w-[5%] h-full p-2 gap-2 overflow-auto">
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
         const isActive = pathname === item.href;
@@ -154,7 +154,7 @@ function MobileSidebar({ onClose }) {
 
 function Content({ children }) {
   return (
-    <div className="flex flex-col items-center justify-start w-full xl:w-[95%] h-full p-2 gap-2 border-4 border-default rounded-3xl overflow-auto">
+    <div className="flex flex-col items-center justify-start w-full lg:w-[95%] h-full p-2 gap-2 border-4 border-default rounded-3xl overflow-auto">
       {children}
     </div>
   );
@@ -170,7 +170,7 @@ export default function PagesLayout({ children }) {
         {isMobileMenuOpen && (
           <MobileSidebar onClose={() => setIsMobileMenuOpen(false)} />
         )}
-        <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2">
+        <div className="flex flex-row items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
           <Sidebar />
           <Content>{children}</Content>
         </div>
