@@ -23,15 +23,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${nunito.variable} ${kanit.variable} antialiased`}>
-        <Toaster position="top-right" />
-        <Providers>
-          <div className="flex items-center justify-center w-full h-screen p-2 gap-2 border-custom">
+    <Providers>
+      <html lang="en">
+        <head>
+          <link rel="icon" href="/logoCompany/com-1.png" />
+        </head>
+        <body className={`${nunito.variable} ${kanit.variable} antialiased`}>
+          <Toaster position="top-right" />
+          <div className="flex items-center justify-center w-full h-screen gap-2">
             {children}
           </div>
-        </Providers>
-      </body>
-    </html>
+        </body>
+      </html>
+    </Providers>
   );
 }

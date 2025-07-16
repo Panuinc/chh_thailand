@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-[lang|="th"] {
-  font-family: var(--kanit), sans-serif;
-}
-
 body {
   font-family: var(--nunito), var(--kanit);
   background-color: theme("colors.light.background");
@@ -19,10 +15,14 @@ body {
   color: theme("colors.dark.text");
 }
 
-.border-custom {
+.border_custom {
   border: 2px dashed theme("colors.light.border");
 }
 
-.dark .border-custom {
+.dark .border_custom {
   border: 2px dashed theme("colors.dark.border");
+}
+
+[lang|="th"] {
+  font-family: var(--kanit), sans-serif;
 }
