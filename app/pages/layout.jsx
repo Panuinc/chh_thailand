@@ -50,7 +50,7 @@ export default function PagesLayout({ children }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full ">
+    <div className="flex flex-col items-center justify-start w-full h-full ">
       <TopBar
         theme={theme}
         toggleTheme={toggleTheme}
@@ -77,7 +77,7 @@ export default function PagesLayout({ children }) {
               <X />
             </button>
 
-            <div className="mt-10 flex-1 overflow-y-auto">
+            <div className="mt-10 flex-1 overflow-auto">
               <SidebarMenu collapsed={false} />
             </div>
 
