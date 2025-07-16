@@ -29,9 +29,9 @@ const sidebarItems = [
 
 function Header({ onMobileMenuToggle }) {
   return (
-    <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-2 border-dark border-dashed">
-      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
-        <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
+    <div className="flex flex-row items-center justify-center w-full p-2 gap-2">
+      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
+        <div className="flex items-center justify-start w-full h-full p-2 gap-2">
           <Image
             src="/logo/logo.png"
             alt="logo"
@@ -41,8 +41,8 @@ function Header({ onMobileMenuToggle }) {
           />
         </div>
       </div>
-      <div className="xl:flex hidden flex-row items-center justify-end w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
-        <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
+      <div className="xl:flex hidden flex-row items-center justify-end w-full h-full p-2 gap-2">
+        <div className="flex items-center justify-center w-full h-full p-2 gap-2">
           <Input
             name="password"
             type="text"
@@ -54,17 +54,17 @@ function Header({ onMobileMenuToggle }) {
           />
         </div>
       </div>
-      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
+      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
         <button
           onClick={onMobileMenuToggle}
-          className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 border-2 border-dark border-dashed bg-default rounded-full"
+          className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default rounded-full"
         >
           <AlignJustify />
         </button>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-default rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-default hover:bg-dark hover:text-white rounded-full">
           <Bell />
         </div>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-primary rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-primary rounded-full">
           <Image
             src="/picture/robot.png"
             alt="picture-2"
@@ -82,7 +82,7 @@ function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="xl:flex hidden flex-col items-center justify-start xl:w-[5%] h-full p-2 gap-2 border-2 border-dark border-dashed overflow-auto">
+    <div className="xl:flex hidden flex-col items-center justify-start xl:w-[5%] h-full p-2 gap-2 overflow-auto">
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
         const isActive = pathname === item.href;
@@ -98,7 +98,7 @@ function Sidebar() {
           >
             <Link href={item.href} className="w-full flex justify-center">
               <div
-                className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed rounded-full ${
+                className={`flex items-center justify-center w-12 h-12 p-2 gap-2 rounded-full ${
                   isActive
                     ? "bg-dark text-white"
                     : "bg-default hover:bg-dark hover:text-white"
@@ -118,7 +118,7 @@ function MobileSidebar({ onClose }) {
   const pathname = usePathname();
 
   return (
-    <div className="fixed top-0 left-0 w-64 h-full z-50 bg-white border-2 border-dark border-dashed p-2 flex flex-col gap-2">
+    <div className="fixed top-0 left-0 w-64 h-full z-50 bg-white p-2 flex flex-col gap-2">
       <button className="self-end mb-2" onClick={onClose}>
         <X />
       </button>
@@ -131,10 +131,10 @@ function MobileSidebar({ onClose }) {
             key={index}
             href={item.href}
             onClick={onClose}
-            className="w-full flex justify-start items-center p-2 gap-2 border-2 border-dark border-dashed"
+            className="w-full flex justify-start items-center p-2 gap-2"
           >
             <div
-              className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed rounded-full ${
+              className={`flex items-center justify-center w-12 h-12 p-2 gap-2 rounded-full ${
                 isActive
                   ? "bg-dark text-white"
                   : "bg-default hover:bg-dark hover:text-white"
@@ -154,7 +154,7 @@ function MobileSidebar({ onClose }) {
 
 function Content({ children }) {
   return (
-    <div className="flex flex-col items-center justify-start w-full xl:w-[95%] h-full p-2 gap-2 border-4 border-dark overflow-auto">
+    <div className="flex flex-col items-center justify-start w-full xl:w-[95%] h-full p-2 gap-2 border-4 border-default rounded-3xl overflow-auto">
       {children}
     </div>
   );
@@ -170,7 +170,7 @@ export default function PagesLayout({ children }) {
         {isMobileMenuOpen && (
           <MobileSidebar onClose={() => setIsMobileMenuOpen(false)} />
         )}
-        <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark border-dashed">
+        <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2">
           <Sidebar />
           <Content>{children}</Content>
         </div>
