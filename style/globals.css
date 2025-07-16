@@ -25,11 +25,11 @@ body {
 
 
 .border-custom {
-  border: 2px dashed theme("colors.light.border");
+  border: 2px dashed theme("colors.light.text");
 }
 
 .dark .border-custom {
-  border: 2px dashed theme("colors.dark.border");
+  border: 2px dashed theme("colors.dark.text");
 }
 
 .bg-default {
@@ -38,6 +38,14 @@ body {
 
 .dark .bg-default {
   background-color: theme("colors.dark.default");
+}
+
+.bg-app {
+  background-color: theme("colors.light.background");
+}
+
+.dark .bg-app {
+  background-color: theme("colors.dark.background");
 }
 
 [lang|="th"] {

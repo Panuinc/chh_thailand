@@ -15,11 +15,16 @@ import {
   Moon,
   Sun,
   User,
+  X,
 } from "lucide-react";
 
 export default function PagesLayout({ children }) {
   const [theme, setTheme] = useState("light");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(false);
+  const toggleMobileSidebar = () => {
+    setIsSidebarOpenMobile((prev) => !prev);
+  };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -46,7 +51,11 @@ export default function PagesLayout({ children }) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full ">
-      <TopBar theme={theme} toggleTheme={toggleTheme} />
+      <TopBar
+        theme={theme}
+        toggleTheme={toggleTheme}
+        toggleMobileSidebar={toggleMobileSidebar}
+      />
       <div className="flex flex-row items-center justify-center w-full h-full border-custom-use">
         <Sidebar collapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
         <div
@@ -57,11 +66,39 @@ export default function PagesLayout({ children }) {
           {children}
         </div>
       </div>
+
+      {isSidebarOpenMobile && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex xl:hidden">
+          <div className="relative w-12/12 h-full bg-app dark:bg-black p-4 shadow-lg flex flex-col justify-between">
+            <button
+              onClick={toggleMobileSidebar}
+              className="absolute top-3 right-3 z-10 "
+            >
+              <X />
+            </button>
+
+            <div className="mt-10 flex-1 overflow-y-auto">
+              <SidebarMenu collapsed={false} />
+            </div>
+
+            <div className="mt-4 flex flex-row items-center justify-center w-full p-2 gap-2 hover:bg-default rounded-xl">
+              <div className="flex items-center justify-center aspect-square h-full p-2 gap-2">
+                <Key />
+              </div>
+              <div className="flex items-center justify-start w-full h-full p-2 gap-2">
+                Sign Out
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1" onClick={toggleMobileSidebar}></div>
+        </div>
+      )}
     </div>
   );
 }
 
-function TopBar({ theme, toggleTheme }) {
+function TopBar({ theme, toggleTheme, toggleMobileSidebar }) {
   return (
     <div className="flex flex-row items-center justify-between w-full py-2 gap-2 border-custom-use">
       <div className="flex items-center justify-center h-full p-2 gap-2">
@@ -73,21 +110,23 @@ function TopBar({ theme, toggleTheme }) {
           priority
         />
       </div>
-      <div className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2">
-        <AlignLeft />
-      </div>
       <div className="xl:flex hidden items-center justify-center w-full h-full p-2 gap-2"></div>
-      <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default shadow-md rounded-full">
+      <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default rounded-full">
         <Bell />
       </div>
       <button
         onClick={toggleTheme}
-        className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default shadow-md rounded-full"
+        className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default rounded-full"
       >
         {theme === "light" ? <Moon /> : <Sun />}
       </button>
-      <div className="flex items-center justify-start w-80 h-full p-2 gap-2 bg-default shadow-md rounded-full">
-        Imag
+      <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default rounded-full">
+        Img
+      </div>
+      <div className="xl:hidden flex items-center justify-center aspect-square h-full p-2 gap-2">
+        <button onClick={toggleMobileSidebar}>
+          <AlignLeft />
+        </button>
       </div>
     </div>
   );
@@ -103,7 +142,7 @@ function Sidebar({ collapsed, toggleSidebar }) {
       <div className="flex flex-row items-center justify-center w-full p-2 gap-2">
         <button
           onClick={toggleSidebar}
-          className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default shadow-md rounded-full"
+          className="flex items-center justify-center aspect-square h-full p-2 gap-2 bg-default rounded-full"
         >
           <ChevronLeft />
         </button>
@@ -114,7 +153,7 @@ function Sidebar({ collapsed, toggleSidebar }) {
         )}
       </div>
       <SidebarMenu collapsed={collapsed} />
-      <div className="flex flex-row items-center justify-center w-full p-2 gap-2 hover:bg-default rounded-lg">
+      <div className="flex flex-row items-center justify-center w-full p-2 gap-2 hover:bg-default rounded-xl">
         <div className="flex items-center justify-center aspect-square h-full p-2 gap-2">
           <Key />
         </div>
@@ -144,19 +183,21 @@ function SidebarMenu({ collapsed }) {
       label: "Human",
       hasDropdown: true,
       subItems: [
-        { label: "Recruit", href: "/human/recruit" },
-        { label: "Employee", href: "/human/employee" },
-        { label: "Training", href: "/human/training" },
+        { label: "Role", href: "/pages/hr/role" },
+        { label: "Division", href: "/pages/hr/division" },
+        { label: "Department", href: "/pages/hr/department" },
+        { label: "Position", href: "/pages/hr/position" },
+        { label: "User", href: "/pages/hr/user" },
       ],
     },
     {
       icon: <Computer />,
-      label: "Information Technology",
+      label: "Technology",
       hasDropdown: true,
       subItems: [
-        { label: "Asset", href: "/it/asset" },
-        { label: "Support Ticket", href: "/it/ticket" },
-        { label: "System", href: "/it/system" },
+        { label: "Asset", href: "/pages/it/asset" },
+        { label: "Support Ticket", href: "/pages/it/ticket" },
+        { label: "System", href: "/pages/it/system" },
       ],
     },
   ];
@@ -193,8 +234,8 @@ function SidebarMenu({ collapsed }) {
             <div
               className={`flex flex-row items-center justify-center w-full p-2 gap-2 ${
                 isActive || isSubActive
-                  ? "bg-default font-semibold rounded-lg"
-                  : "hover:bg-default rounded-lg"
+                  ? "bg-default font-semibold rounded-xl"
+                  : "hover:bg-default rounded-xl"
               }`}
               onClick={() => handleClick(item)}
             >
@@ -241,8 +282,8 @@ function SidebarMenu({ collapsed }) {
                       href={sub.href}
                       className={`flex items-center justify-start w-10/12 h-full px-2 py-4 gap-2 text-sm ${
                         isSubSelected
-                          ? "bg-default font-semibold rounded-lg"
-                          : "hover:bg-default rounded-lg"
+                          ? "bg-default font-semibold rounded-xl"
+                          : "hover:bg-default rounded-xl"
                       }`}
                     >
                       {sub.label}
