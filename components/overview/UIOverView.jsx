@@ -1,5 +1,5 @@
 import React from "react";
-import UIHeader from "@/components/header/UIHeader";
+import UITopic from "@/components/topic/UITopic";
 
 export default function UIOverView({ headerContent }) {
   return (
@@ -9,7 +9,7 @@ export default function UIOverView({ headerContent }) {
           1
         </div>
         <div className="flex flex-col items-center justify-start w-full lg:w-9/12 h-full p-2 gap-2 border-2 border-dark border-dashed rounded-xl">
-          <UIHeader Header={headerContent} />
+          <UITopic Topic={headerContent} />
           <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border-2 border-dark border-dashed overflow-auto">
             <div className="flex items-center justify-center w-full min-h-96 p-2 gap-2 border-2 border-dark border-dashed">
               1
