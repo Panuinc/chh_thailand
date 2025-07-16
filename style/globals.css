@@ -4,51 +4,10 @@
 
 body {
   font-family: var(--nunito), var(--kanit);
-  background-color: theme("colors.light.background");
-  color: theme("colors.light.text");
   font-size: 16px;
   font-weight: 300;
-}
-
-.dark body {
-  background-color: theme("colors.dark.background");
-  color: theme("colors.dark.text");
-}
-
-.border-custom-use {
-  border: 1px solid theme("colors.light.border");
-}
-
-.dark .border-custom-use {
-  border: 1px solid theme("colors.dark.border");
-}
-
-
-.border-custom {
-  border: 2px dashed theme("colors.light.text");
-}
-
-.dark .border-custom {
-  border: 2px dashed theme("colors.dark.text");
-}
-
-.bg-default {
-  background-color: theme("colors.light.default");
-}
-
-.dark .bg-default {
-  background-color: theme("colors.dark.default");
-}
-
-.bg-app {
-  background-color: theme("colors.light.background");
-}
-
-.dark .bg-app {
-  background-color: theme("colors.dark.background");
 }
 
 [lang|="th"] {
   font-family: var(--kanit), sans-serif;
 }
-

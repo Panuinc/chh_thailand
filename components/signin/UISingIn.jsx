@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function UISingIn() {
   return (
     <>
-      <div className="flex flex-row items-center justify-center w-full xl:w-6/12 p-4 gap-2 border-2 shadow-md rounded-3xl">
+      <div className="flex flex-row items-center justify-center w-full xl:w-6/12 p-4 gap-2 bg-white border-2 shadow-md rounded-3xl">
         <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-4">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Image
@@ -54,7 +54,7 @@ export default function UISingIn() {
             <Button
               //   onPress={handleLogin}
               type="submit"
-              color="primary"
+              color="success"
               className="flex items-center justify-center w-9/12 h-full p-4 gap-2"
             >
               <Link href="/pages/overview">Sign In</Link>
