@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
         </head>
         <body className={`${nunito.variable} ${kanit.variable} antialiased`}>
           <Toaster position="top-right" />
-          <div className="flex items-center justify-center w-full h-screen gap-2 bg-default/50">
+          <div className="flex items-center justify-center w-full h-screen gap-2 bg-[#F0F0F0]">
             {children}
           </div>
         </body>
