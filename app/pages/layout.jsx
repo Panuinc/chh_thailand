@@ -1,6 +1,9 @@
 "use client";
+
 import Image from "next/image";
-import { Input } from "@heroui/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Input, Tooltip } from "@heroui/react";
 import {
   AlignJustify,
   Bell,
@@ -63,21 +66,46 @@ function Header() {
   );
 }
 
+const sidebarItems = [
+  { icon: LayoutDashboard, label: "Over View", href: "/pages/overview" },
+  { icon: User, label: "Human", href: "/pages/human" },
+  { icon: Computer, label: "Technology", href: "/pages/technology" },
+  { icon: Warehouse, label: "Warehouse", href: "/pages/warehouse" },
+];
+
 function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <div className="xl:flex hidden flex-col items-center justify-start xl:w-[5%] h-full p-2 gap-2 border-2 border-dark border-dashed overflow-auto">
-      <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-default hover:bg-dark hover:text-white rounded-full">
-        <LayoutDashboard />
-      </div>
-      <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-default hover:bg-dark hover:text-white rounded-full">
-        <User />
-      </div>
-      <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-default hover:bg-dark hover:text-white rounded-full">
-        <Computer />
-      </div>
-      <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed bg-default hover:bg-dark hover:text-white rounded-full">
-        <Warehouse />
-      </div>
+      {sidebarItems.map((item, index) => {
+        const Icon = item.icon;
+        const isActive = pathname === item.href;
+
+        return (
+          <Tooltip
+            key={index}
+            content={item.label}
+            color="primary"
+            className="text-dark font-semibold"
+            placement="right"
+            showArrow
+          >
+            <Link href={item.href} className="w-full flex justify-center">
+              <div
+                className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border-2 border-dark border-dashed rounded-full
+                ${
+                  isActive
+                    ? "bg-dark text-white"
+                    : "bg-default hover:bg-dark hover:text-white"
+                }`}
+              >
+                <Icon />
+              </div>
+            </Link>
+          </Tooltip>
+        );
+      })}
     </div>
   );
 }
