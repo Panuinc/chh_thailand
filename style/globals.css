@@ -11,3 +11,8 @@ body {
 [lang|="th"] {
   font-family: var(--kanit), sans-serif;
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
