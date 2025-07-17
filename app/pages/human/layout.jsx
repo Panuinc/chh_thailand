@@ -25,7 +25,10 @@ export default function HumanLayout({ children }) {
           >
             {group.map((label, subIndex) => {
               const href = getPath(label);
-              const isActive = pathname === href;
+              const isActive =
+                href === "/pages/human"
+                  ? pathname === href
+                  : pathname.startsWith(href);
 
               return (
                 <Link
