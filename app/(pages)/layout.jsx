@@ -1,4 +1,17 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
+import { logUserLogout } from "@/lib/userLogger";
+import Loading from "@/components/loading/UILoading";
+
+import Header from "@/components/layout/Header";
+import Sidebar from "@/components/layout/Sidebar";
+import MobileSidebar from "@/components/layout/MobileSidebar";
+import Content from "@/components/layout/Content";
+import { getSidebarItems } from "@/components/layout/sidebarItems";
 import UILogoutProvider from "@/components/logout/logoutProvider";
+
 export default function PagesLayout({ children }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { data: session, status } = useSession();
@@ -14,6 +27,7 @@ export default function PagesLayout({ children }) {
         });
       }
     } catch (err) {
+      console.error("🔥 Manual logout error:", err);
     } finally {
       await signOut({ callbackUrl: "/" });
     }
