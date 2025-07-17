@@ -10,13 +10,13 @@ const layoutGroups = [
 ];
 
 const getPath = (label) =>
-  label === "Human" ? "/pages/human" : `/pages/human/${label.toLowerCase()}`;
+  label === "Human" ? "/human" : `/${label.toLowerCase()}`;
 
 export default function HumanLayout({ children }) {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col xl:flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark border-dashed rounded-2xl">
+    <div className="flex flex-col lg:flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark border-dashed rounded-2xl">
       <div className="flex flex-row lg:flex-col items-center justify-start w-full lg:w-2/12 lg:h-full p-2 gap-2 border-2 border-dark border-dashed rounded-xl overflow-auto">
         {layoutGroups.map((group, index) => (
           <div
@@ -26,7 +26,7 @@ export default function HumanLayout({ children }) {
             {group.map((label, subIndex) => {
               const href = getPath(label);
               const isActive =
-                href === "/pages/human"
+                href === "/human"
                   ? pathname === href
                   : pathname.startsWith(href);
 

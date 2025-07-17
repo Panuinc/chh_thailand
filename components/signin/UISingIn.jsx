@@ -57,7 +57,7 @@ export default function UISingIn() {
               color="secondary"
               className="flex items-center justify-center w-9/12 h-full p-4 gap-2"
             >
-              <Link href="/pages/overview">Sign In</Link>
+              <Link href="/overview">Sign In</Link>
             </Button>
           </div>
         </div>

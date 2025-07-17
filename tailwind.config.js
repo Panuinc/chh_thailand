@@ -16,7 +16,9 @@ module.exports = {
         while: "#FFFFFF",
         dark: "#000000",
         default: "#E4E4E4",
-        primary: "#F9Fe00",
+        // primary: "#F9Fe00",
+                primary: "#000000",
+
         secondary: "#000000",
         success: "#00C853",
       },

@@ -19,12 +19,12 @@ import {
 } from "lucide-react";
 
 const sidebarItems = [
-  { icon: LayoutDashboard, label: "Over View", href: "/pages/overview" },
-  { icon: User, label: "Human", href: "/pages/human" },
-  { icon: Computer, label: "Technology", href: "/pages/technology" },
-  { icon: Warehouse, label: "Warehouse", href: "/pages/warehouse" },
-  { icon: Settings, label: "Setting", href: "/pages/setting" },
-  { icon: Key, label: "Sign Out", href: "/pages/Key" },
+  { icon: LayoutDashboard, label: "Over View", href: "/overview" },
+  { icon: User, label: "Human", href: "/human" },
+  { icon: Computer, label: "Technology", href: "/technology" },
+  { icon: Warehouse, label: "Warehouse", href: "/warehouse" },
+  { icon: Settings, label: "Setting", href: "/setting" },
+  { icon: Key, label: "Sign Out", href: "/Key" },
 ];
 
 function Header({ onMobileMenuToggle }) {
