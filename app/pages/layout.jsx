@@ -85,7 +85,7 @@ function Sidebar() {
     <div className="lg:flex hidden flex-col items-center justify-start lg:w-[5%] h-full p-2 gap-2 overflow-auto">
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
-        const isActive = pathname === item.href;
+        const isActive = pathname.startsWith(item.href);
 
         return (
           <Tooltip
@@ -124,7 +124,7 @@ function MobileSidebar({ onClose }) {
       </button>
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
-        const isActive = pathname === item.href;
+        const isActive = pathname.startsWith(item.href);
 
         return (
           <Link
