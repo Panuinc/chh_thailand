@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
     <Providers>
       <html lang="en">
         <head>
-          <link rel="icon" href="/logoCompany/com-1.png" />
+          <link rel="icon" href="/logo/logo.png" />
         </head>
         <body className={`${nunito.variable} ${kanit.variable} antialiased`}>
           <Toaster position="top-right" />
