@@ -180,7 +180,6 @@ export default function UITable({
             <DropdownTrigger>
               <Button
                 color="default"
-                variant="flat"
                 className="p-2 gap-2"
                 endContent={<ChevronDown />}
               >
@@ -207,7 +206,6 @@ export default function UITable({
             <DropdownTrigger>
               <Button
                 color="default"
-                variant="flat"
                 className="p-2 gap-2"
                 endContent={<ChevronDown />}
               >
