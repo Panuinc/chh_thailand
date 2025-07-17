@@ -4,7 +4,7 @@ import React from "react";
 export default function UITopic({ Topic }) {
   return (
     <>
-      <div className="flex items-center justify-start w-full p-2 gap-2 text-xl font-semibold">
+      <div className="flex items-center justify-start w-full p-2 gap-2 text-xl font-semibold border-2 border-dark border-dashed rounded-lg">
         <HomeIcon /> {Topic}
       </div>
     </>

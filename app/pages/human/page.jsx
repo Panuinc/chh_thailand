@@ -4,7 +4,7 @@ import React from "react";
 export default function human() {
   return (
     <>
-      <UIHuman />
+      <UIHuman headerContent="Human Dashboard"/>
     </>
   );
 }
