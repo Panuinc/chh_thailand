@@ -202,7 +202,7 @@ model UseJob {
 
 model UserLog {
   userLogId Int       @id @default(autoincrement())
-  userId    Int
+  userId    Int?
   username  String
   loginAt   DateTime  @default(now()) @db.Timestamp(0)
   logoutAt  DateTime?
@@ -211,7 +211,7 @@ model UserLog {
   success   Boolean
   message   String?
 
-  user User @relation(fields: [userId], references: [userId])
+  user User? @relation(fields: [userId], references: [userId])
 
   @@index([userId])
   @@index([loginAt])

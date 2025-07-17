@@ -5,7 +5,13 @@ import Image from "next/image";
 import { Input, Button } from "@heroui/react";
 import Link from "next/link";
 
-export default function UISingIn() {
+export default function UISingIn({
+  username,
+  password,
+  setUsername,
+  setPassword,
+  handleLogin,
+}) {
   return (
     <>
       <div className="flex flex-row items-center justify-center w-full lg:w-6/12 p-4 gap-2 bg-white border-2 shadow-md rounded-3xl">
@@ -32,8 +38,8 @@ export default function UISingIn() {
               variant="bordered"
               color="default"
               isRequired
-              // value={username}
-              // onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
@@ -46,13 +52,13 @@ export default function UISingIn() {
               variant="bordered"
               color="default"
               isRequired
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Button
-              //   onPress={handleLogin}
+                onPress={handleLogin}
               type="submit"
               color="primary"
               className="flex items-center justify-center w-9/12 h-full p-4 gap-2"

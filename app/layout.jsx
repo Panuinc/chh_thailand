@@ -1,6 +1,7 @@
 import "@/style/globals.css";
 import { Kanit, Nunito } from "next/font/google";
 import { Providers } from "./providers";
+import { SessionProviders } from "./sessionProvider";
 import { Toaster } from "react-hot-toast";
 
 const kanit = Kanit({
@@ -23,19 +24,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/logo/logo.png" />
-      </head>
+    <SessionProviders>
+      <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel="icon" href="/logo/logo.png" />
+        </head>
 
-      <body className={`${nunito.variable} ${kanit.variable} antialiased`}>
-        <Providers>
-          <Toaster position="top-right" />
-          <div className="flex items-center justify-center w-full h-screen gap-2 bg-[#F0F0F0]">
-            {children}
-          </div>
-        </Providers>
-      </body>
-    </html>
+        <body className={`${nunito.variable} ${kanit.variable} antialiased`}>
+          <Providers>
+            <Toaster position="top-right" />
+            <div className="flex items-center justify-center w-full h-screen gap-2 bg-[#F0F0F0]">
+              {children}
+            </div>
+          </Providers>
+        </body>
+      </html>
+    </SessionProviders>
   );
 }
