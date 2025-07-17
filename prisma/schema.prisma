@@ -1,0 +1,218 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum EnableState {
+  Enable
+  Disable
+}
+
+enum CusType {
+  owner
+  cm
+  main
+  mainConstruction
+  designerArchitect
+  endUser
+}
+
+enum ContractType {
+  FullTime
+  PartTime
+  Internship
+  Temporary
+  Freelance
+}
+
+model Role {
+  roleId       Int         @id @default(autoincrement())
+  roleName     String
+  roleStatus   EnableState @default(Enable)
+  roleCreateBy Int
+  roleCreateAt DateTime    @default(now()) @db.Timestamp(0)
+  roleUpdateBy Int?
+  roleUpdateAt DateTime?   @db.Timestamp(0)
+
+  jobs      UseJob[] @relation("UseJobToRole")
+  createdBy User?    @relation("RoleCreatedBy", fields: [roleCreateBy], references: [userId])
+  updatedBy User?    @relation("RoleUpdatedBy", fields: [roleUpdateBy], references: [userId])
+
+  @@index([roleCreateBy])
+  @@index([roleUpdateBy])
+}
+
+model Division {
+  divisionId       Int         @id @default(autoincrement())
+  divisionName     String
+  divisionStatus   EnableState @default(Enable)
+  divisionCreateBy Int
+  divisionCreateAt DateTime    @default(now()) @db.Timestamp(0)
+  divisionUpdateBy Int?
+  divisionUpdateAt DateTime?   @db.Timestamp(0)
+
+  departments Department[] @relation("DivisionToDepartment")
+  positions   Position[]   @relation("DivisionToPosition")
+  jobs        UseJob[]     @relation("UseJobToDivision")
+
+  createdBy User? @relation("DivisionCreatedBy", fields: [divisionCreateBy], references: [userId])
+  updatedBy User? @relation("DivisionUpdatedBy", fields: [divisionUpdateBy], references: [userId])
+
+  @@index([divisionCreateBy])
+  @@index([divisionUpdateBy])
+}
+
+model Department {
+  departmentId         Int         @id @default(autoincrement())
+  departmentDivisionId Int
+  departmentName       String
+  departmentStatus     EnableState @default(Enable)
+  departmentCreateBy   Int
+  departmentCreateAt   DateTime    @default(now()) @db.Timestamp(0)
+  departmentUpdateBy   Int?
+  departmentUpdateAt   DateTime?   @db.Timestamp(0)
+
+  division  Division   @relation("DivisionToDepartment", fields: [departmentDivisionId], references: [divisionId])
+  positions Position[] @relation("DepartmentToPosition")
+  jobs      UseJob[]   @relation("UseJobToDepartment")
+
+  createdBy User? @relation("DepartmentCreatedBy", fields: [departmentCreateBy], references: [userId])
+  updatedBy User? @relation("DepartmentUpdatedBy", fields: [departmentUpdateBy], references: [userId])
+
+  @@unique([departmentDivisionId, departmentName])
+  @@index([departmentDivisionId])
+  @@index([departmentCreateBy])
+  @@index([departmentUpdateBy])
+}
+
+model Position {
+  positionId           Int         @id @default(autoincrement())
+  positionDivisionId   Int
+  positionDepartmentId Int
+  positionName         String
+  positionStatus       EnableState @default(Enable)
+  positionCreateBy     Int
+  positionCreateAt     DateTime    @default(now()) @db.Timestamp(0)
+  positionUpdateBy     Int?
+  positionUpdateAt     DateTime?   @db.Timestamp(0)
+
+  division   Division   @relation("DivisionToPosition", fields: [positionDivisionId], references: [divisionId])
+  department Department @relation("DepartmentToPosition", fields: [positionDepartmentId], references: [departmentId])
+  jobs       UseJob[]   @relation("UseJobToPosition")
+
+  createdBy User? @relation("PositionCreatedBy", fields: [positionCreateBy], references: [userId])
+  updatedBy User? @relation("PositionUpdatedBy", fields: [positionUpdateBy], references: [userId])
+
+  @@unique([positionDivisionId, positionDepartmentId, positionName])
+  @@index([positionDivisionId])
+  @@index([positionDepartmentId])
+  @@index([positionCreateBy])
+  @@index([positionUpdateBy])
+}
+
+model User {
+  userId        Int         @id @default(autoincrement())
+  userFirstName String
+  userLastName  String
+  userPhone     String
+  userEmail     String
+  userPicture   String
+  userStatus    EnableState @default(Enable)
+  userCreateBy  Int
+  userCreateAt  DateTime    @default(now()) @db.Timestamp(0)
+  userUpdateBy  Int?
+  userUpdateAt  DateTime?   @db.Timestamp(0)
+
+  job         UseJob?  @relation("UseJobToUser")
+  jobsCreated UseJob[] @relation("UseJobCreatedBy")
+  jobsUpdated UseJob[] @relation("UseJobUpdatedBy")
+
+  usersCreated User[] @relation("UserCreatedBy")
+  usersUpdated User[] @relation("UserUpdatedBy")
+
+  authAccounts UserAuth[] @relation("UserAuth")
+
+  rolesCreated Role[] @relation("RoleCreatedBy")
+  rolesUpdated Role[] @relation("RoleUpdatedBy")
+
+  divisionsCreated Division[] @relation("DivisionCreatedBy")
+  divisionsUpdated Division[] @relation("DivisionUpdatedBy")
+
+  departmentsCreated Department[] @relation("DepartmentCreatedBy")
+  departmentsUpdated Department[] @relation("DepartmentUpdatedBy")
+
+  positionsCreated Position[] @relation("PositionCreatedBy")
+  positionsUpdated Position[] @relation("PositionUpdatedBy")
+
+  createdBy User?     @relation("UserCreatedBy", fields: [userCreateBy], references: [userId])
+  updatedBy User?     @relation("UserUpdatedBy", fields: [userUpdateBy], references: [userId])
+  UserLog   UserLog[]
+
+  @@index([userCreateBy])
+  @@index([userUpdateBy])
+}
+
+model UserAuth {
+  userAuthId         Int     @id @default(autoincrement())
+  userAuthUserId     Int     @unique
+  userAuthUsername   String  @unique
+  userAuthPassword   String
+  userAuthForceReset Boolean @default(true)
+
+  userAccount User @relation("UserAuth", fields: [userAuthUserId], references: [userId])
+}
+
+model UseJob {
+  useJobId           Int          @id @default(autoincrement())
+  useJobUserId       Int          @unique
+  useJobDivisionId   Int
+  useJobDepartmentId Int
+  useJobPositionId   Int
+  useJobRoleId       Int
+  useJobStartDate    DateTime
+  useJobEndDate      DateTime?
+  useJobContractType ContractType
+  useJobIsCurrent    Boolean      @default(true)
+  useJobSignature    String
+  useJobCreateBy     Int
+  useJobCreateAt     DateTime     @default(now()) @db.Timestamp(0)
+  useJobUpdateBy     Int?
+  useJobUpdateAt     DateTime?    @db.Timestamp(0)
+
+  user       User       @relation("UseJobToUser", fields: [useJobUserId], references: [userId])
+  division   Division   @relation("UseJobToDivision", fields: [useJobDivisionId], references: [divisionId])
+  department Department @relation("UseJobToDepartment", fields: [useJobDepartmentId], references: [departmentId])
+  position   Position   @relation("UseJobToPosition", fields: [useJobPositionId], references: [positionId])
+  role       Role       @relation("UseJobToRole", fields: [useJobRoleId], references: [roleId])
+  createdBy  User       @relation("UseJobCreatedBy", fields: [useJobCreateBy], references: [userId])
+  updatedBy  User?      @relation("UseJobUpdatedBy", fields: [useJobUpdateBy], references: [userId])
+
+  @@index([useJobUserId])
+  @@index([useJobDivisionId])
+  @@index([useJobDepartmentId])
+  @@index([useJobPositionId])
+  @@index([useJobRoleId])
+  @@index([useJobCreateBy])
+  @@index([useJobUpdateBy])
+}
+
+model UserLog {
+  userLogId Int       @id @default(autoincrement())
+  userId    Int
+  username  String
+  loginAt   DateTime  @default(now()) @db.Timestamp(0)
+  logoutAt  DateTime?
+  ipAddress String?
+  userAgent String?
+  success   Boolean
+  message   String?
+
+  user User @relation(fields: [userId], references: [userId])
+
+  @@index([userId])
+  @@index([loginAt])
+}
