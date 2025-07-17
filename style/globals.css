@@ -16,3 +16,11 @@ body {
   width: 0px;
   height: 0px;
 }
+.bg-content1 {
+  background-color: #f0f0f0;
+  box-shadow: none;
+}
+
+.bg-default-100 {
+  background-color: #e4e4e7;
+}

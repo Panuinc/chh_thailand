@@ -1,16 +1,4 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
-import { logUserLogout } from "@/lib/userLogger";
-import Loading from "@/components/loading/UILoading";
-
-import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
-import MobileSidebar from "@/components/layout/MobileSidebar";
-import Content from "@/components/layout/Content";
-import { getSidebarItems } from "@/components/layout/sidebarItems";
-
+import UILogoutProvider from "@/components/logout/logoutProvider";
 export default function PagesLayout({ children }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { data: session, status } = useSession();
@@ -50,18 +38,20 @@ export default function PagesLayout({ children }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-      <Header onMobileMenuToggle={() => setIsMobileMenuOpen(true)} />
-      {isMobileMenuOpen && (
-        <MobileSidebar
-          sidebarItems={sidebarItems}
-          onClose={() => setIsMobileMenuOpen(false)}
-        />
-      )}
-      <div className="flex flex-row items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
-        <Sidebar sidebarItems={sidebarItems} />
-        <Content>{children}</Content>
+    <UILogoutProvider>
+      <div className="flex flex-col items-center justify-center w-full h-full gap-2">
+        <Header onMobileMenuToggle={() => setIsMobileMenuOpen(true)} />
+        {isMobileMenuOpen && (
+          <MobileSidebar
+            sidebarItems={sidebarItems}
+            onClose={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+        <div className="flex flex-row items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
+          <Sidebar sidebarItems={sidebarItems} />
+          <Content>{children}</Content>
+        </div>
       </div>
-    </div>
+    </UILogoutProvider>
   );
 }
