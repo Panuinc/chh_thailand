@@ -14,10 +14,7 @@ export const rolePostSchema = z.object({
 export const rolePutSchema = z.object({
   roleId: preprocessInt("Please provide the role ID to update"),
   roleName: preprocessString("Please provide the role name"),
-  roleStatus: preprocessEnum(
-    ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable'"
-  ),
+  roleStatus: preprocessEnum(["Enable", "Disable"], "Please provide 'Enable' or 'Disable'"),
   roleUpdateBy: preprocessInt("Please provide the updater's user ID"),
 });
 

@@ -1,4 +1,7 @@
-import { getAllRole, createRole } from "@/app/api/human/role/roleController";
+import {
+  getAllRole,
+  createRole,
+} from "@/modules/human/role/controllers/role.controller";
 
 export async function GET(request) {
   return getAllRole(request);

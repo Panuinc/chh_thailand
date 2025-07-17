@@ -1,4 +1,4 @@
-import { getRoleById, updateRole } from "@/app/api/human/role/roleController";
+import { getRoleById, updateRole } from "@/modules/human/role/controllers/role.controller";
 
 export async function GET(request, context) {
   const { roleId } = await context.params;
