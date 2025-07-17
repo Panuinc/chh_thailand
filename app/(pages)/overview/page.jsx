@@ -1,7 +1,7 @@
 import React from "react";
 import UIOverView from "@/components/overview/UIOverView";
 
-export default function overview() {
+export default function Overview() {
   return (
     <>
       <UIOverView headerContent="Over View" />

@@ -1,5 +1,10 @@
 import React from "react";
+import { Spinner } from "@heroui/react";
 
 export default function UILoading() {
-  return <>UILoading</>;
+  return (
+    <>
+      <Spinner label="Loading..." color="primary" />
+    </>
+  );
 }

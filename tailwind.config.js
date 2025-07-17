@@ -15,10 +15,8 @@ module.exports = {
       colors: {
         while: "#FFFFFF",
         dark: "#000000",
-        default: "#E4E4E4",
-        // primary: "#F9Fe00",
-                primary: "#000000",
-
+        default: "#d4d4d8",
+        primary: "#F5A524",
         secondary: "#000000",
         success: "#00C853",
       },
