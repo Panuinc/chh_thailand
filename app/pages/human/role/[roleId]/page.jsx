@@ -1,10 +1,10 @@
-import UIRoleList from "@/modules/human/role/components/UIRoleList";
+import UIRoleForm from "@/modules/human/role/components/UIRoleForm";
 import React from "react";
 
 export default function roleUpdate() {
   return (
     <>
-      <UIRoleList headerContent="Role Update" />
+      <UIRoleForm headerContent="Role Update" />
     </>
   );
 }
