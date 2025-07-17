@@ -272,7 +272,7 @@ export default function UITable({
           ? "All items selected"
           : `${selectedKeys.size} of ${filteredItems.length} selected`}
       </div>
-      <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+      <div className="flex items-center justify-end w-full h-full p-2 gap-2">
         <Pagination
           isCompact
           showControls
@@ -282,22 +282,6 @@ export default function UITable({
           total={pages}
           onChange={setPage}
         />
-      </div>
-      <div className="lg:flex hidden items-center justify-end w-full h-full p-2 gap-2">
-        <Button
-          isDisabled={pages === 1}
-          color="primary"
-          onPress={() => setPage((p) => p - 1)}
-        >
-          Previous
-        </Button>
-        <Button
-          isDisabled={pages === 1}
-          color="primary"
-          onPress={() => setPage((p) => p + 1)}
-        >
-          Next
-        </Button>
       </div>
     </div>
   );
