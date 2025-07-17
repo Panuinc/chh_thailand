@@ -430,3 +430,200 @@
   "page": 1,
   "ip": "::1"
 }
+2025-07-17 14:37:33 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:37:33 [info]: ✅ Secret token verified 
+2025-07-17 14:37:33 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:37:33 [info]: 🔍 Checking duplicate role name {
+  "action": "getRoleByName",
+  "roleName": "managing director"
+}
+2025-07-17 14:37:33 [info]: 🆕 Creating role {
+  "action": "createRole",
+  "roleName": "managing director"
+}
+2025-07-17 14:37:33 [info]: ✅ Role 'managing director' created {
+  "action": "createRole",
+  "createdBy": 1,
+  "ip": "::1",
+  "role": {
+    "roleId": 2,
+    "roleName": "managing director",
+    "roleStatus": "Enable",
+    "roleCreateBy": 1,
+    "roleCreateAt": "2025-07-17T14:37:33.000Z",
+    "roleUpdateBy": null,
+    "roleUpdateAt": null
+  }
+}
+2025-07-17 14:37:35 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:37:35 [info]: ✅ Secret token verified 
+2025-07-17 14:37:35 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:37:35 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:37:35 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:37:35 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:37:35 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:37:35 [info]: ✅ Secret token verified 
+2025-07-17 14:37:35 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:37:35 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:37:35 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:37:35 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:38:44 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:38:44 [info]: ✅ Secret token verified 
+2025-07-17 14:38:44 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:38:44 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:38:44 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:38:44 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:38:44 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:38:44 [info]: ✅ Secret token verified 
+2025-07-17 14:38:44 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:38:44 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:38:44 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:38:44 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:38:51 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:38:51 [info]: ✅ Secret token verified 
+2025-07-17 14:38:51 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:38:51 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:38:51 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:38:51 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:38:51 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:38:51 [info]: ✅ Secret token verified 
+2025-07-17 14:38:51 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:38:51 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:38:51 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:38:51 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:40:39 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:40:39 [info]: ✅ Secret token verified 
+2025-07-17 14:40:39 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:40:39 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:40:39 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:40:39 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:40:39 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:40:39 [info]: ✅ Secret token verified 
+2025-07-17 14:40:39 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:40:39 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:40:39 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:40:39 [info]: ✅ Roles retrieved {
+  "total": 2,
+  "count": 2,
+  "page": 1,
+  "ip": "::1"
+}
