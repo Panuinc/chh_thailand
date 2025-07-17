@@ -346,3 +346,87 @@
     "roleUpdateAt": "2025-07-17T14:35:51.000Z"
   }
 }
+2025-07-17 14:35:53 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:35:53 [info]: ✅ Secret token verified 
+2025-07-17 14:35:53 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:35:53 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:35:53 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:35:53 [info]: ✅ Roles retrieved {
+  "total": 1,
+  "count": 1,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:35:54 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:35:54 [info]: ✅ Secret token verified 
+2025-07-17 14:35:54 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:35:54 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:35:54 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:35:54 [info]: ✅ Roles retrieved {
+  "total": 1,
+  "count": 1,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:36:42 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:36:42 [info]: ✅ Secret token verified 
+2025-07-17 14:36:42 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:36:42 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:36:42 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:36:42 [info]: ✅ Roles retrieved {
+  "total": 1,
+  "count": 1,
+  "page": 1,
+  "ip": "::1"
+}
+2025-07-17 14:36:42 [info]: 📡 Incoming request {
+  "ip": "::1"
+}
+2025-07-17 14:36:42 [info]: ✅ Secret token verified 
+2025-07-17 14:36:42 [info]: ✅ Rate limit OK {
+  "ip": "::1"
+}
+2025-07-17 14:36:42 [info]: 📥 Fetching all roles {
+  "action": "getAllRolePaginated",
+  "skip": 0,
+  "take": 1000000
+}
+2025-07-17 14:36:42 [info]: 🔢 Counting total roles {
+  "action": "countAllRoles"
+}
+2025-07-17 14:36:42 [info]: ✅ Roles retrieved {
+  "total": 1,
+  "count": 1,
+  "page": 1,
+  "ip": "::1"
+}
