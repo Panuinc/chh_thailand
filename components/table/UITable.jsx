@@ -19,7 +19,7 @@ import {
 } from "@heroui/react";
 import { Search, ChevronDown, Cog, Plus } from "lucide-react";
 import Link from "next/link";
-import { useDebounce } from "@/modules/human/role/hooks"; // ✅ import debounce
+import { useDebounce } from "@/hooks/useDebounce";
 
 const capitalize = (s) =>
   s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
