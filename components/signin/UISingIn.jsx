@@ -54,7 +54,7 @@ export default function UISingIn() {
             <Button
               //   onPress={handleLogin}
               type="submit"
-              color="secondary"
+              color="primary"
               className="flex items-center justify-center w-9/12 h-full p-4 gap-2"
             >
               <Link href="/overview">Sign In</Link>

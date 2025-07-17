@@ -49,7 +49,7 @@ function Header({ onMobileMenuToggle }) {
             placeholder="Search..."
             startContent={<Search />}
             variant="bordered"
-            color="default"
+            color="primary"
             radius="full"
           />
         </div>
@@ -64,7 +64,7 @@ function Header({ onMobileMenuToggle }) {
         <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-default hover:bg-dark hover:text-white rounded-full">
           <Bell />
         </div>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-primary rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-dark rounded-full">
           <Image
             src="/picture/robot.png"
             alt="picture-2"
@@ -92,7 +92,7 @@ function Sidebar() {
             key={index}
             content={item.label}
             color="primary"
-            className="text-dark font-semibold"
+            className="text-white font-semibold"
             placement="right"
             showArrow
           >
