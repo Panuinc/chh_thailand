@@ -1,93 +1,67 @@
 "use client";
-
-import toast, { Toaster } from "react-hot-toast";
-import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useEffect, useCallback } from "react";
+
+import { useSessionUser, useRoleForm } from "@/modules/human/role/hooks";
 import UIRoleForm from "@/modules/human/role/components/UIRoleForm";
 
-const SECRET_TOKEN = process.env.NEXT_PUBLIC_SECRET_TOKEN;
-
 export default function RoleUpdate() {
-  const { data: sessionData } = useSession();
-  const { id: userId = "", nameTH = "" } = sessionData?.user ?? {};
   const router = useRouter();
   const { roleId } = useParams();
-  const formRef = useRef(null);
+  const { userId, userName } = useSessionUser();
 
-  const [errors, setErrors] = useState({});
-  const [formData, setFormData] = useState({ roleName: "", roleStatus: "" });
+  const onSubmitHandler = useCallback(async (formRef, formData, setErrors) => {
+    const form = new FormData(formRef);
+    form.append("roleUpdateBy", userId);
+    try {
+      const res = await fetch(`/api/human/role/${roleId}`, {
+        method: "PUT",
+        body: form,
+        headers: {
+          "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
+        },
+      });
+      const result = await res.json();
+      if (res.ok) {
+        toast.success(result.message);
+        setTimeout(() => router.push("/role"), 1500);
+      } else {
+        setErrors(result.details || {});
+        toast.error(result.error || "Failed to update role.");
+      }
+    } catch (err) {
+      toast.error(`Failed to update role: ${err.message}`);
+    }
+  }, [roleId, userId, router]);
+
+  const {
+    formRef,
+    formData,
+    setFormData,
+    errors,
+    handleChange,
+    handleSubmit,
+  } = useRoleForm({ roleName: "", roleStatus: "" }, onSubmitHandler);
 
   useEffect(() => {
     if (!roleId) return;
     (async () => {
       try {
         const res = await fetch(`/api/human/role/${roleId}`, {
-          headers: { "secret-token": SECRET_TOKEN || "" },
+          headers: { "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "" },
         });
         const result = await res.json();
-
         if (res.ok && result.role?.length) {
           setFormData(result.role[0]);
         } else {
-          toast.error(result.error || "Failed to load role data.");
+          toast.error(result.error || "Failed to load role.");
         }
       } catch (err) {
-        toast.error(`Failed to load data: ${err.message}`);
+        toast.error("Error: " + err.message);
       }
     })();
-  }, [roleId]);
-
-  const handleChange = useCallback(
-    (field) => (eOrValue) => {
-      const value =
-        typeof eOrValue === "string" ? eOrValue : eOrValue?.target?.value ?? "";
-
-      setFormData((prev) => ({ ...prev, [field]: value }));
-      setErrors((prev) => {
-        const { [field]: removed, ...rest } = prev;
-        return rest;
-      });
-    },
-    []
-  );
-
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      if (!roleId || !formRef.current) return;
-
-      const form = new FormData(formRef.current);
-      form.append("roleUpdateBy", userId);
-
-      try {
-        const res = await fetch(`/api/human/role/${roleId}`, {
-          method: "PUT",
-          body: form,
-          headers: { "secret-token": SECRET_TOKEN || "" },
-        });
-
-        const result = await res.json();
-
-        if (res.ok) {
-          toast.success(result.message);
-          setTimeout(() => router.push("/role"), 2000);
-        } else {
-          if (result.details) {
-            const fieldErrors = Object.entries(result.details).reduce(
-              (acc, [key, val]) => ({ ...acc, [key]: val[0] }),
-              {}
-            );
-            setErrors(fieldErrors);
-          }
-          toast.error(result.error || "Failed to update role.");
-        }
-      } catch (err) {
-        toast.error(`Failed to update role: ${err.message}`);
-      }
-    },
-    [userId, roleId, router]
-  );
+  }, [roleId, setFormData]);
 
   return (
     <>
@@ -99,7 +73,7 @@ export default function RoleUpdate() {
         errors={errors}
         formData={formData}
         handleInputChange={handleChange}
-        operatedBy={nameTH}
+        operatedBy={userName}
         isUpdate
       />
     </>

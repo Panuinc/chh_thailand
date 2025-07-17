@@ -18,7 +18,7 @@ export async function middleware(request) {
   const token = await getToken({ req: request, secret });
 
   const restrictedPaths = [
-    "/role/create",
+    // "/role/create",
     "/division/create",
     "/department/create",
   ];
@@ -53,7 +53,7 @@ export async function middleware(request) {
 export const config = {
   matcher: [
     "/api/:path*",
-    "/role/:path*",
+    // "/role/:path*",
     "/division/:path*",
     "/department/:path*",
   ],

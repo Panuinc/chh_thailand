@@ -19,6 +19,7 @@ import {
 } from "@heroui/react";
 import { Search, ChevronDown, Cog, Plus } from "lucide-react";
 import Link from "next/link";
+import { useDebounce } from "@/modules/human/role/hooks"; // ✅ import debounce
 
 const capitalize = (s) =>
   s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
@@ -34,7 +35,9 @@ export default function UITable({
   basePath = "",
   extraFiltersSlot = null,
 }) {
-  const [filterValue, setFilterValue] = useState("");
+  const [filterValue, setFilterValue] = useState(""); // ✅ required for search input
+  const debouncedFilter = useDebounce(filterValue, 300); // ✅ delay user typing
+
   const [selectedKeys, setSelectedKeys] = useState(new Set());
   const [visibleColumns, setVisibleColumns] = useState(
     new Set(columns.map((c) => c.uid))
@@ -47,8 +50,6 @@ export default function UITable({
   });
   const [page, setPage] = useState(1);
 
-  const hasSearchFilter = Boolean(filterValue);
-
   const headerColumns = useMemo(
     () =>
       visibleColumns === "all"
@@ -59,17 +60,18 @@ export default function UITable({
 
   const filteredItems = useMemo(() => {
     let filtered = [...data];
-    if (hasSearchFilter)
+    if (debouncedFilter)
       filtered = filtered.filter((item) =>
-        item.name.toLowerCase().includes(filterValue.toLowerCase())
+        item.name.toLowerCase().includes(debouncedFilter.toLowerCase())
       );
+
     if (statusFilter !== "all") {
       const selected = Array.from(statusFilter);
       if (selected.length < statusOptions.length)
         filtered = filtered.filter((item) => selected.includes(item.status));
     }
     return filtered;
-  }, [data, filterValue, statusFilter, statusOptions, hasSearchFilter]);
+  }, [data, debouncedFilter, statusFilter, statusOptions]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
