@@ -34,7 +34,7 @@ export default function HumanLayout({ children }) {
                 <Link
                   key={subIndex}
                   href={href}
-                  className={`flex items-center justify-center w-24 h-full lg:w-1/2 lg:aspect-square p-2 gap-2 text-sm border-2 border-dark border-dashed rounded-full
+                  className={`flex items-center justify-center w-24 h-full lg:w-6/12 lg:h-20 p-2 gap-2 text-sm border-2 border-dark border-dashed rounded-lg
                     ${
                       isActive
                         ? "bg-dark text-white"
