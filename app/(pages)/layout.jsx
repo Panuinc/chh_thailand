@@ -204,7 +204,6 @@ export default function PagesLayout({ children }) {
         });
       }
     } catch (err) {
-      // Logging failed silently
     } finally {
       await signOut({ callbackUrl: "/" });
     }
