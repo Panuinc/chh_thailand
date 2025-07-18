@@ -293,7 +293,7 @@ export default function UITable({
       <Table
         isHeaderSticky
         aria-label={`${entityNamePlural} table`}
-        shadow
+        shadow="none"
         bottomContent={bottomContent}
         bottomContentPlacement="outside"
         classNames={{ wrapper: "w-full h-full" }}
