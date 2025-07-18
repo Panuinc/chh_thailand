@@ -3,7 +3,6 @@
 import React from "react";
 import UITopic from "@/components/topic/UITopic";
 import { Input, Button, Select, SelectItem } from "@heroui/react";
-import { useFetchDivisions } from "@/modules/human/division/hooks";
 
 export default function UIDepartmentForm({
   headerContent,
@@ -14,9 +13,8 @@ export default function UIDepartmentForm({
   handleInputChange,
   isUpdate,
   operatedBy,
+  divisions,
 }) {
-  const { divisions } = useFetchDivisions();
-
   return (
     <>
       <UITopic Topic={headerContent} />
@@ -51,6 +49,7 @@ export default function UIDepartmentForm({
               ))}
             </Select>
           </div>
+
           <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="departmentName"
@@ -66,6 +65,7 @@ export default function UIDepartmentForm({
             />
           </div>
         </div>
+
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
@@ -91,6 +91,7 @@ export default function UIDepartmentForm({
             </div>
           </div>
         )}
+
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-center w-full h-full lg:w-4/12 p-2 gap-2 border_custom">
             <Input
@@ -106,6 +107,7 @@ export default function UIDepartmentForm({
             />
           </div>
         </div>
+
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
             <Button

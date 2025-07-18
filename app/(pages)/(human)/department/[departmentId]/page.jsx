@@ -5,12 +5,14 @@ import { useEffect, useCallback } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDepartmentForm } from "@/modules/human/department/hooks";
 import { useSessionUser } from "@/hooks/useSessionUser";
+import { useFetchDivisions } from "@/modules/human/division/hooks";
 import UIDepartmentForm from "@/modules/human/department/components/UIDepartmentForm";
 
 export default function DepartmentUpdate() {
   const router = useRouter();
   const { departmentId } = useParams();
   const { userId, userName } = useSessionUser();
+  const { divisions, loading } = useFetchDivisions();
 
   const onSubmitHandler = useCallback(
     async (formRef, formData, setErrors) => {
@@ -84,6 +86,7 @@ export default function DepartmentUpdate() {
         handleInputChange={handleChange}
         operatedBy={userName}
         isUpdate
+        divisions={divisions}
       />
     </>
   );
