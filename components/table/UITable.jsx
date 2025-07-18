@@ -35,8 +35,8 @@ export default function UITable({
   basePath = "",
   extraFiltersSlot = null,
 }) {
-  const [filterValue, setFilterValue] = useState(""); // ✅ required for search input
-  const debouncedFilter = useDebounce(filterValue, 300); // ✅ delay user typing
+  const [filterValue, setFilterValue] = useState("");
+  const debouncedFilter = useDebounce(filterValue, 300);
 
   const [selectedKeys, setSelectedKeys] = useState(new Set());
   const [visibleColumns, setVisibleColumns] = useState(
