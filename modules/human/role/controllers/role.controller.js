@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { CreateRoleUseCase } from "../use-cases/createRole.usecase";
-import { UpdateRoleUseCase } from "../use-cases/updateRole.usecase";
-import { GetAllRoleUseCase } from "../use-cases/getAllRole.usecase";
-import { GetRoleByIdUseCase } from "../use-cases/getRoleById.usecase";
+import { CreateRoleUseCase } from "../useCases/createRole.usecase";
+import { UpdateRoleUseCase } from "../useCases/updateRole.usecase";
+import { GetAllRoleUseCase } from "../useCases/getAllRole.usecase";
+import { GetRoleByIdUseCase } from "../useCases/getRoleById.usecase";
 import { validateRequest } from "@/lib/validateRequest";
 import { handleErrors, handleGetErrors } from "@/lib/errorHandler";
 import { formatRoleData } from "../schemas/role.schema";

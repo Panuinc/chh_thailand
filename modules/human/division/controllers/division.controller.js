@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { CreateDivisionUseCase } from "../use-cases/createDivision.usecase";
-import { UpdateDivisionUseCase } from "../use-cases/updateDivision.usecase";
-import { GetAllDivisionUseCase } from "../use-cases/getAllDivision.usecase";
-import { GetDivisionByIdUseCase } from "../use-cases/getDivisionById.usecase";
+import { CreateDivisionUseCase } from "../useCases/createDivision.usecase";
+import { UpdateDivisionUseCase } from "../useCases/updateDivision.usecase";
+import { GetAllDivisionUseCase } from "../useCases/getAllDivision.usecase";
+import { GetDivisionByIdUseCase } from "../useCases/getDivisionById.usecase";
 import { validateRequest } from "@/lib/validateRequest";
 import { handleErrors, handleGetErrors } from "@/lib/errorHandler";
 import { formatDivisionData } from "../schemas/division.schema";
