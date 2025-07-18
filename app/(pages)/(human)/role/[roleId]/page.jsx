@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter, useParams } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useCallback } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useRoleForm } from "@/modules/human/role/hooks";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import UIRoleForm from "@/modules/human/role/components/UIRoleForm";
@@ -16,6 +16,7 @@ export default function RoleUpdate() {
     async (formRef, formData, setErrors) => {
       const form = new FormData(formRef);
       form.append("roleUpdateBy", userId);
+
       try {
         const res = await fetch(`/api/human/role/${roleId}`, {
           method: "PUT",
@@ -24,7 +25,9 @@ export default function RoleUpdate() {
             "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
           },
         });
+
         const result = await res.json();
+
         if (res.ok) {
           toast.success(result.message);
           setTimeout(() => router.push("/role"), 1500);
@@ -44,6 +47,7 @@ export default function RoleUpdate() {
 
   useEffect(() => {
     if (!roleId) return;
+
     (async () => {
       try {
         const res = await fetch(`/api/human/role/${roleId}`, {
@@ -51,7 +55,9 @@ export default function RoleUpdate() {
             "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
           },
         });
+
         const result = await res.json();
+
         if (res.ok && result.role?.length) {
           setFormData(result.role[0]);
         } else {

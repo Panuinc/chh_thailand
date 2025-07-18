@@ -15,6 +15,7 @@ export default function RoleCreate() {
     async (formRef, formData, setErrors) => {
       const form = new FormData(formRef);
       form.append("roleCreateBy", userId);
+
       try {
         const res = await fetch("/api/human/role", {
           method: "POST",
@@ -23,7 +24,9 @@ export default function RoleCreate() {
             "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
           },
         });
+
         const result = await res.json();
+
         if (res.ok) {
           toast.success(result.message);
           setTimeout(() => router.push("/role"), 1500);
