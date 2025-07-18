@@ -13,11 +13,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-      //   while: "#FFFFFF",
-      //   dark: "#000000",
+        white: "#FFFFFF",
+        black: "#000000",
         default: "#f4f4f4",
         primary: "#BDE454",
-      //   secondary: "#3C3C3C",
       },
       fontFamily: {
         kanit: ["var(--kanit)"],
@@ -27,10 +26,3 @@ module.exports = {
   },
   plugins: [heroui()],
 };
-
-//         while: "#FFFFFF",
-//         dark: "#1B1A1D",
-//         default: "#E4E4E4",
-//         primary: "#F8FF00",
-//         secondary: "#303234",
-//         bg: "#F0F0F0",
