@@ -12,7 +12,7 @@ export default function UIUnauthorized() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="flex flex-row items-center justify-center w-full lg:w-6/12 p-4 gap-2 bg-white border-2 shadow-md rounded-3xl"
+      className="flex flex-row items-center justify-center w-full lg:w-6/12 p-4 gap-2 bg-white shadow-md rounded-3xl"
     >
       <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-2">
         <motion.div
