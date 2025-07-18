@@ -6,6 +6,7 @@ export function useFetchRoles(apiUrl = "/api/human/role") {
 
   useEffect(() => {
     let active = true;
+
     (async () => {
       try {
         const res = await fetch(apiUrl, {
@@ -13,7 +14,9 @@ export function useFetchRoles(apiUrl = "/api/human/role") {
             "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
           },
         });
+
         const data = await res.json();
+
         if (active) {
           setRoles(Array.isArray(data.role) ? data.role : []);
         }
@@ -23,6 +26,7 @@ export function useFetchRoles(apiUrl = "/api/human/role") {
         setLoading(false);
       }
     })();
+
     return () => {
       active = false;
     };

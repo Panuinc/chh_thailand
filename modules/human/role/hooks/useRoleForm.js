@@ -9,9 +9,14 @@ export function useRoleForm(initialData = {}, onSubmitHandler) {
     (field) => (eOrValue) => {
       const value =
         typeof eOrValue === "string" ? eOrValue : eOrValue?.target?.value ?? "";
-      setFormData((prev) => ({ ...prev, [field]: value }));
+
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+
       setErrors((prev) => {
-        const { [field]: removed, ...rest } = prev;
+        const { [field]: _, ...rest } = prev;
         return rest;
       });
     },
