@@ -1,7 +1,8 @@
 "use client";
 
 import { useSessionUser } from "@/hooks/useSessionUser";
-import { useRoleForm, useSubmitRole } from "@/modules/human/role/hooks";
+import { useSubmitRole } from "@/modules/human/role/hooks";
+import { useFormHandler } from "@/hooks/useFormHandler";
 import UIRoleForm from "@/modules/human/role/components/UIRoleForm";
 import { Toaster } from "react-hot-toast";
 
@@ -13,10 +14,8 @@ export default function RoleCreate() {
     userId,
   });
 
-  const { formRef, formData, errors, handleChange, handleSubmit } = useRoleForm(
-    { roleName: "" },
-    onSubmitHandler
-  );
+  const { formRef, formData, errors, handleChange, handleSubmit } =
+    useFormHandler({ roleName: "" }, onSubmitHandler);
 
   return (
     <>

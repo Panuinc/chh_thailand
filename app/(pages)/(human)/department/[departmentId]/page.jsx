@@ -4,10 +4,10 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import {
-  useDepartmentForm,
   useFetchDepartmentById,
   useSubmitDepartment,
 } from "@/modules/human/department/hooks";
+import { useFormHandler } from "@/hooks/useFormHandler";
 import { useFetchDivisions } from "@/modules/human/division/hooks";
 import UIDepartmentForm from "@/modules/human/department/components/UIDepartmentForm";
 import { Toaster } from "react-hot-toast";
@@ -26,7 +26,7 @@ export default function DepartmentUpdate() {
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useDepartmentForm(
+    useFormHandler(
       { departmentName: "", departmentStatus: "" },
       onSubmitHandler
     );

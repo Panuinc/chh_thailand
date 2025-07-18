@@ -3,10 +3,10 @@
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import {
-  useDivisionForm,
   useFetchDivisionById,
   useSubmitDivision,
 } from "@/modules/human/division/hooks";
+import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import UIDivisionForm from "@/modules/human/division/components/UIDivisionForm";
 import { Toaster } from "react-hot-toast";
@@ -23,7 +23,7 @@ export default function DivisionUpdate() {
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useDivisionForm({ divisionName: "", divisionStatus: "" }, onSubmitHandler);
+    useFormHandler({ divisionName: "", divisionStatus: "" }, onSubmitHandler);
 
   useEffect(() => {
     if (division) setFormData(division);

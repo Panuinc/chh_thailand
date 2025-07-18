@@ -1,10 +1,8 @@
 "use client";
 
 import { useSessionUser } from "@/hooks/useSessionUser";
-import {
-  useDivisionForm,
-  useSubmitDivision,
-} from "@/modules/human/division/hooks";
+import { useSubmitDivision } from "@/modules/human/division/hooks";
+import { useFormHandler } from "@/hooks/useFormHandler";
 import UIDivisionForm from "@/modules/human/division/components/UIDivisionForm";
 import { Toaster } from "react-hot-toast";
 
@@ -17,7 +15,7 @@ export default function DivisionCreate() {
   });
 
   const { formRef, formData, errors, handleChange, handleSubmit } =
-    useDivisionForm({ divisionName: "" }, onSubmitHandler);
+    useFormHandler({ divisionName: "" }, onSubmitHandler);
 
   return (
     <>

@@ -2,11 +2,8 @@
 
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import {
-  useRoleForm,
-  useFetchRoleById,
-  useSubmitRole,
-} from "@/modules/human/role/hooks";
+import { useFetchRoleById, useSubmitRole } from "@/modules/human/role/hooks";
+import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import UIRoleForm from "@/modules/human/role/components/UIRoleForm";
 import { Toaster } from "react-hot-toast";
@@ -23,7 +20,7 @@ export default function RoleUpdate() {
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useRoleForm({ roleName: "", roleStatus: "" }, onSubmitHandler);
+    useFormHandler({ roleName: "", roleStatus: "" }, onSubmitHandler);
 
   useEffect(() => {
     if (role) setFormData(role);
