@@ -19,8 +19,8 @@ export async function middleware(request) {
 
   const restrictedPaths = [
     // "/role/create",
-    "/division/create",
-    "/department/create",
+    // "/division/create",
+    // "/department/create",
   ];
 
   const isRestricted =
@@ -52,9 +52,9 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    "/api/:path*",
+    // "/api/:path*",
     // "/role/:path*",
-    "/division/:path*",
-    "/department/:path*",
+    // "/division/:path*",
+    // "/department/:path*",
   ],
 };
