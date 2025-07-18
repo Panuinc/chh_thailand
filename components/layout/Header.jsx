@@ -19,7 +19,7 @@ export default function Header({ onMobileMenuToggle }) {
             placeholder="Search..."
             startContent={<Search />}
             variant="bordered"
-            color="primary"
+            color="default"
             radius="full"
           />
         </div>
