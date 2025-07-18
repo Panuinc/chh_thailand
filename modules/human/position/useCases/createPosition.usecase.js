@@ -15,9 +15,10 @@ export async function CreatePositionUseCase(data) {
 
   const normalizedName = parsed.data.positionName.trim().toLowerCase();
   const duplicate = await PositionValidator.isDuplicatePositionName(
-    normalizedName,
-    parsed.data.positionDivisionId
-  );
+  normalizedName,
+  parsed.data.positionDivisionId,
+  parsed.data.positionDepartmentId
+);
 
   if (duplicate) {
     throw {

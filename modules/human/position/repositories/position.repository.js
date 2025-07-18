@@ -8,6 +8,7 @@ export const PositionRepository = {
       orderBy: { positionCreateAt: "asc" },
       include: {
         division: true,
+        department: true,
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
       },
@@ -20,15 +21,17 @@ export const PositionRepository = {
       where: { positionId },
       include: {
         division: true,
+        department: true,
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
       },
     }),
 
-  findByName: (positionName, divisionId) =>
+  findByName: (positionName, divisionId, departmentId) =>
     prisma.position.findFirst({
       where: {
         positionDivisionId: divisionId,
+        positionDepartmentId: departmentId,
         positionName: positionName.trim().toLowerCase(),
       },
     }),

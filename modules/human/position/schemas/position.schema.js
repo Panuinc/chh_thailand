@@ -8,6 +8,7 @@ import {
 
 export const positionPostSchema = z.object({
   positionDivisionId: preprocessInt("Please select division"),
+  positionDepartmentId: preprocessInt("Please select department"),
   positionName: preprocessString("Please provide the position name"),
   positionCreateBy: preprocessInt("Please provide the creator's user ID"),
 });

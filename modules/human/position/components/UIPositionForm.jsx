@@ -14,6 +14,7 @@ export default function UIPositionForm({
   isUpdate,
   operatedBy,
   divisions,
+  departmentsByDivision,
 }) {
   return (
     <>
@@ -50,6 +51,38 @@ export default function UIPositionForm({
             </Select>
           </div>
 
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Select
+              name="positionDepartmentId"
+              label="Department"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              isDisabled={isUpdate || !formData.positionDivisionId}
+              selectedKeys={
+                formData.positionDepartmentId
+                  ? [String(formData.positionDepartmentId)]
+                  : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("positionDepartmentId")([...keys][0])
+              }
+              isInvalid={!!errors.positionDepartmentId}
+              errorMessage={errors.positionDepartmentId}
+            >
+              {(departmentsByDivision[formData.positionDivisionId] || []).map(
+                (dep) => (
+                  <SelectItem key={dep.departmentId}>
+                    {dep.departmentName}
+                  </SelectItem>
+                )
+              )}
+            </Select>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="positionName"
