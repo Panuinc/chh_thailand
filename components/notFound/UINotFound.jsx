@@ -78,7 +78,7 @@ export default function UINotFound() {
         initial={{ x: 80, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.7, ease: "easeOut" }}
-        className="xl:flex hidden flex-col items-center justify-center w-full h-full p-2"
+        className="lg:flex hidden flex-col items-center justify-center w-full h-full p-2"
       >
         <div className="flex items-center justify-center w-full h-full p-2">
           <Image
