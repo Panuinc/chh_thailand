@@ -5,36 +5,36 @@ export default function UIHuman({ headerContent }) {
   return (
     <>
       <UITopic Topic={headerContent} />
-      <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-1 border-black border-dashed rounded-lg">
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
+      <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom rounded-lg">
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
           1
         </div>
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
           1
         </div>
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
-          1
-        </div>
-      </div>
-      <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-1 border-black border-dashed rounded-lg">
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
-          1
-        </div>
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
-          1
-        </div>
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
           1
         </div>
       </div>
-      <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-1 border-black border-dashed rounded-lg">
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
+      <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom rounded-lg">
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
           1
         </div>
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
           1
         </div>
-        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border-1 border-black border-dashed">
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
+          1
+        </div>
+      </div>
+      <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom rounded-lg">
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
+          1
+        </div>
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
+          1
+        </div>
+        <div className="flex items-center justify-center w-full h-40 p-2 gap-2 border_custom">
           1
         </div>
       </div>

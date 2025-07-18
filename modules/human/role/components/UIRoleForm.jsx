@@ -20,10 +20,10 @@ export default function UIRoleForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border-1 border-black border-dashed rounded-lg overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom rounded-lg overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-1 border-black border-dashed">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-1 border-black border-dashed">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="roleName"
               label="Role"
@@ -39,8 +39,8 @@ export default function UIRoleForm({
           </div>
         </div>
         {isUpdate && (
-          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-1 border-black border-dashed">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-1 border-black border-dashed">
+          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
               <Select
                 name="roleStatus"
                 label="Role Status"
@@ -61,8 +61,8 @@ export default function UIRoleForm({
             </div>
           </div>
         )}
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-1 border-black border-dashed">
-          <div className="flex items-center justify-center w-full h-full xl:w-4/12 p-2 gap-2 border-1 border-black border-dashed">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full xl:w-4/12 p-2 gap-2 border_custom">
             <Input
               name="operatedBy"
               type="text"
@@ -76,12 +76,12 @@ export default function UIRoleForm({
             />
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-1 border-black border-dashed">
-          <div className="flex items-center justify-end w-full h-full p-2 gap-2 border-1 border-black border-dashed">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
             <Button
               type="submit"
               color="primary"
-              className="flex items-center justify-center h-full p-3 gap-2 border-1 border-black border-dashed"
+              className="flex items-center justify-center h-full p-3 gap-2 border_custom"
             >
               Save
             </Button>
