@@ -44,7 +44,7 @@ export default function DepartmentUpdate() {
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
     useDepartmentForm(
-      { departmentDivisionId: "", departmentName: "", departmentStatus: "" },
+      { departmentName: "", departmentStatus: "" },
       onSubmitHandler
     );
 

@@ -3,6 +3,7 @@
 import React from "react";
 import UITopic from "@/components/topic/UITopic";
 import { Input, Button, Select, SelectItem } from "@heroui/react";
+import { useFetchDivisions } from "@/modules/human/division/hooks";
 
 export default function UIDepartmentForm({
   headerContent,
@@ -14,6 +15,8 @@ export default function UIDepartmentForm({
   isUpdate,
   operatedBy,
 }) {
+  const { divisions } = useFetchDivisions();
+
   return (
     <>
       <UITopic Topic={headerContent} />
@@ -23,6 +26,31 @@ export default function UIDepartmentForm({
         className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom rounded-lg overflow-auto"
       >
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Select
+              name="departmentDivisionId"
+              label="Division"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              isDisabled={isUpdate}
+              selectedKeys={
+                formData.departmentDivisionId
+                  ? [String(formData.departmentDivisionId)]
+                  : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("departmentDivisionId")([...keys][0])
+              }
+              isInvalid={!!errors.departmentDivisionId}
+              errorMessage={errors.departmentDivisionId}
+            >
+              {divisions.map((div) => (
+                <SelectItem key={div.divisionId}>{div.divisionName}</SelectItem>
+              ))}
+            </Select>
+          </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="departmentName"
@@ -48,7 +76,9 @@ export default function UIDepartmentForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                selectedKeys={formData.departmentStatus ? [formData.departmentStatus] : []}
+                selectedKeys={
+                  formData.departmentStatus ? [formData.departmentStatus] : []
+                }
                 onSelectionChange={(keys) =>
                   handleInputChange("departmentStatus")([...keys][0])
                 }

@@ -10,6 +10,7 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
+  { name: "Division", uid: "division", sortable: true },
   { name: "Department", uid: "name", sortable: true },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
@@ -29,6 +30,7 @@ export default function UIDepartmentList({
 }) {
   const departments = rawDepartments.map((r) => ({
     id: r.departmentId,
+    division: r.division?.divisionName || "-",
     name: r.departmentName || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]

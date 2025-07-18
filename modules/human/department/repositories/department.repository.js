@@ -7,6 +7,7 @@ export const DepartmentRepository = {
       take,
       orderBy: { departmentCreateAt: "asc" },
       include: {
+        division: true,
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
       },
@@ -18,14 +19,18 @@ export const DepartmentRepository = {
     prisma.department.findUnique({
       where: { departmentId },
       include: {
+        division: true,
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
       },
     }),
 
-  findByName: (departmentName) =>
+  findByName: (departmentName, divisionId) =>
     prisma.department.findFirst({
-      where: { departmentName: departmentName.trim().toLowerCase() },
+      where: {
+        departmentDivisionId: divisionId,
+        departmentName: departmentName.trim().toLowerCase(),
+      },
     }),
 
   create: (data) => prisma.department.create({ data }),

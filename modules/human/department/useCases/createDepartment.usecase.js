@@ -14,9 +14,16 @@ export async function CreateDepartmentUseCase(data) {
   }
 
   const normalizedName = parsed.data.departmentName.trim().toLowerCase();
-  const duplicate = await DepartmentValidator.isDuplicateDepartmentName(normalizedName);
+  const duplicate = await DepartmentValidator.isDuplicateDepartmentName(
+    normalizedName,
+    parsed.data.departmentDivisionId
+  );
+
   if (duplicate) {
-    throw { status: 409, message: `Department '${normalizedName}' already exists` };
+    throw {
+      status: 409,
+      message: `Department '${normalizedName}' already exists`,
+    };
   }
 
   return DepartmentService.create({

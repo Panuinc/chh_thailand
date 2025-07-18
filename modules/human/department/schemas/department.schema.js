@@ -14,7 +14,6 @@ export const departmentPostSchema = z.object({
 
 export const departmentPutSchema = z.object({
   departmentId: preprocessInt("Please provide the department ID to update"),
-  departmentDivisionId: preprocessInt("Please select division"),
   departmentName: preprocessString("Please provide the department name"),
   departmentStatus: preprocessEnum(
     ["Enable", "Disable"],
