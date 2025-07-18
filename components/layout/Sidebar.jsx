@@ -10,14 +10,17 @@ export default function Sidebar({ sidebarItems }) {
     <div className="lg:flex hidden flex-col items-center justify-start lg:w-[5%] h-full p-2 gap-2 overflow-auto">
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
-        const isActive = pathname.startsWith(item.href || "");
+        const hrefList  = Array.isArray(item.href) ? item.href : [item.href];
+        const isActive = hrefList .some((href) => pathname.startsWith(href));
 
         const button = (
           <div
             key={index}
             onClick={item.onClick}
             className={`flex items-center justify-center w-12 h-12 p-2 gap-2 rounded-full cursor-pointer ${
-              isActive ? "bg-dark text-white" : "bg-default hover:bg-dark hover:text-white"
+              isActive
+                ? "bg-dark text-white"
+                : "bg-default hover:bg-dark hover:text-white"
             }`}
           >
             <Icon />
@@ -33,7 +36,7 @@ export default function Sidebar({ sidebarItems }) {
             placement="right"
             showArrow
           >
-            <Link href={item.href} className="w-full flex justify-center">
+            <Link href={hrefList [0]} className="w-full flex justify-center">
               {button}
             </Link>
           </Tooltip>
