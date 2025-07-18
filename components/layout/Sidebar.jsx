@@ -19,8 +19,8 @@ export default function Sidebar({ sidebarItems }) {
             onClick={item.onClick}
             className={`flex items-center justify-center w-12 h-12 p-2 gap-2 rounded-full cursor-pointer ${
               isActive
-                ? "bg-dark text-white"
-                : "bg-default hover:bg-dark hover:text-white"
+                ? "bg-primary text-white"
+                : "bg-default hover:bg-primary hover:text-white"
             }`}
           >
             <Icon />
@@ -32,7 +32,7 @@ export default function Sidebar({ sidebarItems }) {
             key={index}
             content={item.label}
             color="primary"
-            className="text-white font-semibold"
+            className="text-white font-semibold px-4 py-2"
             placement="right"
             showArrow
           >
@@ -45,7 +45,7 @@ export default function Sidebar({ sidebarItems }) {
             key={index}
             content={item.label}
             color="primary"
-            className="text-white font-semibold"
+            className="text-white font-semibold px-4 py-2"
             placement="right"
             showArrow
           >

@@ -31,10 +31,10 @@ export default function Header({ onMobileMenuToggle }) {
         >
           <AlignJustify />
         </button>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-default hover:bg-dark hover:text-white rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-default hover:bg-primary hover:text-white rounded-full">
           <Bell />
         </div>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-dark rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-primary rounded-full">
           <Image src="/picture/robot.png" alt="profile" width={300} height={300} priority />
         </div>
       </div>
