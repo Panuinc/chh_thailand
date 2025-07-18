@@ -54,7 +54,10 @@ export default function PagesLayout({ children }) {
   return (
     <UILogoutProvider>
       <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-        <Header onMobileMenuToggle={() => setIsMobileMenuOpen(true)} />
+        <Header
+          onMobileMenuToggle={() => setIsMobileMenuOpen(true)}
+          onManualLogout={handleManualLogout}
+        />
         {isMobileMenuOpen && (
           <MobileSidebar
             sidebarItems={sidebarItems}
