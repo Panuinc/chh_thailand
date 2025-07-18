@@ -8,9 +8,7 @@ export function useRoleForm(initialData = {}, onSubmitHandler) {
   const handleChange = useCallback(
     (field) => (eOrValue) => {
       const value =
-        typeof eOrValue === "string"
-          ? eOrValue
-          : eOrValue?.target?.value ?? "";
+        typeof eOrValue === "string" ? eOrValue : eOrValue?.target?.value ?? "";
       setFormData((prev) => ({ ...prev, [field]: value }));
       setErrors((prev) => {
         const { [field]: removed, ...rest } = prev;
