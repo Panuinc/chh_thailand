@@ -3,7 +3,10 @@
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useCallback } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useDivisionForm } from "@/modules/human/division/hooks";
+import {
+  useDivisionForm,
+  useFetchDivisionById,
+} from "@/modules/human/division/hooks";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import UIDivisionForm from "@/modules/human/division/components/UIDivisionForm";
 
@@ -11,6 +14,7 @@ export default function DivisionUpdate() {
   const router = useRouter();
   const { divisionId } = useParams();
   const { userId, userName } = useSessionUser();
+  const { division, loading } = useFetchDivisionById(divisionId); // 👈 ใช้ hook ใหม่
 
   const onSubmitHandler = useCallback(
     async (formRef, formData, setErrors) => {
@@ -46,28 +50,10 @@ export default function DivisionUpdate() {
     useDivisionForm({ divisionName: "", divisionStatus: "" }, onSubmitHandler);
 
   useEffect(() => {
-    if (!divisionId) return;
+    if (division) setFormData(division);
+  }, [division, setFormData]);
 
-    (async () => {
-      try {
-        const res = await fetch(`/api/human/division/${divisionId}`, {
-          headers: {
-            "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
-          },
-        });
-
-        const result = await res.json();
-
-        if (res.ok && result.division?.length) {
-          setFormData(result.division[0]);
-        } else {
-          toast.error(result.error || "Failed to load division.");
-        }
-      } catch (err) {
-        toast.error("Error: " + err.message);
-      }
-    })();
-  }, [divisionId, setFormData]);
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>

@@ -3,7 +3,7 @@
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useCallback } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useRoleForm } from "@/modules/human/role/hooks";
+import { useRoleForm, useFetchRoleById } from "@/modules/human/role/hooks";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import UIRoleForm from "@/modules/human/role/components/UIRoleForm";
 
@@ -11,6 +11,7 @@ export default function RoleUpdate() {
   const router = useRouter();
   const { roleId } = useParams();
   const { userId, userName } = useSessionUser();
+  const { role, loading } = useFetchRoleById(roleId); // 👈 ใช้ hook ที่แยกออกมา
 
   const onSubmitHandler = useCallback(
     async (formRef, formData, setErrors) => {
@@ -46,28 +47,10 @@ export default function RoleUpdate() {
     useRoleForm({ roleName: "", roleStatus: "" }, onSubmitHandler);
 
   useEffect(() => {
-    if (!roleId) return;
+    if (role) setFormData(role);
+  }, [role, setFormData]);
 
-    (async () => {
-      try {
-        const res = await fetch(`/api/human/role/${roleId}`, {
-          headers: {
-            "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
-          },
-        });
-
-        const result = await res.json();
-
-        if (res.ok && result.role?.length) {
-          setFormData(result.role[0]);
-        } else {
-          toast.error(result.error || "Failed to load role.");
-        }
-      } catch (err) {
-        toast.error("Error: " + err.message);
-      }
-    })();
-  }, [roleId, setFormData]);
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>
