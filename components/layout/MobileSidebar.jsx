@@ -40,7 +40,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
               className="w-full flex justify-start items-center p-2 gap-2"
             >
               {button}
-              <span className="text-sm text-dark font-semibold">
+              <span className="text-sm text-black font-semibold">
                 {item.label}
               </span>
             </Link>
@@ -56,7 +56,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
               className="w-full flex justify-start items-center p-2 gap-2 cursor-pointer"
             >
               {button}
-              <span className="text-sm text-dark font-semibold">
+              <span className="text-sm text-black font-semibold">
                 {item.label}
               </span>
             </div>

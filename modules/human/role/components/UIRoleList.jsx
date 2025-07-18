@@ -45,7 +45,7 @@ export default function UIRoleList({
   return (
     <>
       <UITopic Topic={headerContent} />
-      <div className="flex items-center justify-center w-full p-2 gap-2 border-2 border-dark border-dashed rounded-lg">
+      <div className="flex items-center justify-center w-full p-2 gap-2 border-2 border-black border-dashed rounded-lg">
         <UITable
           data={roles}
           isLoading={isLoading}

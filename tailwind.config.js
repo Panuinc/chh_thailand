@@ -12,13 +12,13 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-      colors: {
-        while: "#FFFFFF",
-        dark: "#000000",
-        default: "#E4E4E4",
-        primary: "#BDE454",
-        secondary: "#3C3C3C",
-      },
+      // colors: {
+      //   while: "#FFFFFF",
+      //   dark: "#000000",
+      //   default: "#E4E4E4",
+      //   primary: "#BDE454",
+      //   secondary: "#3C3C3C",
+      // },
       fontFamily: {
         kanit: ["var(--kanit)"],
         nunito: ["var(--nunito)"],
