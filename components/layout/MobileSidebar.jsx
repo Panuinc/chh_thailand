@@ -18,10 +18,10 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
 
         const button = (
           <div
-            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 rounded-full cursor-pointer ${
+            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 shadow-md rounded-full cursor-pointer ${
               isActive
                 ? "bg-primary text-white"
-                : "bg-default hover:bg-primary hover:text-white"
+                : "bg-white hover:bg-primary hover:text-white"
             }`}
           >
             <Icon />

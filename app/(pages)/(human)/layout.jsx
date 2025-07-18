@@ -17,7 +17,7 @@ export default function HumanLayout({ children }) {
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center w-full h-full gap-2">
-      <div className="flex flex-row lg:flex-col items-center justify-start w-full lg:w-2/12 lg:h-full p-2 gap-2 border_custom rounded-xl overflow-auto">
+      <div className="flex flex-row lg:flex-col items-center justify-start w-full lg:w-2/12 lg:h-full p-2 lg:px-2 lg:py-0 gap-2 overflow-auto">
         {layoutGroups.map((group, index) => (
           <div
             key={index}
@@ -34,11 +34,11 @@ export default function HumanLayout({ children }) {
                 <Link
                   key={subIndex}
                   href={href}
-                  className={`flex items-center justify-center w-24 h-full lg:w-6/12 lg:h-20 p-2 gap-2 text-sm border_custom rounded-lg
+                  className={`flex items-center justify-center w-24 h-12 lg:w-6/12 lg:h-20 p-2 gap-2 text-sm shadow-md rounded-xl
                     ${
                       isActive
-                        ? "bg-black text-white"
-                        : "bg-default hover:bg-black hover:text-white"
+                        ? "bg-primary text-white"
+                        : "bg-white hover:bg-primary hover:text-white"
                     }`}
                 >
                   {label}
@@ -48,7 +48,7 @@ export default function HumanLayout({ children }) {
           </div>
         ))}
       </div>
-      <div className="flex flex-col items-center justify-start w-full h-full lg:w-10/12 p-2 gap-2 border_custom rounded-xl overflow-auto">
+      <div className="flex flex-col items-center justify-start w-full h-full lg:w-10/12 p-2 gap-2 bg-white rounded-xl overflow-auto">
         {children}
       </div>
     </div>
