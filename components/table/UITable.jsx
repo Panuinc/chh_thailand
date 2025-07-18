@@ -329,7 +329,7 @@ export default function UITable({
             items={sortedItems}
           >
             {(item) => (
-              <TableRow key={item.id} className="border_use_bottom">
+              <TableRow key={item.id} className="border-b-2 border-default">
                 {(columnKey) => (
                   <TableCell>{renderCell(item, columnKey)}</TableCell>
                 )}
