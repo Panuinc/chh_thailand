@@ -42,7 +42,12 @@ export async function UpdateUserUseCase(data) {
   const normalizedEmail = userEmail.trim().toLowerCase();
 
   let updatedPicture = existing.userPicture;
-  if (userPicture && typeof userPicture.name === "string") {
+  if (
+    userPicture &&
+    typeof userPicture === "object" &&
+    typeof userPicture.name === "string" &&
+    userPicture.size > 0
+  ) {
     updatedPicture = await saveUploadedFile(
       userPicture,
       "user",

@@ -75,12 +75,16 @@ export default function UserUpdate() {
 
   const handleChangeWithPreview = (name) => (e) => {
     const file = e?.target?.files?.[0];
-    if (name === "userPicture" && file instanceof File) {
-      setFormData((prev) => ({ ...prev, [name]: file }));
+    if (name === "userPicture") {
+      if (file instanceof File) {
+        setFormData((prev) => ({ ...prev, [name]: file }));
 
-      const reader = new FileReader();
-      reader.onloadend = () => setPreviewImage(reader.result);
-      reader.readAsDataURL(file);
+        const reader = new FileReader();
+        reader.onloadend = () => setPreviewImage(reader.result);
+        reader.readAsDataURL(file);
+      } else {
+        setFormData((prev) => ({ ...prev, [name]: null }));
+      }
     } else {
       handleChange(name)(e);
     }
