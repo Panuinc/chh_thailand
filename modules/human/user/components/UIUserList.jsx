@@ -42,7 +42,7 @@ export default function UIUserList({
           description={r.userEmail || "-"}
           avatarProps={{
             radius: "full",
-            size: "sm",
+            size: "md",
             src: r.userPicture?.startsWith("http")
               ? r.userPicture
               : `/${r.userPicture || "default.png"}`,
