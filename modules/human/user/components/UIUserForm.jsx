@@ -23,6 +23,11 @@ export default function UIUserForm({
         className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom rounded-lg overflow-auto"
       >
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-start w-full h-full p-2 gap-2 font-semibold border_custom">
+            User personal
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="userFirstName"

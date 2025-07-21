@@ -43,7 +43,7 @@ export default function UIUnauthorized() {
             type: "spring",
             stiffness: 200,
           }}
-          className="text-2xl font-bold text-center text-gray-800"
+          className="font-semibold text-center text-gray-800"
         >
           401 - Unauthorized Access
         </motion.div>
