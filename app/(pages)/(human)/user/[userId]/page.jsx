@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useFetchUserById, useSubmitUser } from "@/modules/human/user/hooks";
 import { useSessionUser } from "@/hooks/useSessionUser";
+import { useFetchUserById, useSubmitUser } from "@/modules/human/user/hooks";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useFetchDivisions } from "@/modules/human/division/hooks";
 import { useFetchDepartments } from "@/modules/human/department/hooks";
@@ -14,7 +14,7 @@ import { Toaster } from "react-hot-toast";
 
 export default function UserUpdate() {
   const { userId: paramUserId } = useParams();
-  const { userId, userName } = useSessionUser();
+  const { userId: sessionUserId, userName } = useSessionUser();
   const { user, loading } = useFetchUserById(paramUserId);
 
   const { divisions } = useFetchDivisions();
@@ -38,7 +38,8 @@ export default function UserUpdate() {
 
   const onSubmitHandler = useSubmitUser({
     mode: "update",
-    userId,
+    userId: sessionUserId,
+    targetUserId: paramUserId,
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
