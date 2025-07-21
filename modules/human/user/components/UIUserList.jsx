@@ -12,7 +12,7 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
-  { name: "User", uid: "name", sortable: true },
+  { name: "User", uid: "nameDisplay", sortable: true },
   { name: "Email", uid: "email" },
   { name: "Role", uid: "role" },
   { name: "Team", uid: "team" },
@@ -30,28 +30,33 @@ export default function UIUserList({
   users: rawUsers = [],
   isLoading,
 }) {
-  const users = rawUsers.map((r) => ({
-    id: r.userId,
-    name: (
-      <User
-        name={`${r.userFirstName || ""} ${r.userLastName || ""}`.trim()}
-        description={r.userEmail || "-"}
-        avatarProps={{
-          radius: "full",
-          size: "sm",
-          src: r.userPicture?.startsWith("http")
-            ? r.userPicture
-            : `/${r.userPicture || "default.png"}`,
-        }}
-      />
-    ),
-    email: r.userEmail || "-",
-    role: r.job?.role?.roleName || "-",
-    team: r.job?.department?.departmentName || "-",
-    status: r.userStatus?.toLowerCase() || "enable",
-    created: dateToThai(r.userCreateAt),
-    updated: dateToThai(r.userUpdateAt),
-  }));
+  const users = rawUsers.map((r) => {
+    const name = `${r.userFirstName || ""} ${r.userLastName || ""}`.trim();
+
+    return {
+      id: r.userId,
+      name,
+      nameDisplay: (
+        <User
+          name={name}
+          description={r.userEmail || "-"}
+          avatarProps={{
+            radius: "full",
+            size: "sm",
+            src: r.userPicture?.startsWith("http")
+              ? r.userPicture
+              : `/${r.userPicture || "default.png"}`,
+          }}
+        />
+      ),
+      email: r.userEmail || "-",
+      role: r.job?.role?.roleName || "-",
+      team: r.job?.department?.departmentName || "-",
+      status: r.userStatus?.toLowerCase() || "enable",
+      created: dateToThai(r.userCreateAt),
+      updated: dateToThai(r.userUpdateAt),
+    };
+  });
 
   return (
     <>
