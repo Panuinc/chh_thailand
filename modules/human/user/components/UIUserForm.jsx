@@ -13,6 +13,10 @@ export default function UIUserForm({
   handleInputChange,
   isUpdate,
   operatedBy,
+  divisions = [],
+  departmentsByDivision = {},
+  positionsByDepartment = {},
+  roles = [],
 }) {
   return (
     <>
@@ -38,7 +42,6 @@ export default function UIUserForm({
               variant="bordered"
               color="default"
               radius="lg"
-              value={formData.userPicture || ""}
               onChange={handleInputChange("userPicture")}
               isInvalid={!!errors.userPicture}
               errorMessage={errors.userPicture}
@@ -140,6 +143,156 @@ export default function UIUserForm({
             User Employment
           </div>
         </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Select
+              name="useJobDivisionId"
+              label="Division"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              radius="lg"
+              selectedKeys={
+                formData.useJobDivisionId
+                  ? [String(formData.useJobDivisionId)]
+                  : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("useJobDivisionId")([...keys][0])
+              }
+              isInvalid={!!errors.useJobDivisionId}
+              errorMessage={errors.useJobDivisionId}
+            >
+              {divisions.map((div) => (
+                <SelectItem key={div.divisionId}>{div.divisionName}</SelectItem>
+              ))}
+            </Select>
+          </div>
+
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Select
+              name="useJobDepartmentId"
+              label="Department"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              radius="lg"
+              isDisabled={!formData.useJobDivisionId}
+              selectedKeys={
+                formData.useJobDepartmentId
+                  ? [String(formData.useJobDepartmentId)]
+                  : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("useJobDepartmentId")([...keys][0])
+              }
+              isInvalid={!!errors.useJobDepartmentId}
+              errorMessage={errors.useJobDepartmentId}
+            >
+              {(departmentsByDivision[formData.useJobDivisionId] || []).map(
+                (dep) => (
+                  <SelectItem key={dep.departmentId}>
+                    {dep.departmentName}
+                  </SelectItem>
+                )
+              )}
+            </Select>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Select
+              name="useJobPositionId"
+              label="Position"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              radius="lg"
+              isDisabled={
+                !formData.useJobDivisionId && !formData.useJobDepartmentId
+              }
+              selectedKeys={
+                formData.useJobPositionId
+                  ? [String(formData.useJobPositionId)]
+                  : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("useJobPositionId")([...keys][0])
+              }
+              isInvalid={!!errors.useJobPositionId}
+              errorMessage={errors.useJobPositionId}
+            >
+              {(positionsByDepartment[formData.useJobDepartmentId] || []).map(
+                (pos) => (
+                  <SelectItem key={pos.positionId}>
+                    {pos.positionName}
+                  </SelectItem>
+                )
+              )}
+            </Select>
+          </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Select
+              name="useJobRoleId"
+              label="Role"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              radius="lg"
+              selectedKeys={
+                formData.useJobRoleId ? [String(formData.useJobRoleId)] : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("useJobRoleId")([...keys][0])
+              }
+              isInvalid={!!errors.useJobRoleId}
+              errorMessage={errors.useJobRoleId}
+            >
+              {roles.map((role) => (
+                <SelectItem key={role.roleId}>{role.roleName}</SelectItem>
+              ))}
+            </Select>
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Input
+              type="date"
+              name="useJobStartDate"
+              label="Start Date"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="lg"
+              value={formData.useJobStartDate || ""}
+              onChange={handleInputChange("useJobStartDate")}
+              isInvalid={!!errors.useJobStartDate}
+              errorMessage={errors.useJobStartDate}
+            />
+          </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Input
+              type="date"
+              name="useJobEndDate"
+              label="End Date"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="lg"
+              value={formData.useJobEndDate || ""}
+              onChange={handleInputChange("useJobEndDate")}
+              isInvalid={!!errors.useJobEndDate}
+              errorMessage={errors.useJobEndDate}
+            />
+          </div>
+        </div>
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
             <Input
@@ -154,6 +307,33 @@ export default function UIUserForm({
               isReadOnly
               value={operatedBy}
             />
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <Select
+              name="useJobContractType"
+              label="Contract Type"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              radius="lg"
+              selectedKeys={
+                formData.useJobContractType ? [formData.useJobContractType] : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("useJobContractType")([...keys][0])
+              }
+              isInvalid={!!errors.useJobContractType}
+              errorMessage={errors.useJobContractType}
+            >
+              <SelectItem key="FullTime">FullTime</SelectItem>
+              <SelectItem key="PartTime">PartTime</SelectItem>
+              <SelectItem key="Internship">Internship</SelectItem>
+              <SelectItem key="Temporary">Temporary</SelectItem>
+              <SelectItem key="Freelance">Freelance</SelectItem>
+            </Select>
           </div>
         </div>
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
