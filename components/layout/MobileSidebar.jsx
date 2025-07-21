@@ -9,7 +9,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
   return (
     <div className="fixed top-0 left-0 w-64 h-full z-50 bg-white p-2 flex flex-col gap-2">
       <button
-        className="self-end p-2 mb-2 rounded-full bg-danger hover:bg-danger-300 text-white"
+        className="self-end p-2 mb-2 rounded-lg bg-danger hover:bg-danger-300 text-white"
         onClick={onClose}
       >
         <X />
@@ -21,7 +21,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
 
         const button = (
           <div
-            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 shadow-md rounded-full cursor-pointer ${
+            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 shadow-md rounded-lg cursor-pointer ${
               isActive
                 ? "bg-primary text-white"
                 : "hover:bg-primary hover:text-white"

@@ -126,9 +126,9 @@ export default function UITable({
         case "status":
           return (
             <Chip
-              className="w-full h-full p-2 gap-2 rounded-full"
+              className="w-full h-full p-2 gap-2 text-white rounded-lg"
               color={statusColorMap[item.status]}
-              variant="flat"
+              variant="solid"
             >
               {capitalize(value)}
             </Chip>
@@ -142,7 +142,7 @@ export default function UITable({
                     isIconOnly
                     color="none"
                     radius="lg"
-                    className="w-full p-4 text-white"
+                    className="w-full p-4 text-black"
                     aria-label="Actions"
                   >
                     <Cog />
