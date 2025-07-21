@@ -4,6 +4,8 @@ import React from "react";
 import dynamic from "next/dynamic";
 import UITopic from "@/components/topic/UITopic";
 import { dateToThai } from "@/lib/date";
+import { User } from "@heroui/react";
+
 const UITable = dynamic(() => import("@/components/table/UITable"), {
   ssr: false,
 });
@@ -11,8 +13,9 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "User", uid: "name", sortable: true },
-  { name: "Created", uid: "created" },
-  { name: "Updated", uid: "updated" },
+  { name: "Email", uid: "email" },
+  { name: "Role", uid: "role" },
+  { name: "Team", uid: "team" },
   { name: "Status", uid: "status", sortable: true },
   { name: "Actions", uid: "actions" },
 ];
@@ -29,19 +32,27 @@ export default function UIUserList({
 }) {
   const users = rawUsers.map((r) => ({
     id: r.userId,
-    name: r.userFirstName || "-",
-    creator:
-      [r.createdBy?.userFirstName, r.createdBy?.userLastName]
-        .filter(Boolean)
-        .join(" ") || "-",
-    createAt: dateToThai(r.userCreateAt),
-    updateBy:
-      [r.updatedBy?.userFirstName, r.updatedBy?.userLastName]
-        .filter(Boolean)
-        .join(" ") || "-",
-    updateAt: dateToThai(r.userUpdateAt),
+    name: (
+      <User
+        name={`${r.userFirstName || ""} ${r.userLastName || ""}`.trim()}
+        description={r.userEmail || "-"}
+        avatarProps={{
+          radius: "full",
+          size: "sm",
+          src: r.userPicture?.startsWith("http")
+            ? r.userPicture
+            : `/${r.userPicture || "default.png"}`,
+        }}
+      />
+    ),
+    email: r.userEmail || "-",
+    role: r.job?.role?.roleName || "-",
+    team: r.job?.department?.departmentName || "-",
     status: r.userStatus?.toLowerCase() || "enable",
+    created: dateToThai(r.userCreateAt),
+    updated: dateToThai(r.userUpdateAt),
   }));
+
   return (
     <>
       <UITopic Topic={headerContent} />
