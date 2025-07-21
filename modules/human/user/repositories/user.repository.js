@@ -23,9 +23,9 @@ export const UserRepository = {
       },
     }),
 
-  findByName: (userFirstName) =>
+  findByEmail: (userEmail) =>
     prisma.user.findFirst({
-      where: { userFirstName: userFirstName.trim().toLowerCase() },
+      where: { userEmail: userEmail.trim().toLowerCase() },
     }),
 
   create: (data) => prisma.user.create({ data }),
@@ -35,4 +35,8 @@ export const UserRepository = {
       where: { userId },
       data,
     }),
+
+  createAuth: (data) => prisma.userAuth.create({ data }),
+
+  createJob: (data) => prisma.useJob.create({ data }),
 };

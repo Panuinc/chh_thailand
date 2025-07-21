@@ -1,6 +1,7 @@
 import { userPutSchema } from "../schemas/user.schema";
 import { UserService } from "../services/user.service";
 import { getLocalNow } from "@/lib/getLocalNow";
+import { saveUploadedFile } from "@/lib/fileStore";
 
 export async function UpdateUserUseCase(data) {
   const parsed = userPutSchema.safeParse(data);
@@ -12,14 +13,29 @@ export async function UpdateUserUseCase(data) {
     };
   }
 
-  const existing = await UserService.getById(parsed.data.userId);
+  const { userId, userPicture, userFirstName } = parsed.data;
+
+  const existing = await UserService.getById(userId);
   if (!existing) {
     throw { status: 404, message: "User not found" };
   }
 
-  return UserService.update(parsed.data.userId, {
+  const now = getLocalNow();
+  const normalizedName = userFirstName.trim().toLowerCase();
+
+  let updatedPicture = existing.userPicture;
+  if (userPicture && typeof userPicture.name === "string") {
+    updatedPicture = await saveUploadedFile(
+      userPicture,
+      "user",
+      normalizedName
+    );
+  }
+
+  return UserService.update(userId, {
     ...parsed.data,
-    userFirstName: parsed.data.userFirstName.trim().toLowerCase(),
-    userUpdateAt: getLocalNow(),
+    userPicture: updatedPicture,
+    userFirstName: normalizedName,
+    userUpdateAt: now,
   });
 }

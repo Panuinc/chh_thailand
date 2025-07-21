@@ -13,15 +13,19 @@ export class UserService {
     return UserRepository.findById(userId);
   }
 
-  static getByName(userFirstName) {
-    return UserRepository.findByName(userFirstName);
-  }
-
   static create(data) {
     return UserRepository.create(data);
   }
 
   static update(userId, data) {
     return UserRepository.update(userId, data);
+  }
+
+  static createAuth(data) {
+    return UserRepository.createAuth(data);
+  }
+
+  static createJob(data) {
+    return UserRepository.createJob(data);
   }
 }
