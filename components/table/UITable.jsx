@@ -138,7 +138,13 @@ export default function UITable({
             <div className="relative flex justify-end items-center p-2 gap-2">
               <Dropdown>
                 <DropdownTrigger>
-                  <Button isIconOnly color="none" aria-label="Actions">
+                  <Button
+                    isIconOnly
+                    color="none"
+                    radius="lg"
+                    className="w-full p-4 text-black"
+                    aria-label="Actions"
+                  >
                     <Cog />
                   </Button>
                 </DropdownTrigger>
@@ -170,6 +176,7 @@ export default function UITable({
             placeholder={searchPlaceholder}
             variant="bordered"
             color="default"
+            radius="lg"
             className="w-8/12"
             startContent={<Search />}
             value={filterValue}
@@ -181,8 +188,9 @@ export default function UITable({
           <Dropdown>
             <DropdownTrigger>
               <Button
-                color="default"
-                className="p-2 gap-2"
+                color="primary"
+                radius="lg"
+                className="w-full p-4 text-black"
                 endContent={<ChevronDown />}
               >
                 Status
@@ -207,8 +215,9 @@ export default function UITable({
           <Dropdown>
             <DropdownTrigger>
               <Button
-                color="default"
-                className="p-2 gap-2"
+                color="primary"
+                radius="lg"
+                className="w-full p-4 text-black"
                 endContent={<ChevronDown />}
               >
                 Columns
@@ -238,7 +247,8 @@ export default function UITable({
           <Button
             asChild
             color="primary"
-            className="flex items-center justify-center p-2 gap-2"
+            radius="lg"
+            className="w-full p-4 text-black"
             endContent={<Plus />}
           >
             <Link href={`${basePath}/create`}>Add New</Link>

@@ -31,6 +31,7 @@ export default function UIRoleForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
+              radius="lg"
               value={formData.roleName || ""}
               onChange={handleInputChange("roleName")}
               isInvalid={!!errors.roleName}
@@ -48,6 +49,7 @@ export default function UIRoleForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
+                radius="lg"
                 selectedKeys={formData.roleStatus ? [formData.roleStatus] : []}
                 onSelectionChange={(keys) =>
                   handleInputChange("roleStatus")([...keys][0])
@@ -71,17 +73,19 @@ export default function UIRoleForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
+              radius="lg"
               isReadOnly
               value={operatedBy}
             />
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
             <Button
               type="submit"
               color="primary"
-              className="flex items-center justify-center h-full p-3 gap-2 border_custom"
+              radius="lg"
+              className="w-full p-4 text-black"
             >
               Save
             </Button>

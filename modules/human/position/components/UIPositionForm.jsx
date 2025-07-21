@@ -33,6 +33,7 @@ export default function UIPositionForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
+              radius="lg"
               isDisabled={isUpdate}
               selectedKeys={
                 formData.positionDivisionId
@@ -59,6 +60,7 @@ export default function UIPositionForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
+              radius="lg"
               isDisabled={isUpdate || !formData.positionDivisionId}
               selectedKeys={
                 formData.positionDepartmentId
@@ -91,6 +93,7 @@ export default function UIPositionForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
+              radius="lg"
               value={formData.positionName || ""}
               onChange={handleInputChange("positionName")}
               isInvalid={!!errors.positionName}
@@ -109,6 +112,7 @@ export default function UIPositionForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
+                radius="lg"
                 selectedKeys={
                   formData.positionStatus ? [formData.positionStatus] : []
                 }
@@ -135,18 +139,20 @@ export default function UIPositionForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
+              radius="lg"
               isReadOnly
               value={operatedBy}
             />
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
             <Button
               type="submit"
               color="primary"
-              className="flex items-center justify-center h-full p-3 gap-2 border_custom"
+              radius="lg"
+              className="w-full p-4 text-black"
             >
               Save
             </Button>

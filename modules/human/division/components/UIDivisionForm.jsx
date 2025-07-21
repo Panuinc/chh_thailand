@@ -31,6 +31,7 @@ export default function UIDivisionForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
+              radius="lg"
               value={formData.divisionName || ""}
               onChange={handleInputChange("divisionName")}
               isInvalid={!!errors.divisionName}
@@ -48,7 +49,10 @@ export default function UIDivisionForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                selectedKeys={formData.divisionStatus ? [formData.divisionStatus] : []}
+                radius="lg"
+                selectedKeys={
+                  formData.divisionStatus ? [formData.divisionStatus] : []
+                }
                 onSelectionChange={(keys) =>
                   handleInputChange("divisionStatus")([...keys][0])
                 }
@@ -71,17 +75,19 @@ export default function UIDivisionForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
+              radius="lg"
               isReadOnly
               value={operatedBy}
             />
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
             <Button
               type="submit"
               color="primary"
-              className="flex items-center justify-center h-full p-3 gap-2 border_custom"
+              radius="lg"
+              className="w-full p-4 text-black"
             >
               Save
             </Button>

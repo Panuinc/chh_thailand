@@ -69,7 +69,7 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
             startContent={<Search />}
             variant="bordered"
             color="default"
-            radius="full"
+            radius="lg"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -79,9 +79,9 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
                 <li
                   key={index}
                   onClick={() => handleSelect(item.href)}
-                  className="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer"
+                  className="px-4 py-2 hover:bg-primary cursor-pointer"
                 >
-                  {item.label} -{" "}
+                  {item.label} - {" "}
                   <span className="text-md">{item.href}</span>
                 </li>
               ))}
@@ -93,11 +93,11 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
       <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
         <button
           onClick={onMobileMenuToggle}
-          className="lg:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 bg-white shadow-md rounded-full"
+          className="lg:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 shadow-md rounded-full"
         >
           <AlignJustify />
         </button>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-white hover:bg-primary hover:text-white shadow-md rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 hover:bg-primary shadow-md rounded-full">
           <Bell />
         </div>
         <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-primary shadow-md rounded-full">

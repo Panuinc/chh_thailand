@@ -37,8 +37,8 @@ export default function HumanLayout({ children }) {
                   className={`flex items-center justify-center w-24 h-12 lg:w-6/12 lg:h-20 p-2 gap-2 text-sm shadow-md rounded-xl
                     ${
                       isActive
-                        ? "bg-primary text-white"
-                        : "bg-white hover:bg-primary hover:text-white"
+                        ? "bg-primary"
+                        : "hover:bg-primary"
                     }`}
                 >
                   {label}
@@ -48,7 +48,7 @@ export default function HumanLayout({ children }) {
           </div>
         ))}
       </div>
-      <div className="flex flex-col items-center justify-start w-full h-full lg:w-10/12 p-2 gap-2 bg-white rounded-xl overflow-auto">
+      <div className="flex flex-col items-center justify-start w-full h-full lg:w-10/12 p-2 gap-2 rounded-xl overflow-auto">
         {children}
       </div>
     </div>

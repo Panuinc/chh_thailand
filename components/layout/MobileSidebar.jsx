@@ -8,7 +8,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
 
   return (
     <div className="fixed top-0 left-0 w-64 h-full z-50 bg-white p-2 flex flex-col gap-2">
-      <button className="self-end mb-2" onClick={onClose}>
+      <button className="self-end p-2 mb-2 rounded-full bg-danger text-white" onClick={onClose}>
         <X />
       </button>
       {sidebarItems.map((item, index) => {
@@ -20,8 +20,8 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
           <div
             className={`flex items-center justify-center w-12 h-12 p-2 gap-2 shadow-md rounded-full cursor-pointer ${
               isActive
-                ? "bg-primary text-white"
-                : "bg-white hover:bg-primary hover:text-white"
+                ? "bg-primary"
+                : "hover:bg-primary"
             }`}
           >
             <Icon />
@@ -40,7 +40,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
               className="w-full flex justify-start items-center p-2 gap-2"
             >
               {button}
-              <span className="text-sm text-black font-semibold">
+              <span className="text-sm">
                 {item.label}
               </span>
             </Link>
@@ -56,7 +56,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
               className="w-full flex justify-start items-center p-2 gap-2 cursor-pointer"
             >
               {button}
-              <span className="text-sm text-black font-semibold">
+              <span className="text-sm">
                 {item.label}
               </span>
             </div>

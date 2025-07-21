@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: #ffffff;
+  background-color: #fafafa;
   font-family: var(--nunito), var(--kanit);
   font-size: 16px;
   font-weight: 300;
@@ -23,13 +23,13 @@ svg.lucide {
   height: 0px;
 }
 .bg-content1 {
-  background-color: #ffffff;
+  background-color: #fafafa;
 }
 
 .bg-default-100 {
-  background-color: #f4f4f4;
+  background-color: #F1F2F6;
 }
 
 .border_custom {
-  border: 1px dashed #000000;
+  border: 1px dashed #2E2F33;
 }

@@ -19,8 +19,8 @@ export default function Sidebar({ sidebarItems }) {
             onClick={item.onClick}
             className={`flex items-center justify-center w-12 h-12 p-2 gap-2 shadow-md rounded-full cursor-pointer ${
               isActive
-                ? "bg-primary text-white"
-                : "bg-white hover:bg-primary hover:text-white"
+                ? "bg-primary"
+                : "hover:bg-primary"
             }`}
           >
             <Icon />
@@ -31,8 +31,8 @@ export default function Sidebar({ sidebarItems }) {
           <Tooltip
             key={index}
             content={item.label}
-            color="primary"
-            className="text-white font-semibold px-4 py-2"
+            color="secondary"
+            className="px-4 py-2"
             placement="right"
             showArrow
           >
@@ -44,8 +44,8 @@ export default function Sidebar({ sidebarItems }) {
           <Tooltip
             key={index}
             content={item.label}
-            color="primary"
-            className="text-white font-semibold px-4 py-2"
+            color="secondary"
+            className="px-4 py-2"
             placement="right"
             showArrow
           >
