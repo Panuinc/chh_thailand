@@ -4,6 +4,7 @@ import {
   preprocessString,
   preprocessEnum,
   preprocessDate,
+  preprocessDateOptional,
   preprocessFileFlexible,
   formatData,
 } from "@/lib/zodSchema";
@@ -43,7 +44,9 @@ export const userPutSchema = z.object({
   useJobPositionId: preprocessInt("Please provide Position ID"),
   useJobRoleId: preprocessInt("Please provide Role ID"),
   useJobStartDate: preprocessDate("Please provide start date (YYYY-MM-DD)"),
-  useJobEndDate: preprocessDate("Please provide start date (YYYY-MM-DD)"),
+  useJobEndDate: preprocessDateOptional(
+    "Please provide start date (YYYY-MM-DD)"
+  ),
   useJobContractType: preprocessEnum(
     ["FullTime", "PartTime", "Internship", "Temporary", "Freelance"],
     "Please provide contract type"
