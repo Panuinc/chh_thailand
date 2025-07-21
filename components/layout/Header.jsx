@@ -82,7 +82,7 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
                   className="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer"
                 >
                   {item.label} -{" "}
-                  <span className="text-md text-gray-500">{item.href}</span>
+                  <span className="text-md">{item.href}</span>
                 </li>
               ))}
             </ul>
