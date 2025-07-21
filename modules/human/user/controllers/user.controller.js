@@ -94,7 +94,8 @@ export async function createUser(request) {
 
     logger.info({ message: "📝 Parsing create user form" });
     const formData = Object.fromEntries((await request.formData()).entries());
-    const user = await CreateUserUseCase(formData);
+
+    const { user, job } = await CreateUserUseCase(formData);
 
     logger.info({
       action: "createUser",
@@ -105,7 +106,7 @@ export async function createUser(request) {
     });
 
     return NextResponse.json(
-      { message: "User created successfully", user },
+      { message: "User created successfully", user, userJob: job },
       { status: 201 }
     );
   } catch (error) {
@@ -139,7 +140,8 @@ export async function updateUser(request, userId) {
 
     logger.info({ message: "📝 Parsing update user form" });
     const formData = Object.fromEntries((await request.formData()).entries());
-    const user = await UpdateUserUseCase({ ...formData, userId });
+
+    const { user, job } = await UpdateUserUseCase({ ...formData, userId });
 
     logger.info({
       action: "updateUser",
@@ -150,7 +152,7 @@ export async function updateUser(request, userId) {
     });
 
     return NextResponse.json(
-      { message: "User updated successfully", user },
+      { message: "User updated successfully", user, userJob: job },
       { status: 200 }
     );
   } catch (error) {

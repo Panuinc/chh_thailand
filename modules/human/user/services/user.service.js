@@ -28,4 +28,8 @@ export class UserService {
   static createJob(data) {
     return UserRepository.createJob(data);
   }
+
+  static updateJob(userId, data) {
+    return UserRepository.updateJob(userId, data);
+  }
 }

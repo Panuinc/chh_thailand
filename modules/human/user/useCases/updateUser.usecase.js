@@ -13,29 +13,66 @@ export async function UpdateUserUseCase(data) {
     };
   }
 
-  const { userId, userPicture, userFirstName } = parsed.data;
+  const {
+    userId,
+    userFirstName,
+    userLastName,
+    userPhone,
+    userEmail,
+    userPicture,
+    userUpdateBy,
+    useJobDivisionId,
+    useJobDepartmentId,
+    useJobPositionId,
+    useJobRoleId,
+    useJobStartDate,
+    useJobEndDate,
+    useJobContractType,
+    userStatus,
+  } = parsed.data;
+
+  const now = getLocalNow();
 
   const existing = await UserService.getById(userId);
   if (!existing) {
     throw { status: 404, message: "User not found" };
   }
 
-  const now = getLocalNow();
-  const normalizedName = userFirstName.trim().toLowerCase();
+  const normalizedFirstName = userFirstName.trim().toLowerCase();
+  const normalizedEmail = userEmail.trim().toLowerCase();
 
   let updatedPicture = existing.userPicture;
   if (userPicture && typeof userPicture.name === "string") {
     updatedPicture = await saveUploadedFile(
       userPicture,
       "user",
-      normalizedName
+      normalizedFirstName
     );
   }
 
-  return UserService.update(userId, {
-    ...parsed.data,
+  const updatedUser = await UserService.update(userId, {
+    userFirstName: normalizedFirstName,
+    userLastName,
+    userPhone,
+    userEmail: normalizedEmail,
     userPicture: updatedPicture,
-    userFirstName: normalizedName,
+    userStatus,
+    userUpdateBy,
     userUpdateAt: now,
   });
+
+  const updatedJob = await UserService.updateJob(userId, {
+    useJobDivisionId,
+    useJobDepartmentId,
+    useJobPositionId,
+    useJobRoleId,
+    useJobStartDate,
+    useJobEndDate,
+    useJobContractType,
+    useJobIsCurrent: true,
+    useJobUpdateBy: userUpdateBy,
+    useJobUpdateAt: now,
+  });
+
+  return { user: updatedUser, job: updatedJob };
 }

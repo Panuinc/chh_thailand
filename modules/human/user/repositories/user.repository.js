@@ -39,4 +39,17 @@ export const UserRepository = {
   createAuth: (data) => prisma.userAuth.create({ data }),
 
   createJob: (data) => prisma.useJob.create({ data }),
+
+  updateJob: async (userId, data) => {
+    const currentJob = await prisma.useJob.findFirst({
+      where: { useJobUserId: userId, useJobIsCurrent: true },
+    });
+
+    if (!currentJob) throw new Error("No current job found");
+
+    return prisma.useJob.update({
+      where: { useJobId: currentJob.useJobId },
+      data,
+    });
+  },
 };

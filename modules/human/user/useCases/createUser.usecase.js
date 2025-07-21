@@ -69,7 +69,7 @@ export async function CreateUserUseCase(data) {
     userAuthPassword: hashedPassword,
   });
 
-  await UserService.createJob({
+  const job = await UserService.createJob({
     useJobUserId: user.userId,
     useJobDivisionId,
     useJobDepartmentId,
@@ -82,5 +82,5 @@ export async function CreateUserUseCase(data) {
     useJobCreateAt: now,
   });
 
-  return user;
+  return { user, job };
 }
