@@ -16,7 +16,7 @@ module.exports = {
         white: "#fafafa",
         black: "#2E2F33",
         default: "#F1F2F6",
-        primary: "#D4FF67",
+        primary: "#17c964",
         secondary: "#2E2F33",
       },
       fontFamily: {

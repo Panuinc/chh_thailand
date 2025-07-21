@@ -19,8 +19,8 @@ export default function Sidebar({ sidebarItems }) {
             onClick={item.onClick}
             className={`flex items-center justify-center w-12 h-12 p-2 gap-2 shadow-md rounded-full cursor-pointer ${
               isActive
-                ? "bg-primary"
-                : "hover:bg-primary"
+                ? "bg-primary text-white"
+                : "hover:bg-primary hover:text-white"
             }`}
           >
             <Icon />

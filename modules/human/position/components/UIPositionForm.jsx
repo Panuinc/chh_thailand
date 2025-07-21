@@ -152,7 +152,7 @@ export default function UIPositionForm({
               type="submit"
               color="primary"
               radius="lg"
-              className="w-full p-4 text-black"
+              className="w-full p-4 text-white"
             >
               Save
             </Button>

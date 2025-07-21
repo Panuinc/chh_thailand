@@ -67,7 +67,7 @@ export default function UINotFound() {
             transition={{ type: "spring", stiffness: 300 }}
             className="w-6/12"
           >
-            <Button color="primary" radius="lg" className="w-full p-4 text-black">
+            <Button color="primary" radius="lg" className="w-full p-4 text-white">
               Go to Homepage
             </Button>
           </motion.div>

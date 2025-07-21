@@ -64,7 +64,7 @@ export default function UISingIn({
               type="submit"
               color="primary"
               radius="lg"
-              className="w-6/12 p-4 text-black"
+              className="w-6/12 p-4 text-white"
             >
               <Link href="/overview">Sign In</Link>
             </Button>

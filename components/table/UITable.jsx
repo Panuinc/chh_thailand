@@ -142,7 +142,7 @@ export default function UITable({
                     isIconOnly
                     color="none"
                     radius="lg"
-                    className="w-full p-4 text-black"
+                    className="w-full p-4 text-white"
                     aria-label="Actions"
                   >
                     <Cog />
@@ -190,7 +190,7 @@ export default function UITable({
               <Button
                 color="primary"
                 radius="lg"
-                className="w-full p-4 text-black"
+                className="w-full p-4 text-white"
                 endContent={<ChevronDown />}
               >
                 Status
@@ -217,7 +217,7 @@ export default function UITable({
               <Button
                 color="primary"
                 radius="lg"
-                className="w-full p-4 text-black"
+                className="w-full p-4 text-white"
                 endContent={<ChevronDown />}
               >
                 Columns
@@ -248,7 +248,7 @@ export default function UITable({
             asChild
             color="primary"
             radius="lg"
-            className="w-full p-4 text-black"
+            className="w-full p-4 text-white"
             endContent={<Plus />}
           >
             <Link href={`${basePath}/create`}>Add New</Link>

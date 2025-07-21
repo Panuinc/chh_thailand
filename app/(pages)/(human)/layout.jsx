@@ -37,8 +37,8 @@ export default function HumanLayout({ children }) {
                   className={`flex items-center justify-center w-24 h-12 lg:w-6/12 lg:h-20 p-2 gap-2 text-sm shadow-md rounded-xl
                     ${
                       isActive
-                        ? "bg-primary"
-                        : "hover:bg-primary"
+                        ? "bg-primary text-white"
+                        : "hover:bg-primary hover:text-white"
                     }`}
                 >
                   {label}

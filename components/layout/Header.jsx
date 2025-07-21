@@ -93,11 +93,11 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
       <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
         <button
           onClick={onMobileMenuToggle}
-          className="lg:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 shadow-md rounded-full"
+          className="lg:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 hover:bg-primary hover:text-white shadow-md rounded-full"
         >
           <AlignJustify />
         </button>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 hover:bg-primary shadow-md rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 hover:bg-primary hover:text-white shadow-md rounded-full">
           <Bell />
         </div>
         <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 bg-primary shadow-md rounded-full">
