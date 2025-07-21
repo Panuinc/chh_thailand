@@ -25,17 +25,17 @@ export default function UIUserForm({
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
-              name="userName"
+              name="userFirstName"
               label="User"
               labelPlacement="outside"
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
               radius="lg"
-              value={formData.userName || ""}
-              onChange={handleInputChange("userName")}
-              isInvalid={!!errors.userName}
-              errorMessage={errors.userName}
+              value={formData.userFirstName || ""}
+              onChange={handleInputChange("userFirstName")}
+              isInvalid={!!errors.userFirstName}
+              errorMessage={errors.userFirstName}
             />
           </div>
         </div>

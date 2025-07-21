@@ -29,7 +29,7 @@ export default function UIUserList({
 }) {
   const users = rawUsers.map((r) => ({
     id: r.userId,
-    name: r.userName || "-",
+    name: r.userFirstName || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

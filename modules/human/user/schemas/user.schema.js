@@ -7,13 +7,13 @@ import {
 } from "@/lib/zodSchema";
 
 export const userPostSchema = z.object({
-  userName: preprocessString("Please provide the user name"),
+  userFirstName: preprocessString("Please provide the user name"),
   userCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
 export const userPutSchema = z.object({
   userId: preprocessInt("Please provide the user ID to update"),
-  userName: preprocessString("Please provide the user name"),
+  userFirstName: preprocessString("Please provide the user name"),
   userStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"
