@@ -58,7 +58,7 @@ export const UserRepository = {
 
   updateJob: async (userId, data) => {
     const currentJob = await prisma.useJob.findFirst({
-      where: { useJobUserId: userId, useJobIsCurrent: true },
+      where: { useJobUserId: userId, useJobIsActive: true },
     });
 
     if (!currentJob) throw new Error("No current job found");

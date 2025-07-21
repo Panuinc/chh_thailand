@@ -17,6 +17,7 @@ export default function UIUserForm({
   departmentsByDivision = {},
   positionsByDepartment = {},
   roles = [],
+  previewImage,
 }) {
   return (
     <>
@@ -32,13 +33,23 @@ export default function UIUserForm({
           </div>
         </div>
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-40 h-40 p-2 gap-2 rounded-lg border_custom">
+          <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            {formData.userPicture && previewImage && (
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="w-40 h-40 object-cover rounded-lg border"
+                onError={(e) => {
+                  e.currentTarget.src = "/default-avatar.png";
+                }}
+              />
+            )}
             <Input
               type="file"
               name="userPicture"
               label="Picture"
               labelPlacement="outside"
-              placeholder="Please Enter Data"
+              placeholder="Please Upload"
               variant="bordered"
               color="default"
               radius="lg"
@@ -276,38 +287,24 @@ export default function UIUserForm({
               errorMessage={errors.useJobStartDate}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
-            <Input
-              type="date"
-              name="useJobEndDate"
-              label="End Date"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="bordered"
-              color="default"
-              radius="lg"
-              value={formData.useJobEndDate || ""}
-              onChange={handleInputChange("useJobEndDate")}
-              isInvalid={!!errors.useJobEndDate}
-              errorMessage={errors.useJobEndDate}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
-            <Input
-              name="operatedBy"
-              type="text"
-              label="Operated By"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="flat"
-              color="default"
-              radius="lg"
-              isReadOnly
-              value={operatedBy}
-            />
-          </div>
+          {isUpdate && (
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+              <Input
+                type="date"
+                name="useJobEndDate"
+                label="End Date"
+                labelPlacement="outside"
+                placeholder="Please Enter Data"
+                variant="bordered"
+                color="default"
+                radius="lg"
+                value={formData.useJobEndDate || ""}
+                onChange={handleInputChange("useJobEndDate")}
+                isInvalid={!!errors.useJobEndDate}
+                errorMessage={errors.useJobEndDate}
+              />
+            </div>
+          )}
         </div>
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
@@ -334,6 +331,22 @@ export default function UIUserForm({
               <SelectItem key="Temporary">Temporary</SelectItem>
               <SelectItem key="Freelance">Freelance</SelectItem>
             </Select>
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
+            <Input
+              name="operatedBy"
+              type="text"
+              label="Operated By"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="flat"
+              color="default"
+              radius="lg"
+              isReadOnly
+              value={operatedBy}
+            />
           </div>
         </div>
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">

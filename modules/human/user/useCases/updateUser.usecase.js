@@ -69,7 +69,7 @@ export async function UpdateUserUseCase(data) {
     useJobStartDate,
     useJobEndDate,
     useJobContractType,
-    useJobIsCurrent: true,
+    useJobIsActive: true,
     useJobUpdateBy: userUpdateBy,
     useJobUpdateAt: now,
   });

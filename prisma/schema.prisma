@@ -176,7 +176,7 @@ model UseJob {
   useJobStartDate    DateTime
   useJobEndDate      DateTime?
   useJobContractType ContractType
-  useJobIsCurrent    Boolean      @default(true)
+  useJobIsActive     Boolean      @default(true)
   useJobCreateBy     Int
   useJobCreateAt     DateTime     @default(now()) @db.Timestamp(0)
   useJobUpdateBy     Int?

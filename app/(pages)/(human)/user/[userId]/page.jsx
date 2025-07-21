@@ -1,7 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
 import { useFetchUserById, useSubmitUser } from "@/modules/human/user/hooks";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import { useFormHandler } from "@/hooks/useFormHandler";
@@ -22,6 +22,8 @@ export default function UserUpdate() {
   const { positions } = useFetchPositions();
   const { roles } = useFetchRoles();
 
+  const [previewImage, setPreviewImage] = useState("");
+
   const departmentsByDivision = departments.reduce((acc, dep) => {
     if (!acc[dep.departmentDivisionId]) acc[dep.departmentDivisionId] = [];
     acc[dep.departmentDivisionId].push(dep);
@@ -37,7 +39,6 @@ export default function UserUpdate() {
   const onSubmitHandler = useSubmitUser({
     mode: "update",
     userId,
-    userId,
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
@@ -47,6 +48,7 @@ export default function UserUpdate() {
         userLastName: "",
         userPhone: "",
         userEmail: "",
+        userPicture: "",
         useJobDivisionId: "",
         useJobDepartmentId: "",
         useJobPositionId: "",
@@ -60,8 +62,29 @@ export default function UserUpdate() {
     );
 
   useEffect(() => {
-    if (user) setFormData(user);
+    if (user) {
+      setFormData({
+        ...user,
+        ...user.job,
+      });
+      if (user.userPicture && typeof user.userPicture === "string") {
+        setPreviewImage(`/${user.userPicture}`);
+      }
+    }
   }, [user, setFormData]);
+
+  const handleChangeWithPreview = (name) => (e) => {
+    const file = e?.target?.files?.[0];
+    if (name === "userPicture" && file instanceof File) {
+      setFormData((prev) => ({ ...prev, [name]: file }));
+
+      const reader = new FileReader();
+      reader.onloadend = () => setPreviewImage(reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      handleChange(name)(e);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
 
@@ -74,7 +97,8 @@ export default function UserUpdate() {
         onSubmit={handleSubmit}
         errors={errors}
         formData={formData}
-        handleInputChange={handleChange}
+        handleInputChange={handleChangeWithPreview}
+        previewImage={previewImage}
         operatedBy={userName}
         isUpdate
         divisions={divisions}

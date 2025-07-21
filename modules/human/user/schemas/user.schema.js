@@ -57,6 +57,6 @@ export const userPutSchema = z.object({
 export const formatUserData = (users) =>
   formatData(
     users,
-    ["useJobStartDate", "useJobEndDate"],
+    ["job.useJobStartDate", "job.useJobEndDate"],
     ["userCreateAt", "userUpdateAt"]
   );

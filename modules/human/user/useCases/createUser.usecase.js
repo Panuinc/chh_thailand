@@ -77,7 +77,7 @@ export async function CreateUserUseCase(data) {
     useJobRoleId,
     useJobStartDate,
     useJobContractType,
-    useJobIsCurrent: true,
+    useJobIsActive: true,
     useJobCreateBy: userCreateBy,
     useJobCreateAt: now,
   });
