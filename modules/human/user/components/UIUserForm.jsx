@@ -38,7 +38,7 @@ export default function UIUserForm({
               <img
                 src={previewImage}
                 alt="Preview"
-                className="w-40 h-40 object-cover rounded-lg border"
+                className="w-40 h-40 object-cover rounded-lg"
                 onError={(e) => {
                   e.currentTarget.src = "/default-avatar.png";
                 }}
