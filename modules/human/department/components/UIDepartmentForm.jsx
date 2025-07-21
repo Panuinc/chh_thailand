@@ -95,8 +95,8 @@ export default function UIDepartmentForm({
           </div>
         )}
 
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full lg:w-4/12 p-2 gap-2 border_custom">
+       <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
             <Input
               name="operatedBy"
               type="text"
