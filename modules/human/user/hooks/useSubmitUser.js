@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-export function useSubmitUser({ mode = "create", userId, userId }) {
+export function useSubmitUser({ mode = "create", userId, usersId }) {
   const router = useRouter();
 
   return useCallback(
