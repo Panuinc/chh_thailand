@@ -14,10 +14,11 @@ module.exports = {
     extend: {
       colors: {
         white: "#fafafa",
-        black: "#2E2F33",
+        black: "#232D35",
         default: "#F1F2F6",
-        primary: "#30915E",
-        secondary: "#F8BB13",
+        primary: "#88B95D",
+        secondary: "#232D35",
+        success: "#88B95D",
       },
       fontFamily: {
         kanit: ["var(--kanit)"],
