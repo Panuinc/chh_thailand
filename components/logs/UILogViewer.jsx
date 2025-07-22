@@ -19,8 +19,8 @@ export default function UILogViewer({
   currentTime, // 👈 receive realtime clock
 }) {
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-start w-full h-full gap-2 overflow-auto">
-      <div className="lg:flex hidden flex-col items-center justify-center w-full lg:w-3/12 h-full p-2 gap-2 border_custom rounded-xl relative">
+    <div className="flex flex-col lg:flex-row items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
+      <div className="lg:flex hidden flex-col items-center justify-center w-full lg:w-3/12 h-full p-2 gap-2 border_custom relative">
         <Image
           src="/picture/dashboard.jpg"
           alt="dashboard"
@@ -30,19 +30,19 @@ export default function UILogViewer({
         />
       </div>
 
-      <div className="flex flex-col items-center justify-start w-full lg:w-9/12 h-full p-2 gap-2 border_custom rounded-xl">
+      <div className="flex flex-col items-center justify-start w-full lg:w-9/12 h-full p-2 gap-2 border_custom">
         <UITopic Topic={headerContent} />
-        <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto rounded-lg">
-          <div className="w-full flex items-center justify-between px-4 py-2 rounded-md border">
-            <div className="flex items-center gap-2 text-lg font-semibold">
+        <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
+          <div className="w-full flex items-center justify-between p-2 border">
+            <div className="flex items-center p-2 gap-2 border_custom">
               <LogIn />
               Log Viewer
             </div>
             <span className="text-sm">{currentTime}</span>
           </div>
 
-          <div className="flex w-full h-[600px] rounded overflow-hidden border">
-            <aside className="w-1/4 border-r bg-default overflow-y-auto">
+          <div className="flex w-full h-[600px] overflow-hidden border">
+            <aside className="w-1/4 border-r overflow-y-auto">
               <ul className="divide-y">
                 {logs.map((log, index) => (
                   <li key={index}>
@@ -51,9 +51,9 @@ export default function UILogViewer({
                         setSelected(log);
                         setFilter("");
                       }}
-                      className={`w-full text-left px-4 py-3 flex items-center gap-2 hover:bg-primary hover:text-white ${
+                      className={`w-full text-left p-2 flex items-center p-2 gap-2 border_custom ${
                         selected?.fileName === log.fileName
-                          ? "bg-primary text-white font-semibold"
+                          ? ""
                           : ""
                       }`}
                     >
@@ -65,29 +65,29 @@ export default function UILogViewer({
               </ul>
             </aside>
 
-            <main className="w-3/4 p-4 overflow-auto">
+            <main className="w-3/4 overflow-auto">
               {selected ? (
                 <>
-                  <div className="mb-3 flex items-center gap-2 font-bold">
+                  <div className="mb-3 flex items-center p-2 gap-2 border_custom font-bold">
                     <Eye className="w-5 h-5" />
                     {selected.fileName}
                     <button
                       onClick={handleDownload}
-                      className="ml-auto flex items-center gap-1 text-sm px-3 py-2 rounded bg-primary hover:brightness-110 text-white"
+                      className="ml-auto flex items-center gap-2 text-sm p-2 brightness-110"
                     >
                       <Download />
                       Download
                     </button>
                   </div>
 
-                  <div className="mb-3 flex items-center gap-2">
+                  <div className="mb-3 flex items-center p-2 gap-2 border_custom">
                     <Filter />
                     <input
                       type="text"
                       placeholder="Filter by keyword (space-separated)"
                       value={filter}
                       onChange={(e) => setFilter(e.target.value)}
-                      className="w-full px-3 py-2 rounded border focus:outline-none focus:ring focus:ring-primary/40"
+                      className="w-full p-2 border focus:outline-none focus:ring focus:ring-none/40"
                     />
                   </div>
 

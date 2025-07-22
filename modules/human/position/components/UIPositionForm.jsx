@@ -22,7 +22,7 @@ export default function UIPositionForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom rounded-lg overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto"
       >
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
@@ -33,7 +33,7 @@ export default function UIPositionForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               isDisabled={isUpdate}
               selectedKeys={
                 formData.positionDivisionId
@@ -60,7 +60,7 @@ export default function UIPositionForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               isDisabled={isUpdate || !formData.positionDivisionId}
               selectedKeys={
                 formData.positionDepartmentId
@@ -93,7 +93,7 @@ export default function UIPositionForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               value={formData.positionName || ""}
               onChange={handleInputChange("positionName")}
               isInvalid={!!errors.positionName}
@@ -112,7 +112,7 @@ export default function UIPositionForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                radius="lg"
+                radius="none"
                 selectedKeys={
                   formData.positionStatus ? [formData.positionStatus] : []
                 }
@@ -139,7 +139,7 @@ export default function UIPositionForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
-              radius="lg"
+              radius="none"
               isReadOnly
               value={operatedBy}
             />
@@ -150,9 +150,9 @@ export default function UIPositionForm({
           <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
             <Button
               type="submit"
-              color="primary"
-              radius="lg"
-              className="w-full p-4 text-white"
+              color="none"
+              radius="none"
+              className="w-full p-2"
             >
               Save
             </Button>

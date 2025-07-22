@@ -47,7 +47,7 @@ export default function UIDepartmentList({
   return (
     <>
       <UITopic Topic={headerContent} />
-      <div className="flex items-center justify-center w-full p-2 gap-2 border_custom rounded-lg">
+      <div className="flex items-center justify-center w-full p-2 gap-2 border_custom">
         <UITable
           data={departments}
           isLoading={isLoading}

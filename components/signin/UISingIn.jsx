@@ -14,9 +14,9 @@ export default function UISingIn({
 }) {
   return (
     <>
-      <div className="flex flex-row items-center justify-center w-full lg:w-6/12 p-4 gap-2 shadow-md rounded-3xl">
-        <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-4">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+      <div className="flex flex-row items-center justify-center w-full lg:w-6/12 p-2 gap-2 border_custom">
+        <div className="flex flex-col items-center justify-center w-full h-full gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Image
               src="/logo/logo.png"
               alt="logo"
@@ -25,10 +25,10 @@ export default function UISingIn({
               priority
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 font-semibold">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             CHH Internal System
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="username"
               type="text"
@@ -37,13 +37,13 @@ export default function UISingIn({
               placeholder="Enter your username"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               isRequired
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="password"
               type="password"
@@ -52,26 +52,26 @@ export default function UISingIn({
               placeholder="Enter your password"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               isRequired
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Button
               onPress={handleLogin}
               type="submit"
-              color="primary"
-              radius="lg"
-              className="w-6/12 p-4 text-white"
+              color="none"
+              radius="none"
+              className="w-6/12 p-2"
             >
               <Link href="/overview">Sign In</Link>
             </Button>
           </div>
         </div>
-        <div className="lg:flex hidden flex-col items-center justify-center w-full h-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+        <div className="lg:flex hidden flex-col items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Image
               src="/picture/picture.png"
               alt="picture"

@@ -53,7 +53,7 @@ export default function PagesLayout({ children }) {
 
   return (
     <UILogoutProvider>
-      <div className="flex flex-col items-center justify-center w-full h-full gap-2">
+      <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-2 border_custom">
         <Header
           onMobileMenuToggle={() => setIsMobileMenuOpen(true)}
           onManualLogout={handleManualLogout}
@@ -64,7 +64,7 @@ export default function PagesLayout({ children }) {
             onClose={() => setIsMobileMenuOpen(false)}
           />
         )}
-        <div className="flex flex-row items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
+        <div className="flex flex-row items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
           <Sidebar sidebarItems={sidebarItems} />
           <Content>{children}</Content>
         </div>

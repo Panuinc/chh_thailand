@@ -25,10 +25,10 @@ export default function UIUserForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom rounded-lg overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom bg-default">
-          <div className="flex items-center justify-start w-full h-full p-2 gap-2 font-semibold border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
             User personal
           </div>
         </div>
@@ -38,7 +38,7 @@ export default function UIUserForm({
               <img
                 src={previewImage}
                 alt="Preview"
-                className="w-40 h-40 object-cover rounded-lg"
+                className="w-40 h-40 object-cover"
                 onError={(e) => {
                   e.currentTarget.src = "/default-avatar.png";
                 }}
@@ -52,7 +52,7 @@ export default function UIUserForm({
               placeholder="Please Upload"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               onChange={handleInputChange("userPicture")}
               isInvalid={!!errors.userPicture}
               errorMessage={errors.userPicture}
@@ -68,7 +68,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               value={formData.userFirstName || ""}
               onChange={handleInputChange("userFirstName")}
               isInvalid={!!errors.userFirstName}
@@ -83,7 +83,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               value={formData.userLastName || ""}
               onChange={handleInputChange("userLastName")}
               isInvalid={!!errors.userLastName}
@@ -101,7 +101,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               value={formData.userPhone || ""}
               onChange={handleInputChange("userPhone")}
               isInvalid={!!errors.userPhone}
@@ -117,7 +117,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               value={formData.userEmail || ""}
               onChange={handleInputChange("userEmail")}
               isInvalid={!!errors.userEmail}
@@ -135,7 +135,7 @@ export default function UIUserForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                radius="lg"
+                radius="none"
                 selectedKeys={formData.userStatus ? [formData.userStatus] : []}
                 onSelectionChange={(keys) =>
                   handleInputChange("userStatus")([...keys][0])
@@ -149,8 +149,8 @@ export default function UIUserForm({
             </div>
           </div>
         )}
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom bg-default">
-          <div className="flex items-center justify-start w-full h-full p-2 gap-2 font-semibold border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
             User Employment
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               selectedKeys={
                 formData.useJobDivisionId
                   ? [String(formData.useJobDivisionId)]
@@ -189,7 +189,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               isDisabled={!formData.useJobDivisionId}
               selectedKeys={
                 formData.useJobDepartmentId
@@ -222,7 +222,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               isDisabled={
                 !formData.useJobDivisionId && !formData.useJobDepartmentId
               }
@@ -254,7 +254,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               selectedKeys={
                 formData.useJobRoleId ? [String(formData.useJobRoleId)] : []
               }
@@ -280,7 +280,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               value={formData.useJobStartDate || ""}
               onChange={handleInputChange("useJobStartDate")}
               isInvalid={!!errors.useJobStartDate}
@@ -297,7 +297,7 @@ export default function UIUserForm({
                 placeholder="Please Enter Data"
                 variant="bordered"
                 color="default"
-                radius="lg"
+                radius="none"
                 value={formData.useJobEndDate || ""}
                 onChange={handleInputChange("useJobEndDate")}
                 isInvalid={!!errors.useJobEndDate}
@@ -315,7 +315,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="lg"
+              radius="none"
               selectedKeys={
                 formData.useJobContractType ? [formData.useJobContractType] : []
               }
@@ -343,7 +343,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
-              radius="lg"
+              radius="none"
               isReadOnly
               value={operatedBy}
             />
@@ -353,9 +353,9 @@ export default function UIUserForm({
           <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
             <Button
               type="submit"
-              color="primary"
-              radius="lg"
-              className="w-full p-4 text-white"
+              color="none"
+              radius="none"
+              className="w-full p-2"
             >
               Save
             </Button>

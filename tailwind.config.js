@@ -13,12 +13,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        white: "#fafafa",
-        black: "#232D35",
-        default: "#F1F2F6",
-        primary: "#88B95D",
-        secondary: "#232D35",
-        success: "#88B95D",
+        white: "#f5f5f5",
+        black: "#202020",
+        default: "#E4E5E6",
+        primary: "#6DD708",
       },
       fontFamily: {
         kanit: ["var(--kanit)"],

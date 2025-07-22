@@ -23,7 +23,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 
 const capitalize = (s) =>
   s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
-const statusColorMap = { enable: "success", disable: "danger" };
+const statusColorMap = { enable: "none", disable: "danger" };
 
 export default function UITable({
   data = [],
@@ -105,7 +105,7 @@ export default function UITable({
       switch (columnKey) {
         case "name":
           return typeof value === "string" ? (
-            <p className="text-bold text-small">{value}</p>
+            <p className="text-bold text-sm">{value}</p>
           ) : (
             value
           );
@@ -113,21 +113,22 @@ export default function UITable({
           return (
             <div className="text-sm leading-snug">
               <div>{item.creator}</div>
-              <div className="text-xs text-default-500">{item.createAt}</div>
+              <div className="text-xs text-default">{item.createAt}</div>
             </div>
           );
         case "updated":
           return (
             <div className="text-sm leading-snug">
               <div>{item.updateBy}</div>
-              <div className="text-xs text-default-500">{item.updateAt}</div>
+              <div className="text-xs text-default">{item.updateAt}</div>
             </div>
           );
         case "status":
           return (
             <Chip
-              className="w-full h-full p-2 gap-2 text-white rounded-lg"
+              className="w-full h-full p-2 gap-2 border_custom"
               color={statusColorMap[item.status]}
+              radius="none"
               variant="solid"
             >
               {capitalize(value)}
@@ -135,14 +136,14 @@ export default function UITable({
           );
         case "actions":
           return (
-            <div className="relative flex justify-end items-center p-2 gap-2">
+            <div className="relative flex justify-end items-center p-2 gap-2 border_custom">
               <Dropdown>
                 <DropdownTrigger>
                   <Button
                     isIconOnly
                     color="none"
-                    radius="lg"
-                    className="w-full p-4 text-black"
+                    radius="none"
+                    className="w-full p-2"
                     aria-label="Actions"
                   >
                     <Cog />
@@ -168,15 +169,15 @@ export default function UITable({
   );
 
   const topContent = (
-    <div className="flex flex-col items-center justify-center w-full gap-2">
-      <div className="flex flex-row items-center justify-center w-full h-full gap-2">
-        <div className="flex items-center justify-start w-full h-full p-2 gap-2">
+    <div className="flex flex-col items-center justify-center w-full p-2 gap-2 border_custom">
+      <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
           <Input
             isClearable
             placeholder={searchPlaceholder}
             variant="bordered"
             color="default"
-            radius="lg"
+            radius="none"
             className="w-8/12"
             startContent={<Search />}
             value={filterValue}
@@ -184,13 +185,13 @@ export default function UITable({
             onValueChange={setFilterValue}
           />
         </div>
-        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2">
+        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2 border_custom">
           <Dropdown>
             <DropdownTrigger>
               <Button
-                color="primary"
-                radius="lg"
-                className="w-full p-4 text-white"
+                color="none"
+                radius="none"
+                className="w-full p-2"
                 endContent={<ChevronDown />}
               >
                 Status
@@ -211,13 +212,13 @@ export default function UITable({
             </DropdownMenu>
           </Dropdown>
         </div>
-        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2">
+        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2 border_custom">
           <Dropdown>
             <DropdownTrigger>
               <Button
-                color="primary"
-                radius="lg"
-                className="w-full p-4 text-white"
+                color="none"
+                radius="none"
+                className="w-full p-2"
                 endContent={<ChevronDown />}
               >
                 Columns
@@ -239,30 +240,30 @@ export default function UITable({
           </Dropdown>
         </div>
         {extraFiltersSlot && (
-          <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2">
+          <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2 border_custom">
             {extraFiltersSlot}
           </div>
         )}
-        <div className="flex items-center justify-center h-full p-2 gap-2">
+        <div className="flex items-center justify-center h-full p-2 gap-2 border_custom">
           <Button
             asChild
-            color="primary"
-            radius="lg"
-            className="w-full p-4 text-white"
+            color="none"
+            radius="none"
+            className="w-full p-2"
             endContent={<Plus />}
           >
             <Link href={`${basePath}/create`}>Add New</Link>
           </Button>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-between w-full h-full gap-2">
-        <div className="flex items-center justify-start w-full h-full p-2 gap-2">
+      <div className="flex flex-row items-center justify-between w-full h-full p-2 gap-2 border_custom">
+        <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
           Total {data.length} {entityNamePlural}
         </div>
-        <div className="flex items-center justify-end w-full h-full p-2 gap-2">
+        <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
           Rows per page:
           <select
-            className="p-2 rounded-lg"
+            className="p-2"
             onChange={(e) => {
               setRowsPerPage(Number(e.target.value));
               setPage(1);
@@ -278,18 +279,19 @@ export default function UITable({
   );
 
   const bottomContent = (
-    <div className="flex flex-row items-center justify-center w-full gap-2">
-      <div className="flex items-center justify-start w-full h-full p-2 gap-2">
+    <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+      <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
         {selectedKeys === "all"
           ? "All items selected"
           : `${selectedKeys.size} of ${filteredItems.length} selected`}
       </div>
-      <div className="flex items-center justify-end w-full h-full p-2 gap-2">
+      <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
         <Pagination
           isCompact
           showControls
           showShadow
-          color="primary"
+          color="none"
+          radius="none"
           page={page}
           total={pages}
           onChange={setPage}
@@ -299,7 +301,7 @@ export default function UITable({
   );
 
   return (
-    <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
+    <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
       <Table
         isHeaderSticky
         aria-label={`${entityNamePlural} table`}
@@ -319,7 +321,7 @@ export default function UITable({
           {(column) => (
             <TableColumn
               key={column.uid}
-              className="py-4"
+              className="p-2"
               align={column.uid === "actions" ? "center" : "start"}
               allowsSorting={column.sortable}
             >
