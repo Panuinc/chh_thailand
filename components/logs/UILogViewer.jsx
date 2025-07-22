@@ -16,7 +16,7 @@ export default function UILogViewer({
   prettyJson,
   handleDownload,
   logRef,
-  currentTime,
+  currentTime, // 👈 receive realtime clock
 }) {
   return (
     <div className="flex flex-col lg:flex-row items-center justify-start w-full h-full gap-2 overflow-auto">
@@ -32,18 +32,18 @@ export default function UILogViewer({
 
       <div className="flex flex-col items-center justify-start w-full lg:w-9/12 h-full p-2 gap-2 border_custom rounded-xl">
         <UITopic Topic={headerContent} />
-        <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto rounded-lg bg-default">
-          <div className="w-full flex items-center justify-between bg-white px-4 py-2 rounded-md border border-secondary">
-            <div className="flex items-center gap-2 text-lg font-semibold text-secondary">
-              <LogIn className="text-primary w-5 h-5" />
+        <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto rounded-lg">
+          <div className="w-full flex items-center justify-between px-4 py-2 rounded-md border">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <LogIn />
               Log Viewer
             </div>
-            <span className="text-sm text-secondary">{currentTime}</span>
+            <span className="text-sm">{currentTime}</span>
           </div>
 
-          <div className="flex w-full h-[600px] rounded overflow-hidden border border-secondary">
-            <aside className="w-1/4 border-r border-secondary bg-default overflow-y-auto">
-              <ul className="divide-y divide-secondary/20">
+          <div className="flex w-full h-[600px] rounded overflow-hidden border">
+            <aside className="w-1/4 border-r bg-default overflow-y-auto">
+              <ul className="divide-y">
                 {logs.map((log, index) => (
                   <li key={index}>
                     <button
@@ -51,13 +51,13 @@ export default function UILogViewer({
                         setSelected(log);
                         setFilter("");
                       }}
-                      className={`w-full text-left px-4 py-3 flex items-center gap-2 hover:bg-white ${
+                      className={`w-full text-left px-4 py-3 flex items-center gap-2 hover:bg-primary hover:text-white ${
                         selected?.fileName === log.fileName
                           ? "bg-primary text-white font-semibold"
-                          : "text-secondary"
+                          : ""
                       }`}
                     >
-                      <FileText className="w-4 h-4" />
+                      <FileText />
                       <span className="truncate">{log.fileName}</span>
                     </button>
                   </li>
@@ -65,35 +65,35 @@ export default function UILogViewer({
               </ul>
             </aside>
 
-            <main className="w-3/4 p-4 overflow-auto text-secondary bg-white">
+            <main className="w-3/4 p-4 overflow-auto">
               {selected ? (
                 <>
-                  <div className="mb-3 flex items-center gap-2 text-primary font-bold">
+                  <div className="mb-3 flex items-center gap-2 font-bold">
                     <Eye className="w-5 h-5" />
                     {selected.fileName}
                     <button
                       onClick={handleDownload}
-                      className="ml-auto flex items-center gap-1 text-sm px-3 py-1 rounded bg-primary hover:brightness-110 text-white"
+                      className="ml-auto flex items-center gap-1 text-sm px-3 py-2 rounded bg-primary hover:brightness-110 text-white"
                     >
-                      <Download className="w-4 h-4" />
+                      <Download />
                       Download
                     </button>
                   </div>
 
                   <div className="mb-3 flex items-center gap-2">
-                    <Filter className="w-4 h-4 text-secondary" />
+                    <Filter />
                     <input
                       type="text"
                       placeholder="Filter by keyword (space-separated)"
                       value={filter}
                       onChange={(e) => setFilter(e.target.value)}
-                      className="w-full px-3 py-2 rounded text-secondary border border-secondary focus:outline-none focus:ring focus:ring-primary/40"
+                      className="w-full px-3 py-2 rounded border focus:outline-none focus:ring focus:ring-primary/40"
                     />
                   </div>
 
                   <div ref={logRef}>
                     {filteredLines.length > 0 ? (
-                      <pre className="whitespace-pre-wrap text-sm leading-relaxed text-secondary">
+                      <pre className="whitespace-pre-wrap text-sm leading-relaxed">
                         {filteredLines.map((line, i) => (
                           <div
                             key={i}
@@ -105,14 +105,12 @@ export default function UILogViewer({
                         ))}
                       </pre>
                     ) : (
-                      <span className="text-secondary italic">
-                        No matching log entries
-                      </span>
+                      <span className=" italic">No matching log entries</span>
                     )}
                   </div>
                 </>
               ) : (
-                <div className="text-secondary italic">
+                <div className=" italic">
                   ← Select a log file to view its content
                 </div>
               )}
