@@ -5,6 +5,7 @@ import {
   Warehouse,
   Settings,
   Key,
+  Logs,
 } from "lucide-react";
 
 export function getSidebarItems(handleManualLogout) {
@@ -40,6 +41,11 @@ export function getSidebarItems(handleManualLogout) {
       icon: Settings,
       label: "Setting",
       href: ["/setting"],
+    },
+      {
+      icon: Logs,
+      label: "Logs",
+      href: ["/logs"],
     },
     {
       icon: Key,
