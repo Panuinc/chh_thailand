@@ -1,15 +1,23 @@
 "use client";
 
-import UISingIn from "@/components/signin/UISingIn";
-import React, { useState } from "react";
-import { signIn } from "next-auth/react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSession, signIn } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
+import UISingIn from "@/components/signin/UISingIn";
 
 export default function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/overview");
+    }
+  }, [status, router]);
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -37,13 +45,17 @@ export default function Signin() {
     <>
       <Toaster position="top-right" />
 
-      <UISingIn
-        username={username}
-        password={password}
-        setUsername={setUsername}
-        setPassword={setPassword}
-        handleLogin={handleLogin}
-      />
+      {status === "loading" ? (
+        <div className="text-gray-500">Loading session...</div>
+      ) : (
+        <UISingIn
+          username={username}
+          password={password}
+          setUsername={setUsername}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+        />
+      )}
     </>
   );
 }

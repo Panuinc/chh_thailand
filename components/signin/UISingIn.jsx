@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import { Input, Button } from "@heroui/react";
-import Link from "next/link";
 
 export default function UISingIn({
   username,
@@ -14,9 +13,9 @@ export default function UISingIn({
 }) {
   return (
     <>
-      <div className="flex flex-row items-center justify-center w-full lg:w-6/12 p-2 gap-2 border_custom">
-        <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+      <div className="flex flex-row items-center justify-center w-full lg:w-6/12 p-2 gap-2 border-1 shadow-lg rounded-3xl">
+        <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Image
               src="/logo/logo.png"
               alt="logo"
@@ -25,10 +24,10 @@ export default function UISingIn({
               priority
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
-            CHH Internal System
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 text-lg font-semibold">
+            Internal System
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="username"
               type="text"
@@ -37,13 +36,13 @@ export default function UISingIn({
               placeholder="Enter your username"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               isRequired
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="password"
               type="password"
@@ -52,26 +51,26 @@ export default function UISingIn({
               placeholder="Enter your password"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               isRequired
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Button
               onPress={handleLogin}
               type="submit"
-              color="none"
-              radius="none"
-              className="w-6/12 p-2"
+              color="primary"
+              radius="full"
+              className="w-9/12 h-full p-3 gap-2"
             >
-              <Link href="/overview">Sign In</Link>
+              Sign In
             </Button>
           </div>
         </div>
-        <div className="lg:flex hidden flex-col items-center justify-center w-full h-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="lg:flex hidden flex-col items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Image
               src="/picture/picture.png"
               alt="picture"
