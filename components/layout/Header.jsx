@@ -6,12 +6,14 @@ import { AlignJustify, Bell, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getSidebarItems } from "@/components/layout/sidebarItems";
 import { useRouter } from "next/navigation";
+import { useSessionUser } from "@/hooks/useSessionUser";
 
 export default function Header({ onMobileMenuToggle, onManualLogout }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
+  const { userName } = useSessionUser();
 
   const sidebarItems = getSidebarItems(onManualLogout)
     .filter((item) => item.href)
@@ -81,8 +83,7 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
                   onClick={() => handleSelect(item.href)}
                   className="p-2 cursor-pointer"
                 >
-                  {item.label} - {" "}
-                  <span>{item.href}</span>
+                  {item.label} - <span>{item.href}</span>
                 </li>
               ))}
             </ul>
@@ -97,17 +98,20 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
         >
           <AlignJustify />
         </button>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border_custom">
+        <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border_custom">
           <Bell />
         </div>
-        <div className="flex items-center justify-center w-12 h-12 p-2 gap-2 border_custom">
+        <div className="flex items-center justify-evenly w-full h-full p-2 gap-2 border_custom">
           <Image
             src="/picture/robot.png"
             alt="profile"
-            width={300}
-            height={300}
+            width={25}
+            height={25}
             priority
           />
+          <span className="lg:flex hidden">
+            {userName || "Guest"}
+          </span>
         </div>
       </div>
     </div>

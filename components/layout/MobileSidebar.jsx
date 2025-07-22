@@ -9,7 +9,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
   return (
     <div className="fixed top-0 left-0 w-64 h-full z-50 bg-[#FFFFFF] flex flex-col p-2 gap-2 border_custom">
       <button
-        className="self-end mb-2 bg-danger bg-danger-300"
+        className="self-end mb-2 p-2 bg-danger text-white rounded-full"
         onClick={onClose}
       >
         <X />

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white text-black font-nunito text-base font-light;
+  @apply bg-white text-black font-nunito text-xs font-light;
 }
 
 [lang|="th"] {
