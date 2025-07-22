@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getSidebarItems } from "@/components/layout/sidebarItems";
 import { useRouter } from "next/navigation";
 import { useSessionUser } from "@/hooks/useSessionUser";
+import Link from "next/link";
 
 export default function Header({ onMobileMenuToggle, onManualLogout }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,9 +50,12 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border_custom border-b-2 relative z-50">
-      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2 border_custom">
-        <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
+    <div className="flex flex-row items-center justify-center w-full gap-2 border-1 border-default relative z-50">
+      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
+        <Link
+          href="/overview"
+          className="flex items-center justify-start w-full h-full p-2 gap-2"
+        >
           <Image
             src="/logo/logo.png"
             alt="logo"
@@ -59,11 +63,11 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
             height={150}
             priority
           />
-        </div>
+        </Link>
       </div>
 
-      <div className="lg:flex hidden flex-row items-center justify-end w-full h-full p-2 gap-2 border_custom relative">
-        <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom relative">
+      <div className="lg:flex hidden flex-row items-center justify-end w-full h-full p-2 gap-2 relative">
+        <div className="flex items-center justify-center w-full h-full p-2 gap-2 relative">
           <Input
             name="search"
             type="text"
@@ -71,12 +75,12 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
             startContent={<Search />}
             variant="bordered"
             color="default"
-            radius="none"
+            radius="full"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {showDropdown && filteredItems.length > 0 && (
-            <ul className="absolute top-full mt-2 w-full bg-[#FFFFFF] border shadow z-50 max-h-60 overflow-y-auto">
+            <ul className="absolute top-full mt-2 w-full bg-[#FFFFFF] border-1 border-default shadow-lg rounded-lg z-50 max-h-60 overflow-y-auto">
               {filteredItems.map((item, index) => (
                 <li
                   key={index}
@@ -91,17 +95,17 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2 border_custom">
+      <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
         <button
           onClick={onMobileMenuToggle}
-          className="lg:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 border_custom"
+          className="lg:hidden flex items-center justify-center aspect-square h-full p-2 gap-2 hover:text-primary"
         >
           <AlignJustify />
         </button>
-        <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 border_custom">
+        <div className="flex items-center justify-center aspect-square h-full p-2 gap-2 hover:text-primary ">
           <Bell />
         </div>
-        <div className="flex items-center justify-evenly w-full h-full p-2 gap-2 border_custom">
+        <div className="flex items-center justify-center h-full p-2 gap-2 hover:text-primary">
           <Image
             src="/picture/robot.png"
             alt="profile"
@@ -109,9 +113,7 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
             height={25}
             priority
           />
-          <span className="lg:flex hidden">
-            {userName || "Guest"}
-          </span>
+          <span className="lg:flex hidden">{userName || "Guest"}</span>
         </div>
       </div>
     </div>
