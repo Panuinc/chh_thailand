@@ -50,7 +50,7 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center w-full gap-2 border-1 border-default relative z-50">
+    <div className="flex flex-row items-center justify-center w-full gap-2 border-b-1 border-default relative z-50">
       <div className="flex flex-row items-center justify-end w-full h-full p-2 gap-2">
         <Link
           href="/overview"
@@ -80,7 +80,7 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {showDropdown && filteredItems.length > 0 && (
-            <ul className="absolute top-full mt-2 w-full bg-[#FFFFFF] border-1 border-default shadow-lg rounded-lg z-50 max-h-60 overflow-y-auto">
+            <ul className="absolute top-full mt-2 w-full bg-[#FFFFFF] border-b-1 border-default shadow-lg rounded-lg z-50 max-h-60 overflow-y-auto">
               {filteredItems.map((item, index) => (
                 <li
                   key={index}

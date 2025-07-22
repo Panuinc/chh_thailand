@@ -68,7 +68,7 @@ export default function UILogViewer({
             <main className="w-3/4 overflow-auto">
               {selected ? (
                 <>
-                  <div className="mb-3 flex items-center p-2 gap-2 border_custom font-bold">
+                  <div className="mb-3 flex items-center p-2 gap-2 border_custom">
                     <Eye className="w-5 h-5" />
                     {selected.fileName}
                     <button

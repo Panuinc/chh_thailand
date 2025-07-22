@@ -16,12 +16,12 @@ export default function HumanLayout({ children }) {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center w-full h-full p-2 gap-2 border_custom">
-      <div className="flex flex-row lg:flex-col items-center justify-start w-full lg:w-2/12 lg:h-full lg:p-2 p-2 gap-2 border_custom overflow-auto">
+    <div className="flex flex-col lg:flex-row items-center justify-center w-full h-full">
+      <div className="flex flex-row lg:flex-col items-center justify-start w-full lg:w-[15%] lg:h-full lg:p-2 p-2 gap-2 bg-black overflow-auto">
         {layoutGroups.map((group, index) => (
           <div
             key={index}
-            className="flex flex-row items-center justify-start w-full h-full lg:h-auto p-2 gap-2 border_custom"
+            className="flex flex-row items-center justify-center w-full h-full lg:h-auto p-2 gap-2"
           >
             {group.map((label, subIndex) => {
               const href = getPath(label);
@@ -34,8 +34,8 @@ export default function HumanLayout({ children }) {
                 <Link
                   key={subIndex}
                   href={href}
-                  className={`flex items-center justify-center w-24 h-full lg:w-6/12 lg:h-12 p-2 gap-2 border_custom
-                    ${isActive ? "" : ""}`}
+                  className={`flex items-center justify-center w-24 h-full lg:w-full lg:h-12 p-4 lg:p-2 gap-2 hover:bg-primary hover:text-white shadow-lg rounded-lg
+                  ${isActive ? "bg-primary text-white" : "text-white"}`}
                 >
                   {label}
                 </Link>
@@ -44,7 +44,7 @@ export default function HumanLayout({ children }) {
           </div>
         ))}
       </div>
-      <div className="flex flex-col items-center justify-start w-full h-full lg:w-10/12 p-2 gap-2 border_custom overflow-auto">
+      <div className="flex flex-col items-center justify-start w-full h-full lg:w-[85%] overflow-auto">
         {children}
       </div>
     </div>
