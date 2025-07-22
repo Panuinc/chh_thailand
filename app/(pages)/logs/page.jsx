@@ -6,6 +6,7 @@ export default function LogsPage() {
   const [logs, setLogs] = useState([]);
   const [selected, setSelected] = useState(null);
   const [filter, setFilter] = useState("");
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleString("th-TH", { timeZone: "Asia/Bangkok" }));
 
   const logRef = useRef(null);
 
@@ -13,6 +14,13 @@ export default function LogsPage() {
     fetch("/api/logs")
       .then((res) => res.json())
       .then((data) => setLogs(data.logs || []));
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleString("th-TH", { timeZone: "Asia/Bangkok" }));
+    }, 1000);
+    return () => clearInterval(timer);
   }, []);
 
   const highlightLogLine = (line) => {
@@ -68,6 +76,7 @@ export default function LogsPage() {
       prettyJson={prettyJson}
       handleDownload={handleDownload}
       logRef={logRef}
+      currentTime={currentTime}
     />
   );
 }
