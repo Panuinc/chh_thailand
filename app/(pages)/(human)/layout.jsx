@@ -34,12 +34,8 @@ export default function HumanLayout({ children }) {
                 <Link
                   key={subIndex}
                   href={href}
-                  className={`flex items-center justify-center w-24 h-12 lg:w-6/12 lg:h-20 p-2 gap-2 border_custom
-                    ${
-                      isActive
-                        ? ""
-                        : ""
-                    }`}
+                  className={`flex items-center justify-center w-24 h-full lg:w-6/12 lg:h-12 p-2 gap-2 border_custom
+                    ${isActive ? "" : ""}`}
                 >
                   {label}
                 </Link>
