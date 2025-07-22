@@ -7,7 +7,7 @@ export default function Sidebar({ sidebarItems }) {
   const pathname = usePathname();
 
   return (
-    <div className="lg:flex hidden flex-col items-center justify-start lg:w-[5%] h-full p-2 gap-2 border_custom overflow-auto">
+    <div className="lg:flex hidden flex-col items-center justify-start lg:w-[5%] h-full p-2 gap-2 bg-black overflow-auto">
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
         const hrefList  = Array.isArray(item.href) ? item.href : [item.href];
@@ -17,10 +17,10 @@ export default function Sidebar({ sidebarItems }) {
           <div
             key={index}
             onClick={item.onClick}
-            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border_custom cursor-pointer ${
+            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 hover:bg-primary hover:text-white shadow-lg rounded-lg cursor-pointer ${
               isActive
-                ? ""
-                : ""
+                ? "bg-primary text-white"
+                : "text-white"
             }`}
           >
             <Icon />
@@ -31,7 +31,7 @@ export default function Sidebar({ sidebarItems }) {
           <Tooltip
             key={index}
             content={item.label}
-            color="none"
+            color="primary"
             className="p-2"
             placement="right"
             showArrow
@@ -44,7 +44,7 @@ export default function Sidebar({ sidebarItems }) {
           <Tooltip
             key={index}
             content={item.label}
-            color="none"
+            color="primary"
             className="p-2"
             placement="right"
             showArrow

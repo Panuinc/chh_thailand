@@ -7,7 +7,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
   const pathname = usePathname();
 
   return (
-    <div className="fixed top-0 left-0 w-64 h-full z-50 bg-[#FFFFFF] flex flex-col p-2 gap-2 border_custom">
+    <div className="fixed top-0 left-0 w-64 h-full z-50 bg-black flex flex-col p-2 gap-2 border_custom">
       <button
         className="self-end mb-2 p-2 bg-danger text-white rounded-full"
         onClick={onClose}
@@ -21,10 +21,10 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
 
         const button = (
           <div
-            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 border_custom cursor-pointer ${
+            className={`flex items-center justify-center w-12 h-12 p-2 gap-2 hover:bg-primary hover:text-white shadow-lg rounded-lg cursor-pointer ${
               isActive
-                ? ""
-                : ""
+                ? "bg-primary text-white"
+                : "text-white"
             }`}
           >
             <Icon />
@@ -40,10 +40,10 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
                 onClose();
                 item.onClick?.();
               }}
-              className="w-full flex justify-start items-center p-2 gap-2 border_custom"
+              className="w-full flex justify-start items-center p-2 gap-2"
             >
               {button}
-              <span className="text-sm">{item.label}</span>
+              <span className="text-sm text-white">{item.label}</span>
             </Link>
           );
         } else {
@@ -54,10 +54,10 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
                 onClose();
                 item.onClick?.();
               }}
-              className="w-full flex justify-start items-center p-2 gap-2 border_custom cursor-pointer"
+              className="w-full flex justify-start items-center p-2 gap-2 cursor-pointer"
             >
               {button}
-              <span className="text-sm">{item.label}</span>
+              <span className="text-sm text-white">{item.label}</span>
             </div>
           );
         }

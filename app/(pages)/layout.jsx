@@ -64,7 +64,7 @@ export default function PagesLayout({ children }) {
             onClose={() => setIsMobileMenuOpen(false)}
           />
         )}
-        <div className="flex flex-row items-center justify-start w-full h-full gap-2 overflow-auto">
+        <div className="flex flex-row items-center justify-start w-full h-full overflow-auto">
           <Sidebar sidebarItems={sidebarItems} />
           <Content>{children}</Content>
         </div>
