@@ -51,7 +51,7 @@ export function getSidebarItems(handleManualLogout) {
     {
       icon: Cloud,
       label: "Cloud",
-      href: ["https://chhindustry.sg3.quickconnect.to/#/signin"],
+      href: ["https://192-168-1-100.chhindustry.direct.quickconnect.to:7001/#/signin"],
     },
     {
       icon: Key,
