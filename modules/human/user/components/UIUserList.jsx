@@ -36,25 +36,25 @@ export default function UIUserList({
     return {
       id: r.userId,
       name,
-       nameDisplay: (
-    <User
-      name={name}
-      description={r.userEmail || "-"}
-      avatarProps={{
-        radius: "full",
-        size: "md",
-        src:
-          r.userPicture &&
-          (r.userPicture.startsWith("http") || r.userPicture.includes("/"))
-            ? r.userPicture
-            : r.userPicture &&
-              /\.(png|jpe?g|webp|gif)$/i.test(r.userPicture)
-            ? `/userPicture/${r.userPicture}`
-            : undefined,
-        fallback: "No pic",
-      }}
-    />
-  ),
+      nameDisplay: (
+        <User
+          name={name}
+          description={r.userEmail || "-"}
+          avatarProps={{
+            radius: "full",
+            size: "md",
+            src:
+              r.userPicture &&
+              (r.userPicture.startsWith("http") || r.userPicture.includes("/"))
+                ? r.userPicture
+                : r.userPicture &&
+                  /\.(png|jpe?g|webp|gif)$/i.test(r.userPicture)
+                ? `/userPicture/${r.userPicture}`
+                : undefined,
+            fallback: "No pic",
+          }}
+        />
+      ),
       email: r.userEmail || "-",
       role: r.job?.role?.roleName || "-",
       team: r.job?.department?.departmentName || "-",
@@ -67,7 +67,7 @@ export default function UIUserList({
   return (
     <>
       <UITopic Topic={headerContent} />
-      <div className="flex items-center justify-center w-full p-2 gap-2 border_custom">
+      <div className="flex items-center justify-center w-full p-2 gap-2">
         <UITable
           data={users}
           isLoading={isLoading}

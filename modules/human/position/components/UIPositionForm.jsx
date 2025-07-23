@@ -22,10 +22,10 @@ export default function UIPositionForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="positionDivisionId"
               label="Division"
@@ -52,7 +52,7 @@ export default function UIPositionForm({
             </Select>
           </div>
 
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="positionDepartmentId"
               label="Department"
@@ -84,8 +84,8 @@ export default function UIPositionForm({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="positionName"
               label="Position"
@@ -103,8 +103,8 @@ export default function UIPositionForm({
         </div>
 
         {isUpdate && (
-          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
               <Select
                 name="positionStatus"
                 label="Position Status"
@@ -129,8 +129,8 @@ export default function UIPositionForm({
           </div>
         )}
 
-       <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
             <Input
               name="operatedBy"
               type="text"
@@ -146,13 +146,13 @@ export default function UIPositionForm({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-end h-full p-2 gap-2">
             <Button
               type="submit"
-              color="none"
+              color="primary"
               radius="full"
-              className="w-full p-2"
+              className="w-full h-full p-3 gap-2"
             >
               Save
             </Button>

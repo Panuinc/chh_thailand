@@ -25,15 +25,15 @@ export default function UIUserForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-start w-full h-full p-2 gap-2 font-semibold">
             User personal
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex flex-col items-center justify-center w-full h-full p-2 gap-2">
             {formData.userPicture && previewImage && (
               <img
                 src={previewImage}
@@ -59,8 +59,8 @@ export default function UIUserForm({
             />
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="userFirstName"
               label="Firstname"
@@ -75,7 +75,7 @@ export default function UIUserForm({
               errorMessage={errors.userFirstName}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="userLastName"
               label="Lastname"
@@ -91,8 +91,8 @@ export default function UIUserForm({
             />
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               type="number"
               name="userPhone"
@@ -108,7 +108,7 @@ export default function UIUserForm({
               errorMessage={errors.userPhone}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               type="email"
               name="userEmail"
@@ -126,8 +126,8 @@ export default function UIUserForm({
           </div>
         </div>
         {isUpdate && (
-          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
               <Select
                 name="userStatus"
                 label="User Status"
@@ -149,13 +149,13 @@ export default function UIUserForm({
             </div>
           </div>
         )}
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-start w-full h-full p-2 gap-2 font-semibold">
             User Employment
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="useJobDivisionId"
               label="Division"
@@ -181,7 +181,7 @@ export default function UIUserForm({
             </Select>
           </div>
 
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="useJobDepartmentId"
               label="Department"
@@ -213,8 +213,8 @@ export default function UIUserForm({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="useJobPositionId"
               label="Position"
@@ -246,7 +246,7 @@ export default function UIUserForm({
               )}
             </Select>
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="useJobRoleId"
               label="Role"
@@ -270,8 +270,8 @@ export default function UIUserForm({
             </Select>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               type="date"
               name="useJobStartDate"
@@ -288,7 +288,7 @@ export default function UIUserForm({
             />
           </div>
           {isUpdate && (
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
               <Input
                 type="date"
                 name="useJobEndDate"
@@ -306,8 +306,8 @@ export default function UIUserForm({
             </div>
           )}
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="useJobContractType"
               label="Contract Type"
@@ -333,8 +333,8 @@ export default function UIUserForm({
             </Select>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
             <Input
               name="operatedBy"
               type="text"
@@ -349,13 +349,13 @@ export default function UIUserForm({
             />
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-end h-full p-2 gap-2">
             <Button
               type="submit"
-              color="none"
+              color="primary"
               radius="full"
-              className="w-full p-2"
+              className="w-full h-full p-3 gap-2"
             >
               Save
             </Button>

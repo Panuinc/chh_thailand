@@ -49,7 +49,7 @@ export default function UIPositionList({
   return (
     <>
       <UITopic Topic={headerContent} />
-      <div className="flex items-center justify-center w-full p-2 gap-2 border_custom">
+      <div className="flex items-center justify-center w-full p-2 gap-2">
         <UITable
           data={positions}
           isLoading={isLoading}

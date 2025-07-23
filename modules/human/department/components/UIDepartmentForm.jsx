@@ -21,10 +21,10 @@ export default function UIDepartmentForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Select
               name="departmentDivisionId"
               label="Division"
@@ -51,7 +51,7 @@ export default function UIDepartmentForm({
             </Select>
           </div>
 
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="departmentName"
               label="Department"
@@ -69,8 +69,8 @@ export default function UIDepartmentForm({
         </div>
 
         {isUpdate && (
-          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
               <Select
                 name="departmentStatus"
                 label="Department Status"
@@ -95,8 +95,8 @@ export default function UIDepartmentForm({
           </div>
         )}
 
-       <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
             <Input
               name="operatedBy"
               type="text"
@@ -112,13 +112,13 @@ export default function UIDepartmentForm({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-end h-full p-2 gap-2">
             <Button
               type="submit"
-              color="none"
+              color="primary"
               radius="full"
-              className="w-full p-2"
+              className="w-full h-full p-3 gap-2"
             >
               Save
             </Button>
