@@ -12,15 +12,6 @@ enum EnableState {
   Disable
 }
 
-enum CusType {
-  owner
-  cm
-  main
-  mainConstruction
-  designerArchitect
-  endUser
-}
-
 enum ContractType {
   FullTime
   PartTime
