@@ -32,15 +32,4 @@ export class UserService {
   static updateJob(userId, data) {
     return UserRepository.updateJob(userId, data);
   }
-
-  static getAuthByUserId(userId) {
-    return prisma.userAuth.findUnique({ where: { userAuthUserId: userId } });
-  }
-
-  static updateAuthPassword(userId, hashedPassword) {
-    return prisma.userAuth.update({
-      where: { userAuthUserId: userId },
-      data: { userAuthPassword: hashedPassword, userAuthForceReset: false },
-    });
-  }
 }
