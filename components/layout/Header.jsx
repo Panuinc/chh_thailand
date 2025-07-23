@@ -61,6 +61,7 @@ export default function Header({ onMobileMenuToggle, onManualLogout }) {
             alt="logo"
             width={150}
             height={150}
+            style={{ width: "auto" }}
             priority
           />
         </Link>
