@@ -7,7 +7,7 @@ export default function MobileSidebar({ sidebarItems, onClose }) {
   const pathname = usePathname();
 
   return (
-    <div className="fixed top-0 left-0 w-64 h-full z-50 bg-black flex flex-col p-2 gap-2 border_custom">
+    <div className="fixed top-0 left-0 w-64 h-full z-50 bg-black flex flex-col p-2 gap-2">
       <button
         className="self-end mb-2 p-2 bg-danger text-white rounded-full"
         onClick={onClose}
