@@ -163,6 +163,9 @@ model UserAuth {
   userAuthPassword   String
   userAuthForceReset Boolean @default(true)
 
+  userAuthResetToken  String?
+  userAuthResetExpire DateTime?
+
   userAccount User @relation("UserAuth", fields: [userAuthUserId], references: [userId])
 }
 

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Input, Button } from "@heroui/react";
+import Link from "next/link";
 
 export default function UISingIn({
   username,
@@ -56,6 +57,9 @@ export default function UISingIn({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+          </div>
+          <div className="flex items-center justify-end w-full h-full p-2 gap-2">
+            <Link href="/forgot-password">Forgot password?</Link>
           </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Button

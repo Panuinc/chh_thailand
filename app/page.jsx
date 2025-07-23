@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 import UISingIn from "@/components/signin/UISingIn";
+import UILoading from "@/components/loading/UILoading";
 
 export default function Signin() {
   const [username, setUsername] = useState("");
@@ -16,7 +17,7 @@ export default function Signin() {
   useEffect(() => {
     if (status === "authenticated") {
       if (session?.user?.forceReset) {
-        router.push("/force");
+        router.push("/force-password-change");
       } else {
         router.push("/overview");
       }
@@ -37,7 +38,6 @@ export default function Signin() {
 
     if (res?.ok) {
       toast.success("Login successful!");
-      router.push("/overview");
     } else {
       const errMsg =
         res?.error || "An error occurred during login. Please try again.";
@@ -50,7 +50,7 @@ export default function Signin() {
       <Toaster position="top-right" />
 
       {status === "loading" ? (
-        <div className="text-gray-500">Loading session...</div>
+        <UILoading />
       ) : (
         <UISingIn
           username={username}
