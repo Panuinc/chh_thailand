@@ -9,16 +9,16 @@ const dummyLogout = async () => {
   await signOut({ callbackUrl: "/" });
 };
 
-export default function HumanLayout({ children }) {
+export default function WareHouseLayout({ children }) {
   const pathname = usePathname();
 
   const sidebarItems = getSidebarItems(dummyLogout);
-  const humanItem = sidebarItems.find((item) => item.label === "Human");
-  const humanSubRoutes = humanItem?.href || [];
+  const wareHouseItem = sidebarItems.find((item) => item.label === "WareHouse");
+  const wareHouseSubRoutes = wareHouseItem?.href || [];
 
   const layoutGroups = [];
-  for (let i = 0; i < humanSubRoutes.length; i += 2) {
-    layoutGroups.push(humanSubRoutes.slice(i, i + 2));
+  for (let i = 0; i < wareHouseSubRoutes.length; i += 2) {
+    layoutGroups.push(wareHouseSubRoutes.slice(i, i + 2));
   }
 
   const getLabel = (href) => {
@@ -36,7 +36,7 @@ export default function HumanLayout({ children }) {
           >
             {group.map((href, subIndex) => {
               const isActive =
-                href === "/human"
+                href === "/wareHouse"
                   ? pathname === href
                   : pathname.startsWith(href);
 
