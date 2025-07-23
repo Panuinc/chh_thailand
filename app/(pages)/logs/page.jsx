@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import UILogViewer from "@/modules/logs/UILogViewer";
+import UILogViewer from "@/components/logs/UILogViewer";
 
 export default function LogsPage() {
   const [logs, setLogs] = useState([]);

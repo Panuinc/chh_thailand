@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import UIForcePasswordChange from "@/modules/auth/force/UIForcePasswordChange";
+import UIForcePasswordChange from "@/components/force/UIForcePasswordChange";
 
 export default function ForcePasswordChange() {
   const { data: session } = useSession();
