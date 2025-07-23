@@ -20,10 +20,10 @@ export default function UIRoleForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="roleName"
               label="Role"
@@ -31,7 +31,7 @@ export default function UIRoleForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.roleName || ""}
               onChange={handleInputChange("roleName")}
               isInvalid={!!errors.roleName}
@@ -40,8 +40,8 @@ export default function UIRoleForm({
           </div>
         </div>
         {isUpdate && (
-          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
+          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
               <Select
                 name="roleStatus"
                 label="Role Status"
@@ -49,7 +49,7 @@ export default function UIRoleForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                radius="none"
+                radius="full"
                 selectedKeys={formData.roleStatus ? [formData.roleStatus] : []}
                 onSelectionChange={(keys) =>
                   handleInputChange("roleStatus")([...keys][0])
@@ -63,8 +63,8 @@ export default function UIRoleForm({
             </div>
           </div>
         )}
-       <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
+       <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
             <Input
               name="operatedBy"
               type="text"
@@ -73,19 +73,19 @@ export default function UIRoleForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
-              radius="none"
+              radius="full"
               isReadOnly
               value={operatedBy}
             />
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
-          <div className="flex items-center justify-end h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-center h-full p-2 gap-2">
             <Button
               type="submit"
-              color="none"
-              radius="none"
-              className="w-full p-2"
+              color="primary"
+              radius="full"
+              className="w-full h-full p-3 gap-2"
             >
               Save
             </Button>

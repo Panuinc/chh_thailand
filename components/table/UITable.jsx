@@ -23,7 +23,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 
 const capitalize = (s) =>
   s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
-const statusColorMap = { enable: "none", disable: "danger" };
+const statusColorMap = { enable: "primary", disable: "danger" };
 
 export default function UITable({
   data = [],
@@ -113,22 +113,22 @@ export default function UITable({
           return (
             <div className="text-sm leading-snug">
               <div>{item.creator}</div>
-              <div className="text-xs text-default">{item.createAt}</div>
+              <div className="text-xs">{item.createAt}</div>
             </div>
           );
         case "updated":
           return (
             <div className="text-sm leading-snug">
               <div>{item.updateBy}</div>
-              <div className="text-xs text-default">{item.updateAt}</div>
+              <div className="text-xs">{item.updateAt}</div>
             </div>
           );
         case "status":
           return (
             <Chip
-              className="w-full h-full p-2 gap-2 border_custom"
+              className="w-full h-full p-2 gap-2"
               color={statusColorMap[item.status]}
-              radius="none"
+              radius="full"
               variant="solid"
             >
               {capitalize(value)}
@@ -136,14 +136,14 @@ export default function UITable({
           );
         case "actions":
           return (
-            <div className="relative flex justify-end items-center p-2 gap-2 border_custom">
+            <div className="relative flex justify-end items-center p-2 gap-2">
               <Dropdown>
                 <DropdownTrigger>
                   <Button
                     isIconOnly
                     color="none"
                     radius="none"
-                    className="w-full p-2"
+                    className="w-full h-full p-3 gap-2"
                     aria-label="Actions"
                   >
                     <Cog />
@@ -169,15 +169,15 @@ export default function UITable({
   );
 
   const topContent = (
-    <div className="flex flex-col items-center justify-center w-full p-2 gap-2 border_custom">
-      <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border_custom">
-        <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
+    <div className="flex flex-col items-center justify-center w-full gap-2">
+      <div className="flex flex-row items-center justify-center w-full h-full gap-2">
+        <div className="flex items-center justify-start w-full h-full p-2 gap-2">
           <Input
             isClearable
             placeholder={searchPlaceholder}
             variant="bordered"
             color="default"
-            radius="none"
+            radius="full"
             className="w-8/12"
             startContent={<Search />}
             value={filterValue}
@@ -185,13 +185,13 @@ export default function UITable({
             onValueChange={setFilterValue}
           />
         </div>
-        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2 border_custom">
+        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2">
           <Dropdown>
             <DropdownTrigger>
               <Button
-                color="none"
-                radius="none"
-                className="w-full p-2"
+                color="default"
+                radius="full"
+                className="w-full h-full p-3 gap-2"
                 endContent={<ChevronDown />}
               >
                 Status
@@ -212,13 +212,13 @@ export default function UITable({
             </DropdownMenu>
           </Dropdown>
         </div>
-        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2 border_custom">
+        <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2">
           <Dropdown>
             <DropdownTrigger>
               <Button
-                color="none"
-                radius="none"
-                className="w-full p-2"
+                color="default"
+                radius="full"
+                className="w-full h-full p-3 gap-2"
                 endContent={<ChevronDown />}
               >
                 Columns
@@ -240,27 +240,27 @@ export default function UITable({
           </Dropdown>
         </div>
         {extraFiltersSlot && (
-          <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2 border_custom">
+          <div className="lg:flex hidden items-center justify-center h-full p-2 gap-2">
             {extraFiltersSlot}
           </div>
         )}
-        <div className="flex items-center justify-center h-full p-2 gap-2 border_custom">
+        <div className="flex items-center justify-center h-full p-2 gap-2">
           <Button
             asChild
-            color="none"
-            radius="none"
-            className="w-full p-2"
+            color="primary"
+            radius="full"
+            className="w-full h-full p-3 gap-2"
             endContent={<Plus />}
           >
             <Link href={`${basePath}/create`}>Add New</Link>
           </Button>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-between w-full h-full p-2 gap-2 border_custom">
-        <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
+      <div className="flex flex-row items-center justify-between w-full h-full gap-2">
+        <div className="flex items-center justify-start w-full h-full p-2 gap-2">
           Total {data.length} {entityNamePlural}
         </div>
-        <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
+        <div className="flex items-center justify-end w-full h-full p-2 gap-2">
           Rows per page:
           <select
             className="p-2"
@@ -279,19 +279,19 @@ export default function UITable({
   );
 
   const bottomContent = (
-    <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-      <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
+    <div className="flex flex-row items-center justify-center w-full gap-2">
+      <div className="flex items-center justify-start w-full h-full p-2 gap-2">
         {selectedKeys === "all"
           ? "All items selected"
           : `${selectedKeys.size} of ${filteredItems.length} selected`}
       </div>
-      <div className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom">
+      <div className="flex items-center justify-end w-full h-full p-2 gap-2">
         <Pagination
           isCompact
           showControls
           showShadow
-          color="none"
-          radius="none"
+          color="primary"
+          radius="full"
           page={page}
           total={pages}
           onChange={setPage}
@@ -301,7 +301,7 @@ export default function UITable({
   );
 
   return (
-    <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
+    <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
       <Table
         isHeaderSticky
         aria-label={`${entityNamePlural} table`}
@@ -321,7 +321,7 @@ export default function UITable({
           {(column) => (
             <TableColumn
               key={column.uid}
-              className="p-2"
+              className="p-4"
               align={column.uid === "actions" ? "center" : "start"}
               allowsSorting={column.sortable}
             >
