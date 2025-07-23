@@ -2,18 +2,24 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const layoutGroups = [
-  ["Human", "Role"],
-  ["Division", "Department"],
-  ["Position", "User"],
-];
-
-const getPath = (label) =>
-  label === "Human" ? "/human" : `/${label.toLowerCase()}`;
+import { getSidebarItems } from "@/components/layout/sidebarItems";
 
 export default function HumanLayout({ children }) {
   const pathname = usePathname();
+
+  const sidebarItems = getSidebarItems(dummyLogout);
+  const humanItem = sidebarItems.find((item) => item.label === "Human");
+  const humanSubRoutes = humanItem?.href || [];
+
+  const layoutGroups = [];
+  for (let i = 0; i < humanSubRoutes.length; i += 2) {
+    layoutGroups.push(humanSubRoutes.slice(i, i + 2));
+  }
+
+  const getLabel = (href) => {
+    const path = href.replace("/", "");
+    return path.charAt(0).toUpperCase() + path.slice(1);
+  };
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center w-full h-full">
@@ -23,8 +29,7 @@ export default function HumanLayout({ children }) {
             key={index}
             className="flex flex-row items-center justify-center w-full h-full lg:h-auto p-2 gap-2"
           >
-            {group.map((label, subIndex) => {
-              const href = getPath(label);
+            {group.map((href, subIndex) => {
               const isActive =
                 href === "/human"
                   ? pathname === href
@@ -37,13 +42,14 @@ export default function HumanLayout({ children }) {
                   className={`flex items-center justify-center w-24 h-full lg:w-full lg:h-12 p-4 lg:p-2 gap-2 hover:bg-primary hover:text-white shadow-lg rounded-lg
                   ${isActive ? "bg-primary text-white" : "text-white"}`}
                 >
-                  {label}
+                  {getLabel(href)}
                 </Link>
               );
             })}
           </div>
         ))}
       </div>
+
       <div className="flex flex-col items-center justify-start w-full h-full lg:w-[85%] overflow-auto">
         {children}
       </div>
