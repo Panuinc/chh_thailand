@@ -10,17 +10,16 @@ export default function Sidebar({ sidebarItems }) {
     <div className="lg:flex hidden flex-col items-center justify-start lg:w-[5%] h-full p-2 gap-2 bg-black overflow-auto">
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
-        const hrefList  = Array.isArray(item.href) ? item.href : [item.href];
-        const isActive = hrefList .some((href) => pathname.startsWith(href));
+        const hrefList = Array.isArray(item.href) ? item.href : [item.href];
+        const isActive = hrefList.some((href) => pathname.startsWith(href));
+        const isExternal = hrefList[0]?.startsWith("http");
 
         const button = (
           <div
             key={index}
             onClick={item.onClick}
             className={`flex items-center justify-center w-12 h-12 p-2 gap-2 hover:bg-primary hover:text-white shadow-lg rounded-lg cursor-pointer ${
-              isActive
-                ? "bg-primary text-white"
-                : "text-white"
+              isActive ? "bg-primary text-white" : "text-white"
             }`}
           >
             <Icon />
@@ -36,9 +35,20 @@ export default function Sidebar({ sidebarItems }) {
             placement="right"
             showArrow
           >
-            <Link href={hrefList [0]} className="w-full flex justify-center">
-              {button}
-            </Link>
+            {isExternal ? (
+              <a
+                href={hrefList[0]}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex justify-center"
+              >
+                {button}
+              </a>
+            ) : (
+              <Link href={hrefList[0]} className="w-full flex justify-center">
+                {button}
+              </Link>
+            )}
           </Tooltip>
         ) : (
           <Tooltip
