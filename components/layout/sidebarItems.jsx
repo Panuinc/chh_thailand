@@ -1,72 +1,32 @@
 import {
   LayoutDashboard,
   User,
-  Computer,
   Warehouse,
-  Settings,
-  Key,
   Logs,
   Cloud,
+  Key,
 } from "lucide-react";
+import { menuList } from "@/lib/menuList";
+
+const iconMap = {
+  LayoutDashboard,
+  User,
+  Warehouse,
+  Logs,
+  Cloud,
+  Key,
+};
 
 export function getSidebarItems(handleManualLogout) {
+  const sidebarGroups = menuList.map((group) => ({
+    icon: iconMap[group.icon] || User,
+    label: group.groupName,
+    href: group.items.map((item) => item.href),
+    groupCode: group.groupCode,
+  }));
+
   return [
-    {
-      icon: LayoutDashboard,
-      label: "Over View",
-      href: ["/overview"],
-    },
-    {
-      icon: User,
-      label: "Human",
-      href: [
-        "/human",
-        "/role",
-        "/division",
-        "/department",
-        "/position",
-        "/user",
-      ],
-    },
-    {
-      icon: Computer,
-      label: "Technology",
-      href: ["/technology"],
-    },
-    {
-      icon: Warehouse,
-      label: "Warehouse",
-      href: [
-        "/warehouse",
-        "/rfid-in",
-        "/rfid-out",
-        "/rm/stock",
-        "/rm/inbound",
-        "/rm/outbound",
-        "/fg/stock",
-        "/fg/inbound",
-        "/fg/outbound",
-        "/history",
-        "/erp-status",
-      ],
-    },
-    // {
-    //   icon: Settings,
-    //   label: "Setting",
-    //   href: ["/setting"],
-    // },
-    {
-      icon: Logs,
-      label: "Logs",
-      href: ["/logs"],
-    },
-    {
-      icon: Cloud,
-      label: "Cloud",
-      href: [
-        "https://192-168-1-100.chhindustry.direct.quickconnect.to:7001/#/signin",
-      ],
-    },
+    ...sidebarGroups,
     {
       icon: Key,
       label: "Sign Out",

@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getSidebarItems } from "@/components/layout/sidebarItems";
 import { signOut } from "next-auth/react";
+import { menuList } from "@/lib/menuList";
 
 const dummyLogout = async () => {
   await signOut({ callbackUrl: "/" });
@@ -11,12 +11,12 @@ const dummyLogout = async () => {
 
 export default function SideBarSection({ sectionKey, children }) {
   const pathname = usePathname();
-  const sidebarItems = getSidebarItems(dummyLogout);
 
-  const sectionItem = sidebarItems.find(
-    (item) => item.label.toLowerCase() === sectionKey.toLowerCase()
+  const sectionItem = menuList.find(
+    (item) => item.groupCode.toLowerCase() === sectionKey.toLowerCase()
   );
-  const subRoutes = sectionItem?.href || [];
+
+  const subRoutes = sectionItem?.items?.map((item) => item.href) || [];
 
   const layoutGroups = [];
   for (let i = 0; i < subRoutes.length; i += 2) {
@@ -24,8 +24,9 @@ export default function SideBarSection({ sectionKey, children }) {
   }
 
   const getLabel = (href) => {
-    const path = href.replace("/", "");
-    return path.charAt(0).toUpperCase() + path.slice(1);
+    const flatItems = menuList.flatMap((group) => group.items);
+    const match = flatItems.find((item) => item.href === href);
+    return match?.menuName || href.replace("/", "").charAt(0).toUpperCase() + href.slice(2);
   };
 
   return (
