@@ -27,7 +27,7 @@ export default function ResetPasswordPage() {
     const data = await res.json();
     if (res.ok) {
       toast.success("Password reset successful!");
-      router.push("/signin");
+      router.push("/");
     } else {
       toast.error(data.message || "Something went wrong.");
     }
