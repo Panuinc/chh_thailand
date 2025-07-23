@@ -23,7 +23,7 @@ export default function ForcePasswordChange() {
       return;
     }
 
-    const res = await fetch("/api/auth/force-reset", {
+    const res = await fetch("/api/auth/force", {
       method: "POST",
       body: JSON.stringify({
         newPassword,
