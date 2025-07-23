@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { sendResetEmail } from "@/lib/mail/sendResetEmail";
+import { sendResetEmail } from "@/lib/sendResetEmail";
 import { randomUUID } from "crypto";
 import { getLocalNow } from "@/lib/getLocalNow"
 
