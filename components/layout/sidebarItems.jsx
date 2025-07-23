@@ -5,6 +5,8 @@ import {
   Logs,
   Cloud,
   Key,
+  Settings,
+  MonitorSmartphone as Computer,
 } from "lucide-react";
 import { menuList } from "@/lib/menuList";
 
@@ -15,6 +17,8 @@ const iconMap = {
   Logs,
   Cloud,
   Key,
+  Settings,
+  Computer,
 };
 
 export function getSidebarItems(handleManualLogout) {
