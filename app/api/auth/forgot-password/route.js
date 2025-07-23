@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { sendResetEmail } from "@/lib/mail/sendResetEmail";
 import { randomUUID } from "crypto";
+import { getLocalNow } from "@/lib/getLocalNow"
 
 const prisma = new PrismaClient();
 
@@ -16,7 +17,8 @@ export async function POST(req) {
   }
 
   const token = randomUUID();
-  const expire = new Date(Date.now() + 15 * 60 * 1000);
+  const now = getLocalNow();
+  const expire = new Date(now.getTime() + 15 * 60 * 1000)
 
   await prisma.userAuth.update({
     where: { userAuthId: auth.userAuthId },
