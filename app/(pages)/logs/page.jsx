@@ -26,7 +26,7 @@ export default function LogsPage() {
   const highlightLogLine = (line) => {
     if (/\[error\]/i.test(line)) return "text-red-600";
     if (/\[warn\]/i.test(line)) return "text-yellow-600";
-    if (/\[info\]/i.test(line)) return "text-blue-600";
+    if (/\[info\]/i.test(line)) return "text-green-600";
     return "text-gray-800";
   };
 

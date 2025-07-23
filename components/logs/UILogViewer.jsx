@@ -31,18 +31,18 @@ export default function UILogViewer({
       </div>
       <div className="flex flex-col items-center justify-start w-full lg:w-9/12 h-full">
         <UITopic Topic={headerContent} />
-        <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
-          <div className="flex items-center justify-between w-full p-2 gap-2 border_custom">
-            <div className="flex items-center justify-center h-full p-2 gap-2 border_custom">
+        <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
+          <div className="flex items-center justify-between w-full p-2 gap-2">
+            <div className="flex items-center justify-center h-full p-2 gap-2">
               <LogIn />
               Log Viewer
             </div>
             <span className="font-semibold">{currentTime}</span>
           </div>
 
-          <div className="flex items-start justify-center w-full h-full p-2 gap-2 border_custom">
-            <aside className="flex items-start justify-center h-full p-2 gap-2 border_custom">
-              <ul className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
+          <div className="flex items-start justify-center w-full h-full p-2">
+            <aside className="flex items-start justify-center h-full gap-2">
+              <ul className="flex flex-col items-center justify-start w-full h-full gap-2 bg-black overflow-auto">
                 {logs.map((log, index) => (
                   <li key={index}>
                     <button
@@ -50,8 +50,10 @@ export default function UILogViewer({
                         setSelected(log);
                         setFilter("");
                       }}
-                      className={`flex items-center justify-center w-full h-full p-2 gap-2 border_custom ${
-                        selected?.fileName === log.fileName ? "" : ""
+                      className={`flex items-center justify-center w-full h-full p-2 gap-2 hover:text-primary  ${
+                        selected?.fileName === log.fileName
+                          ? "text-primary font-semibold"
+                          : "bg-black text-white"
                       }`}
                     >
                       <FileText />
@@ -62,38 +64,38 @@ export default function UILogViewer({
               </ul>
             </aside>
 
-            <main className="flex flex-col items-start justify-start w-full h-full p-2 gap-2 border_custom overflow-auto">
+            <main className="flex flex-col items-start justify-start w-full h-full gap-2 overflow-auto">
               {selected ? (
                 <>
-                  <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border_custom">
-                    <div className="flex items-center justify-start w-full h-full p-2 gap-2 border_custom">
+                  <div className="flex flex-row items-center justify-center w-full p-2 gap-2">
+                    <div className="flex items-center justify-start w-full h-full p-2 gap-2">
                       <Eye />
                       {selected.fileName}
                     </div>
 
                     <button
                       onClick={handleDownload}
-                      className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom"
+                      className="flex items-center justify-center h-full p-2 gap-2 bg-black text-white rounded-full"
                     >
                       <Download />
                       Download
                     </button>
                   </div>
 
-                  <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+                  <div className="flex flex-row items-center justify-center w-full p-2 gap-2">
                     <Filter />
                     <input
                       type="text"
                       placeholder="Filter by keyword (space-separated)"
                       value={filter}
                       onChange={(e) => setFilter(e.target.value)}
-                      className="flex items-center justify-end w-full h-full p-2 gap-2 border_custom"
+                      className="flex items-center justify-end w-full h-full p-2 gap-2 rounded-full"
                     />
                   </div>
 
                   <div className="w-full" ref={logRef}>
                     {filteredLines.length > 0 ? (
-                      <pre className="flex flex-col items-start justify-center w-full h-full p-2 gap-2 border_custom">
+                      <pre className="flex flex-col items-start justify-center w-full h-full p-2 gap-2">
                         {filteredLines.map((line, i) => (
                           <div
                             key={i}
@@ -105,12 +107,14 @@ export default function UILogViewer({
                         ))}
                       </pre>
                     ) : (
-                      <span className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">No matching log entries</span>
+                      <span className="flex items-center justify-center w-full h-full p-2 gap-2">
+                        No matching log entries
+                      </span>
                     )}
                   </div>
                 </>
               ) : (
-                <div className="flex items-start justify-start w-full h-full p-2 gap-2 border_custom">
+                <div className="flex items-start justify-start w-full h-full p-2 gap-2">
                   ← Select a log file to view its content
                 </div>
               )}
