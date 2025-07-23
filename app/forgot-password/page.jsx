@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import UIForgotPassword from "@/components/forgot/UIForgotPassword";
+import UIForgotPassword from "@/modules/auth/forgot/UIForgotPassword";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

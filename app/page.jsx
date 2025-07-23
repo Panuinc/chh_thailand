@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
-import UISingIn from "@/components/signin/UISingIn";
+import UISingIn from "@/modules/auth/signin/UISingIn";
 import UILoading from "@/components/loading/UILoading";
 
 export default function Signin() {

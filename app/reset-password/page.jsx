@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import UIResetPassword from "@/components/reset/UIResetPassword";
+import UIResetPassword from "@/modules/auth/reset/UIResetPassword";
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams();

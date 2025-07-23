@@ -1,5 +1,5 @@
 import React from "react";
-import UIOverView from "@/components/overview/UIOverView";
+import UIOverView from "@/modules/overview/UIOverView";
 
 export default function Overview() {
   return (
