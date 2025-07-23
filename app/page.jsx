@@ -15,9 +15,13 @@ export default function Signin() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/overview");
+      if (session?.user?.forceReset) {
+        router.push("/force");
+      } else {
+        router.push("/overview");
+      }
     }
-  }, [status, router]);
+  }, [status, session, router]);
 
   const handleLogin = async () => {
     if (!username || !password) {
