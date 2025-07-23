@@ -30,7 +30,7 @@ export async function middleware(request) {
   if (
     isRestricted &&
     (!token ||
-      (token?.user?.roleName !== "Admin" &&
+      (token?.user?.roleName !== "administrator" &&
         token?.user?.divisionName !== "ทรัพยากรบุคคล"))
   ) {
     edgeLogger.warn("⛔ Unauthorized access blocked", {
