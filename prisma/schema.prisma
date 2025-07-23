@@ -29,8 +29,7 @@ model Role {
   roleUpdateBy Int?
   roleUpdateAt DateTime?   @db.Timestamp(0)
 
-  jobs        UseJob[]         @relation("UseJobToRole")
-  permissions MenuPermission[] @relation("PermissionToRole")
+  jobs UseJob[] @relation("UseJobToRole")
 
   createdBy User? @relation("RoleCreatedBy", fields: [roleCreateBy], references: [userId])
   updatedBy User? @relation("RoleUpdatedBy", fields: [roleUpdateBy], references: [userId])
@@ -48,10 +47,9 @@ model Division {
   divisionUpdateBy Int?
   divisionUpdateAt DateTime?   @db.Timestamp(0)
 
-  departments Department[]     @relation("DivisionToDepartment")
-  positions   Position[]       @relation("DivisionToPosition")
-  jobs        UseJob[]         @relation("UseJobToDivision")
-  permissions MenuPermission[] @relation("PermissionToDivision")
+  departments Department[] @relation("DivisionToDepartment")
+  positions   Position[]   @relation("DivisionToPosition")
+  jobs        UseJob[]     @relation("UseJobToDivision")
 
   createdBy User? @relation("DivisionCreatedBy", fields: [divisionCreateBy], references: [userId])
   updatedBy User? @relation("DivisionUpdatedBy", fields: [divisionUpdateBy], references: [userId])
@@ -212,31 +210,4 @@ model UserLog {
 
   @@index([userId])
   @@index([loginAt])
-}
-
-model Menu {
-  menuId     Int         @id @default(autoincrement())
-  menuCode   String      @unique
-  menuName   String
-  menuGroup  String
-  menuHref   String
-  menuStatus EnableState @default(Enable)
-  menuOrder  Int
-
-  permissions MenuPermission[] @relation("PermissionToMenu")
-}
-
-model MenuPermission {
-  menuPermissionId Int     @id @default(autoincrement())
-  menuId           Int
-  roleId           Int
-  divisionId       Int
-  canRead          Boolean @default(false)
-  canWrite         Boolean @default(false)
-
-  menu     Menu     @relation("PermissionToMenu", fields: [menuId], references: [menuId])
-  role     Role     @relation("PermissionToRole", fields: [roleId], references: [roleId])
-  division Division @relation("PermissionToDivision", fields: [divisionId], references: [divisionId])
-
-  @@unique([menuId, roleId, divisionId])
 }

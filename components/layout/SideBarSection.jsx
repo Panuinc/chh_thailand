@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
 import { menuList } from "@/lib/menuList";
-
-const dummyLogout = async () => {
-  await signOut({ callbackUrl: "/" });
-};
 
 export default function SideBarSection({ sectionKey, children }) {
   const pathname = usePathname();
@@ -26,7 +21,10 @@ export default function SideBarSection({ sectionKey, children }) {
   const getLabel = (href) => {
     const flatItems = menuList.flatMap((group) => group.items);
     const match = flatItems.find((item) => item.href === href);
-    return match?.menuName || href.replace("/", "").charAt(0).toUpperCase() + href.slice(2);
+    return (
+      match?.menuName ||
+      href.replace("/", "").charAt(0).toUpperCase() + href.slice(2)
+    );
   };
 
   return (

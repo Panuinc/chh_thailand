@@ -6,7 +6,7 @@ import {
   Cloud,
   Key,
   Settings,
-  MonitorSmartphone as Computer,
+  Computer,
 } from "lucide-react";
 import { menuList } from "@/lib/menuList";
 
