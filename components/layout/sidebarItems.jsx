@@ -36,13 +36,25 @@ export function getSidebarItems(handleManualLogout) {
     {
       icon: Warehouse,
       label: "Warehouse",
-      href: ["/warehouse", "/test"],
+      href: [
+        "/warehouse",
+        "/rfid-in",
+        "/rfid-out",
+        "/rm/stock",
+        "/rm/inbound",
+        "/rm/outbound",
+        "/fg/stock",
+        "/fg/inbound",
+        "/fg/outbound",
+        "/history",
+        "/erp-status",
+      ],
     },
-    {
-      icon: Settings,
-      label: "Setting",
-      href: ["/setting"],
-    },
+    // {
+    //   icon: Settings,
+    //   label: "Setting",
+    //   href: ["/setting"],
+    // },
     {
       icon: Logs,
       label: "Logs",
