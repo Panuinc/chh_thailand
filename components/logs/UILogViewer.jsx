@@ -2,7 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import UITopic from "@/components/topic/UITopic";
-import { FileText, LogIn, Eye, Filter, Download } from "lucide-react";
+import { FileText, Eye, Filter, Download } from "lucide-react";
+import { Button, Input } from "@heroui/react";
 
 export default function UILogViewer({
   headerContent,
@@ -32,17 +33,9 @@ export default function UILogViewer({
       <div className="flex flex-col items-center justify-start w-full lg:w-9/12 h-full">
         <UITopic Topic={headerContent} />
         <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto">
-          <div className="flex items-center justify-between w-full p-2 gap-2">
-            <div className="flex items-center justify-center h-full p-2 gap-2">
-              <LogIn />
-              Log Viewer
-            </div>
-            <span className="font-semibold">{currentTime}</span>
-          </div>
-
           <div className="flex items-start justify-center w-full h-full p-2">
             <aside className="flex items-start justify-center h-full gap-2">
-              <ul className="flex flex-col items-center justify-start w-full h-full gap-2 bg-black overflow-auto">
+              <ul className="flex flex-col items-center justify-start w-full h-full gap-2 border-r-1 border-default overflow-auto">
                 {logs.map((log, index) => (
                   <li key={index}>
                     <button
@@ -53,7 +46,7 @@ export default function UILogViewer({
                       className={`flex items-center justify-center w-full h-full p-2 gap-2 hover:text-primary  ${
                         selected?.fileName === log.fileName
                           ? "text-primary font-semibold"
-                          : "bg-black text-white"
+                          : ""
                       }`}
                     >
                       <FileText />
@@ -72,24 +65,32 @@ export default function UILogViewer({
                       <Eye />
                       {selected.fileName}
                     </div>
-
-                    <button
-                      onClick={handleDownload}
-                      className="flex items-center justify-center h-full p-2 gap-2 bg-black text-white rounded-full"
-                    >
-                      <Download />
-                      Download
-                    </button>
+                    <div className="flex items-center justify-end w-full h-full p-2 gap-2 font-semibold">
+                      {currentTime}
+                    </div>
+                    <div className="flex items-center justify-center h-full p-2 gap-2 font-semibold">
+                      <Button
+                        onPress={handleDownload}
+                        color="primary"
+                        radius="full"
+                        className="w-full h-full p-3 gap-2"
+                      >
+                        <Download />
+                        Download
+                      </Button>
+                    </div>
                   </div>
 
                   <div className="flex flex-row items-center justify-center w-full p-2 gap-2">
                     <Filter />
-                    <input
-                      type="text"
+                    <Input
+                      name="filter"
                       placeholder="Filter by keyword (space-separated)"
+                      variant="bordered"
+                      color="default"
+                      radius="full"
                       value={filter}
                       onChange={(e) => setFilter(e.target.value)}
-                      className="flex items-center justify-end w-full h-full p-2 gap-2 rounded-full"
                     />
                   </div>
 
