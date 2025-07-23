@@ -52,7 +52,7 @@ export default function UIUserForm({
               placeholder="Please Upload"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               onChange={handleInputChange("userPicture")}
               isInvalid={!!errors.userPicture}
               errorMessage={errors.userPicture}
@@ -68,7 +68,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.userFirstName || ""}
               onChange={handleInputChange("userFirstName")}
               isInvalid={!!errors.userFirstName}
@@ -83,7 +83,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.userLastName || ""}
               onChange={handleInputChange("userLastName")}
               isInvalid={!!errors.userLastName}
@@ -101,7 +101,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.userPhone || ""}
               onChange={handleInputChange("userPhone")}
               isInvalid={!!errors.userPhone}
@@ -117,7 +117,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.userEmail || ""}
               onChange={handleInputChange("userEmail")}
               isInvalid={!!errors.userEmail}
@@ -135,7 +135,7 @@ export default function UIUserForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                radius="none"
+                radius="full"
                 selectedKeys={formData.userStatus ? [formData.userStatus] : []}
                 onSelectionChange={(keys) =>
                   handleInputChange("userStatus")([...keys][0])
@@ -163,7 +163,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               selectedKeys={
                 formData.useJobDivisionId
                   ? [String(formData.useJobDivisionId)]
@@ -189,7 +189,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               isDisabled={!formData.useJobDivisionId}
               selectedKeys={
                 formData.useJobDepartmentId
@@ -222,7 +222,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               isDisabled={
                 !formData.useJobDivisionId && !formData.useJobDepartmentId
               }
@@ -254,7 +254,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               selectedKeys={
                 formData.useJobRoleId ? [String(formData.useJobRoleId)] : []
               }
@@ -280,7 +280,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.useJobStartDate || ""}
               onChange={handleInputChange("useJobStartDate")}
               isInvalid={!!errors.useJobStartDate}
@@ -297,7 +297,7 @@ export default function UIUserForm({
                 placeholder="Please Enter Data"
                 variant="bordered"
                 color="default"
-                radius="none"
+                radius="full"
                 value={formData.useJobEndDate || ""}
                 onChange={handleInputChange("useJobEndDate")}
                 isInvalid={!!errors.useJobEndDate}
@@ -315,7 +315,7 @@ export default function UIUserForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               selectedKeys={
                 formData.useJobContractType ? [formData.useJobContractType] : []
               }
@@ -343,7 +343,7 @@ export default function UIUserForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
-              radius="none"
+              radius="full"
               isReadOnly
               value={operatedBy}
             />
@@ -354,7 +354,7 @@ export default function UIUserForm({
             <Button
               type="submit"
               color="none"
-              radius="none"
+              radius="full"
               className="w-full p-2"
             >
               Save

@@ -33,7 +33,7 @@ export default function UIPositionForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               isDisabled={isUpdate}
               selectedKeys={
                 formData.positionDivisionId
@@ -60,7 +60,7 @@ export default function UIPositionForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               isDisabled={isUpdate || !formData.positionDivisionId}
               selectedKeys={
                 formData.positionDepartmentId
@@ -93,7 +93,7 @@ export default function UIPositionForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.positionName || ""}
               onChange={handleInputChange("positionName")}
               isInvalid={!!errors.positionName}
@@ -112,7 +112,7 @@ export default function UIPositionForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                radius="none"
+                radius="full"
                 selectedKeys={
                   formData.positionStatus ? [formData.positionStatus] : []
                 }
@@ -139,7 +139,7 @@ export default function UIPositionForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
-              radius="none"
+              radius="full"
               isReadOnly
               value={operatedBy}
             />
@@ -151,7 +151,7 @@ export default function UIPositionForm({
             <Button
               type="submit"
               color="none"
-              radius="none"
+              radius="full"
               className="w-full p-2"
             >
               Save

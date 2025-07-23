@@ -142,7 +142,7 @@ export default function UITable({
                   <Button
                     isIconOnly
                     color="none"
-                    radius="none"
+                    radius="full"
                     className="w-full h-full p-3 gap-2"
                     aria-label="Actions"
                   >

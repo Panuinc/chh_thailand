@@ -32,7 +32,7 @@ export default function UIDepartmentForm({
               placeholder="Please Select"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               isDisabled={isUpdate}
               selectedKeys={
                 formData.departmentDivisionId
@@ -59,7 +59,7 @@ export default function UIDepartmentForm({
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
-              radius="none"
+              radius="full"
               value={formData.departmentName || ""}
               onChange={handleInputChange("departmentName")}
               isInvalid={!!errors.departmentName}
@@ -78,7 +78,7 @@ export default function UIDepartmentForm({
                 placeholder="Please Select"
                 variant="bordered"
                 color="default"
-                radius="none"
+                radius="full"
                 selectedKeys={
                   formData.departmentStatus ? [formData.departmentStatus] : []
                 }
@@ -105,7 +105,7 @@ export default function UIDepartmentForm({
               placeholder="Please Enter Data"
               variant="flat"
               color="default"
-              radius="none"
+              radius="full"
               isReadOnly
               value={operatedBy}
             />
@@ -117,7 +117,7 @@ export default function UIDepartmentForm({
             <Button
               type="submit"
               color="none"
-              radius="none"
+              radius="full"
               className="w-full p-2"
             >
               Save
