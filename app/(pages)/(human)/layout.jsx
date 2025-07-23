@@ -13,7 +13,9 @@ export default function HumanLayout({ children }) {
   const pathname = usePathname();
 
   const sidebarItems = getSidebarItems(dummyLogout);
-  const humanItem = sidebarItems.find((item) => item.label === "Human");
+  const humanItem = sidebarItems.find(
+    (item) => item.label.toLowerCase() === "้ีทฟื"
+  );
   const humanSubRoutes = humanItem?.href || [];
 
   const layoutGroups = [];

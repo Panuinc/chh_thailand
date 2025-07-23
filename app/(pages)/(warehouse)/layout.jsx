@@ -13,7 +13,9 @@ export default function WareHouseLayout({ children }) {
   const pathname = usePathname();
 
   const sidebarItems = getSidebarItems(dummyLogout);
-  const wareHouseItem = sidebarItems.find((item) => item.label === "WareHouse");
+  const wareHouseItem = sidebarItems.find(
+    (item) => item.label.toLowerCase() === "warehouse"
+  );
   const wareHouseSubRoutes = wareHouseItem?.href || [];
 
   const layoutGroups = [];

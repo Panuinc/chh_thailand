@@ -36,7 +36,7 @@ export function getSidebarItems(handleManualLogout) {
     {
       icon: Warehouse,
       label: "Warehouse",
-      href: ["/warehouse"],
+      href: ["/warehouse", "/test"],
     },
     {
       icon: Settings,
