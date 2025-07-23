@@ -6,10 +6,16 @@ import {
   Settings,
   Key,
   Logs,
+  Workflow,
 } from "lucide-react";
 
 export function getSidebarItems(handleManualLogout) {
   return [
+    {
+      icon: Workflow,
+      label: "Cloud",
+      href: ["https://chhindustry.sg3.quickconnect.to/#/signin"],
+    },
     {
       icon: LayoutDashboard,
       label: "Over View",
@@ -42,7 +48,7 @@ export function getSidebarItems(handleManualLogout) {
       label: "Setting",
       href: ["/setting"],
     },
-      {
+    {
       icon: Logs,
       label: "Logs",
       href: ["/logs"],
