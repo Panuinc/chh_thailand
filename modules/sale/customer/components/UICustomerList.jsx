@@ -1,9 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import UITopic from "@/components/topic/UITopic";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from "@heroui/react";
+import { ChevronDown } from "lucide-react";
 import { dateToThai } from "@/lib/date";
+
 const UITable = dynamic(() => import("@/components/table/UITable"), {
   ssr: false,
 });
@@ -25,6 +34,15 @@ const statusOptions = [
   { name: "Disable", uid: "disable" },
 ];
 
+const typeOptions = [
+  "Owner",
+  "CM",
+  "MainConstruction",
+  "DesignerArchitect",
+  "EndUser",
+  "Dealer",
+];
+
 const typeColorMap = {
   Owner: "bg-blue-100 text-blue-800",
   CM: "bg-green-100 text-green-800",
@@ -39,13 +57,23 @@ export default function UICustomerList({
   customers: rawCustomers = [],
   isLoading,
 }) {
-  const customers = rawCustomers.map((r) => ({
+  const [typeFilter, setTypeFilter] = useState("all");
+
+  const filteredCustomers = rawCustomers.filter((c) =>
+    typeFilter === "all" ? true : c.customerType === typeFilter
+  );
+
+  const customers = filteredCustomers.map((r) => ({
     id: r.customerId,
     name: r.customerName || "-",
     address: r.customerAddress || "-",
     phone: r.customerPhone || "-",
     type: (
-      <span className={`p-2 rounded-full ${typeColorMap[r.customerType]}`}>
+      <span
+        className={`px-3 py-1 rounded-full text-xs font-medium ${
+          typeColorMap[r.customerType] || "bg-gray-100 text-gray-800"
+        }`}
+      >
         {r.customerType || "-"}
       </span>
     ),
@@ -62,6 +90,33 @@ export default function UICustomerList({
     status: r.customerStatus?.toLowerCase() || "enable",
   }));
 
+  const extraFiltersSlot = (
+    <Dropdown>
+      <DropdownTrigger>
+        <Button
+          color="default"
+          radius="full"
+          className="w-full h-full p-3 gap-2"
+          endContent={<ChevronDown />}
+        >
+          {typeFilter === "all" ? "Customer Type" : typeFilter}
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu
+        selectionMode="single"
+        selectedKeys={new Set([typeFilter])}
+        onSelectionChange={(keys) =>
+          setTypeFilter(keys.values().next().value || "all")
+        }
+      >
+        <DropdownItem key="all">All Types</DropdownItem>
+        {typeOptions.map((type) => (
+          <DropdownItem key={type}>{type}</DropdownItem>
+        ))}
+      </DropdownMenu>
+    </Dropdown>
+  );
+
   return (
     <>
       <UITopic Topic={headerContent} />
@@ -74,6 +129,7 @@ export default function UICustomerList({
           entityNamePlural="customers"
           searchPlaceholder="Search by customer name..."
           basePath="/customer"
+          extraFiltersSlot={extraFiltersSlot}
         />
       </div>
     </>
