@@ -15,7 +15,15 @@ export default function CustomerCreate() {
   });
 
   const { formRef, formData, errors, handleChange, handleSubmit } =
-    useFormHandler({ customerName: "" }, onSubmitHandler);
+    useFormHandler(
+      {
+        customerName: "",
+        customerAddress: "",
+        customerPhone: "",
+        customerType: "",
+      },
+      onSubmitHandler
+    );
 
   return (
     <>

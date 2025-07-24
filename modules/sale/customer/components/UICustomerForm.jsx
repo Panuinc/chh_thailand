@@ -38,6 +38,65 @@ export default function UICustomerForm({
               errorMessage={errors.customerName}
             />
           </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="customerAddress"
+              label="Customer Address"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.customerAddress || ""}
+              onChange={handleInputChange("customerAddress")}
+              isInvalid={!!errors.customerAddress}
+              errorMessage={errors.customerAddress}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="customerPhone"
+              label="Customer Phone"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.customerPhone || ""}
+              onChange={handleInputChange("customerPhone")}
+              isInvalid={!!errors.customerPhone}
+              errorMessage={errors.customerPhone}
+            />
+          </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Select
+              name="customerType"
+              label="Customer Type"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              radius="full"
+              selectedKeys={
+                formData.customerType ? [formData.customerType] : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("customerType")([...keys][0])
+              }
+              isInvalid={!!errors.customerType}
+              errorMessage={errors.customerType}
+            >
+              <SelectItem key="Owner">Owner</SelectItem>
+              <SelectItem key="CM">CM</SelectItem>
+              <SelectItem key="MainConstruction">MainConstruction</SelectItem>
+              <SelectItem key="DesignerArchitect">DesignerArchitect</SelectItem>
+              <SelectItem key="EndUser">EndUser</SelectItem>
+              <SelectItem key="Dealer">Dealer</SelectItem>
+            </Select>
+          </div>
         </div>
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
@@ -50,7 +109,9 @@ export default function UICustomerForm({
                 variant="bordered"
                 color="default"
                 radius="full"
-                selectedKeys={formData.customerStatus ? [formData.customerStatus] : []}
+                selectedKeys={
+                  formData.customerStatus ? [formData.customerStatus] : []
+                }
                 onSelectionChange={(keys) =>
                   handleInputChange("customerStatus")([...keys][0])
                 }

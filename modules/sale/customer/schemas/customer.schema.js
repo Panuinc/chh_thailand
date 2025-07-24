@@ -8,12 +8,38 @@ import {
 
 export const customerPostSchema = z.object({
   customerName: preprocessString("Please provide the customer name"),
+  customerAddress: preprocessString("Please provide customer address"),
+  customerPhone: preprocessString("Please provide customer phone"),
+  customerType: preprocessEnum(
+    [
+      "Owner",
+      "CM",
+      "MainConstruction",
+      "DesignerArchitect",
+      "EndUser",
+      "Dealer",
+    ],
+    "Invalid customer type"
+  ),
   customerCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
 export const customerPutSchema = z.object({
   customerId: preprocessInt("Please provide the customer ID to update"),
   customerName: preprocessString("Please provide the customer name"),
+  customerAddress: preprocessString("Please provide customer address"),
+  customerPhone: preprocessString("Please provide customer phone"),
+  customerType: preprocessEnum(
+    [
+      "Owner",
+      "CM",
+      "MainConstruction",
+      "DesignerArchitect",
+      "EndUser",
+      "Dealer",
+    ],
+    "Invalid customer type"
+  ),
   customerStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"

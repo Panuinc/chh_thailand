@@ -2,7 +2,10 @@
 
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import { useFetchCustomerById, useSubmitCustomer } from "@/modules/sale/customer/hooks";
+import {
+  useFetchCustomerById,
+  useSubmitCustomer,
+} from "@/modules/sale/customer/hooks";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import UICustomerForm from "@/modules/sale/customer/components/UICustomerForm";
@@ -20,7 +23,16 @@ export default function CustomerUpdate() {
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useFormHandler({ customerName: "", customerStatus: "" }, onSubmitHandler);
+    useFormHandler(
+      {
+        customerName: "",
+        customerAddress: "",
+        customerPhone: "",
+        customerType: "",
+        customerStatus: "",
+      },
+      onSubmitHandler
+    );
 
   useEffect(() => {
     if (customer) setFormData(customer);
