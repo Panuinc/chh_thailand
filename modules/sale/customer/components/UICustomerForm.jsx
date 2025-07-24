@@ -26,7 +26,7 @@ export default function UICustomerForm({
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="customerName"
-              label="Customer"
+              label="Customer Name"
               labelPlacement="outside"
               placeholder="Please Enter Data"
               variant="bordered"
