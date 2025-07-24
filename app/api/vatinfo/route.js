@@ -64,8 +64,7 @@ export async function POST(req) {
       .map(({ taxpayerId, companyName, address, postalCode }) => ({
         taxpayerId,
         companyName,
-        address,
-        postalCode,
+        fullAddress: postalCode ? `${address} ${postalCode}` : address,
       }));
 
     console.log("✅ Final filtered results:", results);

@@ -25,6 +25,7 @@ export default function CustomerUpdate() {
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
     useFormHandler(
       {
+        customerTax: "",
         customerName: "",
         customerAddress: "",
         customerPhone: "",

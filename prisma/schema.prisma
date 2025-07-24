@@ -226,6 +226,7 @@ model UserLog {
 
 model Customer {
   customerId       Int          @id @default(autoincrement())
+  customerTax      String
   customerName     String
   customerAddress  String
   customerPhone    String

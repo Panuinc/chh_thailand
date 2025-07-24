@@ -17,6 +17,7 @@ export default function CustomerCreate() {
   const { formRef, formData, errors, handleChange, handleSubmit } =
     useFormHandler(
       {
+        customerTax: "",
         customerName: "",
         customerAddress: "",
         customerPhone: "",

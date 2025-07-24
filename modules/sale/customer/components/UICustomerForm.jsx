@@ -44,10 +44,10 @@ export default function UICustomerForm({
       const results = res.data.results || [];
 
       if (results.length > 0) {
-        const { taxpayerId, companyName, address } = results[0];
-        handleInputChange("customerTaxId")(taxpayerId || vatSearchId);
+        const { taxpayerId, companyName, fullAddress } = results[0];
+        handleInputChange("customerTax")(taxpayerId || vatSearchId);
         handleInputChange("customerName")(companyName || vatSearchName);
-        if (address) handleInputChange("customerAddress")(address);
+        if (fullAddress) handleInputChange("customerAddress")(fullAddress);
       } else {
         console.warn("❌ No results found.");
       }
@@ -123,6 +123,24 @@ export default function UICustomerForm({
             >
               Search Data
             </Button>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="customerTax"
+              label="Customer Tax"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.customerTax || ""}
+              onChange={handleInputChange("customerTax")}
+              isInvalid={!!errors.customerTax}
+              errorMessage={errors.customerTax}
+            />
           </div>
         </div>
 

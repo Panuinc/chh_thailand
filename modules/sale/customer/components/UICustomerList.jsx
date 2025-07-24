@@ -27,6 +27,7 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
+  { name: "Customer Tax", uid: "tax" },
   { name: "Customer", uid: "name", sortable: true },
   { name: "Address", uid: "address" },
   { name: "Phone", uid: "phone" },
@@ -84,6 +85,7 @@ export default function UICustomerList({
 
   const customers = filteredCustomers.map((r) => ({
     id: r.customerId,
+    tax: r.customerTax || "-",
     name: r.customerName || "-",
     address: r.customerAddress || "-",
     phone: r.customerPhone || "-",
