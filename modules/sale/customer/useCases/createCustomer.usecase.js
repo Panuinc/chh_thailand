@@ -13,15 +13,18 @@ export async function CreateCustomerUseCase(data) {
     };
   }
 
-  const normalizedName = parsed.data.customerName.trim().toLowerCase();
-  const duplicate = await CustomerValidator.isDuplicateCustomerName(normalizedName);
-  if (duplicate) {
-    throw { status: 409, message: `Customer '${normalizedName}' already exists` };
+  const normalizedTax = parsed.data.customerTax.trim();
+  const duplicateTax = await CustomerValidator.isDuplicateCustomerTax(
+    normalizedTax
+  );
+  if (duplicateTax) {
+    throw { status: 409, message: `Tax ID '${normalizedTax}' already exists` };
   }
 
   return CustomerService.create({
     ...parsed.data,
-    customerName: normalizedName,
+    customerTax: normalizedTax,
+    customerName: parsed.data.customerName.trim(),
     customerCreateAt: getLocalNow(),
   });
 }

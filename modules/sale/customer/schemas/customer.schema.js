@@ -7,6 +7,7 @@ import {
 } from "@/lib/zodSchema";
 
 export const customerPostSchema = z.object({
+  customerTax: preprocessString("Please provide customer tax"),
   customerName: preprocessString("Please provide the customer name"),
   customerAddress: preprocessString("Please provide customer address"),
   customerPhone: preprocessString("Please provide customer phone"),
@@ -26,6 +27,7 @@ export const customerPostSchema = z.object({
 
 export const customerPutSchema = z.object({
   customerId: preprocessInt("Please provide the customer ID to update"),
+  customerTax: preprocessString("Please provide customer tax"),
   customerName: preprocessString("Please provide the customer name"),
   customerAddress: preprocessString("Please provide customer address"),
   customerPhone: preprocessString("Please provide customer phone"),

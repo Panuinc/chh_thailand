@@ -23,9 +23,9 @@ export const CustomerRepository = {
       },
     }),
 
-  findByName: (customerName) =>
+  findByTax: (tax) =>
     prisma.customer.findFirst({
-      where: { customerName: customerName.trim().toLowerCase() },
+      where: { customerTax: tax.trim() },
     }),
 
   create: (data) => prisma.customer.create({ data }),
