@@ -20,6 +20,15 @@ enum ContractType {
   Freelance
 }
 
+enum CustomerType {
+  Owner
+  CM
+  MainConstruction
+  DesignerArchitect
+  EndUser
+  Dealer
+}
+
 model Role {
   roleId       Int         @id @default(autoincrement())
   roleName     String
@@ -145,6 +154,9 @@ model User {
 
   UserLog UserLog[]
 
+  customersCreated Customer[] @relation("CustomerCreatedBy")
+  customersUpdated Customer[] @relation("CustomerUpdatedBy")
+
   @@index([userCreateBy])
   @@index([userUpdateBy])
 }
@@ -210,4 +222,23 @@ model UserLog {
 
   @@index([userId])
   @@index([loginAt])
+}
+
+model Customer {
+  customerId       Int          @id @default(autoincrement())
+  customerName     String
+  customerAddress  String
+  customerPhone    String
+  customerType     CustomerType
+  customerStatus   EnableState  @default(Enable)
+  customerCreateBy Int
+  customerCreateAt DateTime     @default(now()) @db.Timestamp(0)
+  customerUpdateBy Int?
+  customerUpdateAt DateTime?    @db.Timestamp(0)
+
+  createdBy User? @relation("CustomerCreatedBy", fields: [customerCreateBy], references: [userId])
+  updatedBy User? @relation("CustomerUpdatedBy", fields: [customerUpdateBy], references: [userId])
+
+  @@index([customerCreateBy])
+  @@index([customerUpdateBy])
 }
