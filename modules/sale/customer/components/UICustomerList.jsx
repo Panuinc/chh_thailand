@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import UITopic from "@/components/topic/UITopic";
 import {
@@ -11,6 +11,14 @@ import {
   Button,
 } from "@heroui/react";
 import { ChevronDown } from "lucide-react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import { dateToThai } from "@/lib/date";
 
 const UITable = dynamic(() => import("@/components/table/UITable"), {
@@ -52,6 +60,15 @@ const typeColorMap = {
   Dealer: "bg-orange-100 text-orange-800",
 };
 
+const pieColorMap = {
+  Owner: "#60a5fa",
+  CM: "#34d399",
+  MainConstruction: "#facc15",
+  DesignerArchitect: "#f472b6",
+  EndUser: "#a78bfa",
+  Dealer: "#fb923c",
+};
+
 export default function UICustomerList({
   headerContent,
   customers: rawCustomers = [],
@@ -63,6 +80,8 @@ export default function UICustomerList({
     typeFilter === "all" ? true : c.customerType === typeFilter
   );
 
+  const totalCustomers = rawCustomers.length;
+
   const customers = filteredCustomers.map((r) => ({
     id: r.customerId,
     name: r.customerName || "-",
@@ -70,8 +89,8 @@ export default function UICustomerList({
     phone: r.customerPhone || "-",
     type: (
       <span
-        className={`px-3 py-1 rounded-full text-xs font-medium ${
-          typeColorMap[r.customerType] || "bg-gray-100 text-gray-800"
+        className={`w-full h-full p-2 rounded-full ${
+          typeColorMap[r.customerType]
         }`}
       >
         {r.customerType || "-"}
@@ -89,6 +108,21 @@ export default function UICustomerList({
     updateAt: dateToThai(r.customerUpdateAt),
     status: r.customerStatus?.toLowerCase() || "enable",
   }));
+
+  const chartData = useMemo(() => {
+    const countMap = {};
+    rawCustomers.forEach((c) => {
+      const type = c.customerType || "Unknown";
+      countMap[type] = (countMap[type] || 0) + 1;
+    });
+
+    return Object.entries(countMap).map(([type, count]) => ({
+      name: type,
+      value: count,
+      percent: ((count / totalCustomers) * 100).toFixed(1),
+      fill: pieColorMap[type] || "#d1d5db",
+    }));
+  }, [rawCustomers, totalCustomers]);
 
   const extraFiltersSlot = (
     <Dropdown>
@@ -120,6 +154,42 @@ export default function UICustomerList({
   return (
     <>
       <UITopic Topic={headerContent} />
+
+      <div className="flex flex-row items-center justify-center w-full min-h-96 p-2 gap-2">
+        <div className="flex flex-col items-center justify-center w-full h-full gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  label={({ name, percent }) => `${name}: ${percent}%`}
+                >
+                  {chartData.map((entry) => (
+                    <Cell key={entry.name} fill={entry.fill} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  formatter={(value, name, props) =>
+                    `${value} customers (${props.payload.percent}%)`
+                  }
+                />
+                <Legend verticalAlign="bottom" height={36} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center w-full h-full gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            {""}
+          </div>
+        </div>
+      </div>
+
       <div className="flex items-center justify-center w-full p-2 gap-2">
         <UITable
           data={customers}
