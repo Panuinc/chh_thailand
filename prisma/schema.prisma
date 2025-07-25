@@ -149,13 +149,16 @@ model User {
   positionsCreated Position[] @relation("PositionCreatedBy")
   positionsUpdated Position[] @relation("PositionUpdatedBy")
 
+  customerLeadersCreated CustomerLeader[] @relation("CustomerLeaderCreatedBy")
+  customerLeadersUpdated CustomerLeader[] @relation("CustomerLeaderUpdatedBy")
+
+  customersCreated Customer[] @relation("CustomerCreatedBy")
+  customersUpdated Customer[] @relation("CustomerUpdatedBy")
+
   createdBy User? @relation("UserCreatedBy", fields: [userCreateBy], references: [userId])
   updatedBy User? @relation("UserUpdatedBy", fields: [userUpdateBy], references: [userId])
 
   UserLog UserLog[]
-
-  customersCreated Customer[] @relation("CustomerCreatedBy")
-  customersUpdated Customer[] @relation("CustomerUpdatedBy")
 
   @@index([userCreateBy])
   @@index([userUpdateBy])
@@ -237,9 +240,31 @@ model Customer {
   customerUpdateBy Int?
   customerUpdateAt DateTime?    @db.Timestamp(0)
 
-  createdBy User? @relation("CustomerCreatedBy", fields: [customerCreateBy], references: [userId])
-  updatedBy User? @relation("CustomerUpdatedBy", fields: [customerUpdateBy], references: [userId])
+  leaders   CustomerLeader[] @relation("CustomerToLeader")
+  createdBy User?            @relation("CustomerCreatedBy", fields: [customerCreateBy], references: [userId])
+  updatedBy User?            @relation("CustomerUpdatedBy", fields: [customerUpdateBy], references: [userId])
 
   @@index([customerCreateBy])
   @@index([customerUpdateBy])
+}
+
+model CustomerLeader {
+  customerLeaderId Int       @id @default(autoincrement())
+  customerId       Int
+  leaderName       String
+  leaderEmail      String
+  leaderPhone      String
+  isDecisionMaker  Boolean   @default(false)
+  leaderCreateBy   Int
+  leaderCreateAt   DateTime  @default(now()) @db.Timestamp(0)
+  leaderUpdateBy   Int?
+  leaderUpdateAt   DateTime? @db.Timestamp(0)
+
+  customer  Customer @relation("CustomerToLeader", fields: [customerId], references: [customerId])
+  createdBy User     @relation("CustomerLeaderCreatedBy", fields: [leaderCreateBy], references: [userId])
+  updatedBy User?    @relation("CustomerLeaderUpdatedBy", fields: [leaderUpdateBy], references: [userId])
+
+  @@index([customerId])
+  @@index([leaderCreateBy])
+  @@index([leaderUpdateBy])
 }

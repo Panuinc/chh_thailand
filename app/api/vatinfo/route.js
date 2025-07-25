@@ -63,9 +63,15 @@ export async function POST(req) {
       const rawTaxId = cells[1]?.innerText.trim() || "";
       const matchTaxId = rawTaxId.match(/(\d{13})$/);
 
+      let rawCompanyName =
+        cells[3]?.innerText.trim().replace(/\s+/g, " ") || "";
+
+      const [firstName] = rawCompanyName.split(" / ");
+      const companyName = firstName.trim();
+
       return {
         taxpayerId: matchTaxId ? matchTaxId[1] : rawTaxId,
-        companyName: cells[3]?.innerText.trim().replace(/\s+/g, " "),
+        companyName,
         address: cells[4]?.innerText.trim().replace(/\s+/g, " "),
         postalCode: cells[5]?.innerText.trim(),
       };
