@@ -60,8 +60,11 @@ export async function POST(req) {
 
     const firstRow = await page.$eval("table.table-scroll tbody tr", (row) => {
       const cells = Array.from(row.querySelectorAll("td"));
+      const rawTaxId = cells[1]?.innerText.trim() || "";
+      const matchTaxId = rawTaxId.match(/(\d{13})$/);
+
       return {
-        taxpayerId: cells[1]?.innerText.trim(),
+        taxpayerId: matchTaxId ? matchTaxId[1] : rawTaxId,
         companyName: cells[3]?.innerText.trim().replace(/\s+/g, " "),
         address: cells[4]?.innerText.trim().replace(/\s+/g, " "),
         postalCode: cells[5]?.innerText.trim(),
