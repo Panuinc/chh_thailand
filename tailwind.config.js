@@ -18,7 +18,7 @@ module.exports = {
         black: "#202020",
         default: "#E4E5E6",
         primary: "#6DD708",
-        warning: "#F5E663",
+        warning: "#FFE033",
         danger: "#C62828",
       },
       fontFamily: {
