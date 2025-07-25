@@ -6,17 +6,16 @@ export const runtime = "nodejs";
 export async function POST(req) {
   try {
     const { taxpayerId, companyName } = await req.json();
-
-    if (!taxpayerId && !companyName) {
+    if (!taxpayerId && !companyName)
       return NextResponse.json(
         { error: "Missing taxpayer ID or company name" },
         { status: 400 }
       );
-    }
 
     const browser = await puppeteer.launch({
       headless: "new",
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      protocolTimeout: 60000,
     });
 
     const page = await browser.newPage();
@@ -29,52 +28,74 @@ export async function POST(req) {
 
     if (taxpayerId) {
       await page.click("#tinOpt1");
-      await page.waitForSelector("#txtTin");
+      await page.waitForSelector("#txtTin", { timeout: 5000 });
       await page.type("#txtTin", taxpayerId);
-    } else if (companyName) {
+    } else {
       await page.click("#tinOpt2");
-      await page.waitForSelector("#fname");
+      await page.waitForSelector("#fname", { timeout: 5000 });
       await page.type("#fname", companyName);
     }
 
-    await new Promise((r) => setTimeout(r, 500));
-
-    await page.click("#btnSearch");
-
-    await page.waitForSelector("table.table-scroll tbody", { timeout: 15000 });
-    await new Promise((r) => setTimeout(r, 1000));
-
-    const rawRows = await page.$$eval("table.table-scroll tbody tr", (rows) =>
-      rows.map((row) => {
-        const cells = Array.from(row.querySelectorAll("td"));
-        return {
-          index: cells[0]?.innerText.trim(),
-          taxpayerId: cells[1]?.innerText.trim().replace(/\n/g, " "),
-          companyName: cells[3]?.innerText.trim().replace(/\s+/g, " "),
-          address: cells[4]?.innerText.trim().replace(/\s+/g, " "),
-          postalCode: cells[5]?.innerText.trim(),
-        };
-      })
+    await page.waitForFunction(
+      () => {
+        const btn = document.querySelector("#btnSearch");
+        return btn && !btn.disabled;
+      },
+      { timeout: 10000 }
     );
 
-    console.log("✅ Scraped raw rows:", rawRows);
+    await page.evaluate(() => document.querySelector("#btnSearch").click());
 
-    const results = rawRows
-      .filter((r) => r.index)
-      .map(({ taxpayerId, companyName, address, postalCode }) => ({
-        taxpayerId,
-        companyName,
-        fullAddress: postalCode ? `${address} ${postalCode}` : address,
-      }));
+    try {
+      await page.waitForSelector("table.table-scroll tbody tr", {
+        timeout: 10000,
+      });
+    } catch {
+      await browser.close();
+      return NextResponse.json(
+        { error: "No Data Found (timeout)" },
+        { status: 404 }
+      );
+    }
 
-    console.log("✅ Final filtered results:", results);
+    const firstRow = await page.$eval("table.table-scroll tbody tr", (row) => {
+      const cells = Array.from(row.querySelectorAll("td"));
+      return {
+        taxpayerId: cells[1]?.innerText.trim(),
+        companyName: cells[3]?.innerText.trim().replace(/\s+/g, " "),
+        address: cells[4]?.innerText.trim().replace(/\s+/g, " "),
+        postalCode: cells[5]?.innerText.trim(),
+      };
+    });
 
     await browser.close();
-    return NextResponse.json({ results });
+
+    if (!firstRow || !firstRow.taxpayerId) {
+      return NextResponse.json(
+        { error: "No Data Found (empty row)" },
+        { status: 404 }
+      );
+    }
+
+    const fullAddress = firstRow.postalCode
+      ? `${firstRow.address} ${firstRow.postalCode}`
+      : firstRow.address;
+
+    return NextResponse.json({
+      results: [
+        {
+          taxpayerId: firstRow.taxpayerId,
+          companyName: firstRow.companyName,
+          fullAddress,
+        },
+      ],
+    });
   } catch (err) {
-    console.error("VATINFO scrape error →", err);
     return NextResponse.json(
-      { error: "VATINFO scrape failed", message: err.message },
+      {
+        error: "VATINFO scrape failed",
+        message: err?.message || "Unknown error",
+      },
       { status: 500 }
     );
   }

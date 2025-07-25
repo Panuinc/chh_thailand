@@ -4,6 +4,7 @@ import React, { useCallback, useState } from "react";
 import UITopic from "@/components/topic/UITopic";
 import { Input, Button, Select, SelectItem } from "@heroui/react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function UICustomerForm({
   headerContent,
@@ -25,13 +26,19 @@ export default function UICustomerForm({
     const searchByName = vatSearchType === "companyName";
 
     if (searchByTaxId && (!vatSearchId || vatSearchId.length !== 13)) {
-      console.warn("❌ กรุณาใส่ Tax ID ให้ครบ 13 หลัก");
+      toast.error("Please enter a valid 13-digit Tax ID.");
       return;
     }
 
-    if (searchByName && !vatSearchName.trim()) {
-      console.warn("❌ กรุณาใส่ชื่อบริษัท");
-      return;
+    if (searchByName) {
+      if (!vatSearchName.trim()) {
+        toast.error("Please enter the company name.");
+        return;
+      }
+      if (/บริษัท/i.test(vatSearchName)) {
+        toast.error('Do not include the word "บริษัท" (Company) in the name.');
+        return;
+      }
     }
 
     setVatSearching(true);
@@ -41,18 +48,29 @@ export default function UICustomerForm({
         companyName: searchByName ? vatSearchName.trim() : undefined,
       });
 
-      const results = res.data.results || [];
+      const results = res.data?.results || [];
 
       if (results.length > 0) {
         const { taxpayerId, companyName, fullAddress } = results[0];
         handleInputChange("customerTax")(taxpayerId || vatSearchId);
         handleInputChange("customerName")(companyName || vatSearchName);
-        if (fullAddress) handleInputChange("customerAddress")(fullAddress);
+        if (fullAddress) {
+          handleInputChange("customerAddress")(fullAddress);
+        }
+        toast.success("🎉 Company data found!");
       } else {
-        console.warn("❌ No results found.");
+        toast.error("❌ No data found.");
       }
     } catch (err) {
-      console.error("❌ VATINFO Fetch Error:", err);
+      const apiMsg = err?.response?.data?.error || "Unknown error.";
+      if (/^No Data Found/i.test(apiMsg)) {
+        toast.error("❌ No data found.");
+      } else {
+        toast.error(`❌ ${apiMsg}`);
+      }
+      if (process.env.NODE_ENV === "development") {
+        console.debug("❌ VATINFO Error:", err);
+      }
     } finally {
       setVatSearching(false);
     }
@@ -66,65 +84,92 @@ export default function UICustomerForm({
         onSubmit={onSubmit}
         className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Select
-              label="Search By"
-              labelPlacement="outside"
-              variant="flat"
-              color="default"
-              radius="full"
-              selectedKeys={[vatSearchType]}
-              onSelectionChange={(keys) => setVatSearchType([...keys][0])}
-            >
-              <SelectItem key="taxId">Taxpayer ID (13 digits)</SelectItem>
-              <SelectItem key="companyName">Company Name</SelectItem>
-            </Select>
-          </div>
+        {!isUpdate && (
+          <>
+            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                <Select
+                  label="Search By"
+                  labelPlacement="outside"
+                  variant="flat"
+                  color="default"
+                  radius="full"
+                  selectedKeys={[vatSearchType]}
+                  onSelectionChange={(keys) => setVatSearchType([...keys][0])}
+                >
+                  <SelectItem key="taxId">Tax ID (13 digits)</SelectItem>
+                  <SelectItem key="companyName">Company Name</SelectItem>
+                </Select>
+              </div>
 
-          {vatSearchType === "taxId" && (
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-              <Input
-                label="Taxpayer ID"
-                labelPlacement="outside"
-                placeholder="Enter tax ID"
-                variant="bordered"
-                radius="full"
-                value={vatSearchId}
-                onChange={(e) => setVatSearchId(e.target.value)}
-              />
+              {vatSearchType === "taxId" && (
+                <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                  <Input
+                    label="Taxpayer ID"
+                    labelPlacement="outside"
+                    placeholder="Enter tax ID"
+                    variant="bordered"
+                    radius="full"
+                    value={vatSearchId}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      if (value.length <= 13) setVatSearchId(value);
+                    }}
+                    isInvalid={vatSearchId && vatSearchId.length !== 13}
+                    errorMessage={
+                      vatSearchId && vatSearchId.length !== 13
+                        ? "Tax ID must be exactly 13 digits."
+                        : ""
+                    }
+                  />
+                </div>
+              )}
+
+              {vatSearchType === "companyName" && (
+                <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                  <Input
+                    label="Company Name"
+                    labelPlacement="outside"
+                    placeholder="Enter company name"
+                    variant="bordered"
+                    radius="full"
+                    value={vatSearchName}
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (/บริษัท/i.test(inputValue)) {
+                        toast.error(
+                          'Do not include the word "บริษัท" in the name.'
+                        );
+                      }
+                      setVatSearchName(inputValue);
+                    }}
+                    isInvalid={vatSearchName && /บริษัท/i.test(vatSearchName)}
+                    errorMessage={
+                      vatSearchName && /บริษัท/i.test(vatSearchName)
+                        ? 'Do not include the word "บริษัท" in the name.'
+                        : ""
+                    }
+                  />
+                </div>
+              )}
             </div>
-          )}
 
-          {vatSearchType === "companyName" && (
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-              <Input
-                label="Company Name"
-                labelPlacement="outside"
-                placeholder="Enter company name"
-                variant="bordered"
-                radius="full"
-                value={vatSearchName}
-                onChange={(e) => setVatSearchName(e.target.value)}
-              />
+            <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+              <div className="flex items-center justify-center h-full p-2 gap-2">
+                <Button
+                  type="button"
+                  color="warning"
+                  radius="full"
+                  className="w-full h-full p-3 gap-2"
+                  isLoading={vatSearching}
+                  onPress={fetchVATInfo}
+                >
+                  Search Data
+                </Button>
+              </div>
             </div>
-          )}
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
-          <div className="flex items-center justify-center h-full p-2 gap-2">
-            <Button
-              type="button"
-              color="warning"
-              radius="full"
-              className="w-full h-full p-3 gap-2"
-              isLoading={vatSearching}
-              onPress={fetchVATInfo}
-            >
-              Search Data
-            </Button>
-          </div>
-        </div>
+          </>
+        )}
 
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
