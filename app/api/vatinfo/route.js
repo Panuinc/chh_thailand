@@ -65,18 +65,19 @@ export async function POST(req) {
 
       let rawCompanyName =
         cells[3]?.innerText.trim().replace(/\s+/g, " ") || "";
-
       const [firstName] = rawCompanyName.split(" / ");
       const companyName = firstName.trim();
+
+      const branchText = cells[2]?.innerText.trim() || "";
 
       return {
         taxpayerId: matchTaxId ? matchTaxId[1] : rawTaxId,
         companyName,
+        branch: branchText,
         address: cells[4]?.innerText.trim().replace(/\s+/g, " "),
         postalCode: cells[5]?.innerText.trim(),
       };
     });
-
     await browser.close();
 
     if (!firstRow || !firstRow.taxpayerId) {
@@ -95,6 +96,7 @@ export async function POST(req) {
         {
           taxpayerId: firstRow.taxpayerId,
           companyName: firstRow.companyName,
+          customerBranch: firstRow.branch,
           fullAddress,
         },
       ],

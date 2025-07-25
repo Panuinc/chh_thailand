@@ -14,11 +14,18 @@ export async function CreateCustomerUseCase(data) {
   }
 
   const normalizedTax = parsed.data.customerTax.trim();
-  const duplicateTax = await CustomerValidator.isDuplicateCustomerTax(
-    normalizedTax
+  const normalizedBranch = parsed.data.customerBranch.trim();
+
+  const duplicate = await CustomerValidator.isDuplicateCustomerTaxBranch(
+    normalizedTax,
+    normalizedBranch
   );
-  if (duplicateTax) {
-    throw { status: 409, message: `Tax ID '${normalizedTax}' already exists` };
+
+  if (duplicate) {
+    throw {
+      status: 409,
+      message: `Customer with Tax ID '${normalizedTax}' and Branch '${normalizedBranch}' already exists`,
+    };
   }
 
   return CustomerService.create({

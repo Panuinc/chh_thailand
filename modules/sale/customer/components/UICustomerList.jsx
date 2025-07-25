@@ -29,6 +29,7 @@ const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "Customer Tax", uid: "tax" },
   { name: "Customer", uid: "name", sortable: true },
+  { name: "Branch", uid: "branch" },
   { name: "Address", uid: "address" },
   { name: "Phone", uid: "phone" },
   { name: "Type", uid: "type" },
@@ -87,6 +88,7 @@ export default function UICustomerList({
     id: r.customerId,
     tax: r.customerTax || "-",
     name: r.customerName || "-",
+    branch: r.customerBranch || "-",
     address: r.customerAddress || "-",
     phone: r.customerPhone || "-",
     type: (

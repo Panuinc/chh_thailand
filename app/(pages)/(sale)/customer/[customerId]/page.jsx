@@ -27,6 +27,7 @@ export default function CustomerUpdate() {
       {
         customerTax: "",
         customerName: "",
+        customerBranch: "",
         customerAddress: "",
         customerPhone: "",
         customerType: "",

@@ -23,9 +23,12 @@ export const CustomerRepository = {
       },
     }),
 
-  findByTax: (tax) =>
+  findByTaxAndBranch: (tax, branch) =>
     prisma.customer.findFirst({
-      where: { customerTax: tax.trim() },
+      where: {
+        customerTax: tax.trim(),
+        customerBranch: branch.trim(),
+      },
     }),
 
   create: (data) => prisma.customer.create({ data }),

@@ -19,15 +19,20 @@ export async function UpdateCustomerUseCase(data) {
   }
 
   const normalizedTax = parsed.data.customerTax.trim();
+  const normalizedBranch = parsed.data.customerBranch.trim();
 
-  if (normalizedTax !== existing.customerTax) {
-    const duplicateTax = await CustomerValidator.isDuplicateCustomerTax(
-      normalizedTax
+  if (
+    normalizedTax !== existing.customerTax ||
+    normalizedBranch !== existing.customerBranch
+  ) {
+    const duplicate = await CustomerValidator.isDuplicateCustomerTaxBranch(
+      normalizedTax,
+      normalizedBranch
     );
-    if (duplicateTax) {
+    if (duplicate) {
       throw {
         status: 409,
-        message: `Tax ID '${normalizedTax}' already exists`,
+        message: `Customer with Tax ID '${normalizedTax}' and Branch '${normalizedBranch}' already exists`,
       };
     }
   }

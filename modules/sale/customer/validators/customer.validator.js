@@ -1,8 +1,8 @@
 import { CustomerRepository } from "../repositories/customer.repository";
 
 export const CustomerValidator = {
-  async isDuplicateCustomerTax(tax) {
-    const customer = await CustomerRepository.findByTax(tax);
+  async isDuplicateCustomerTaxBranch(tax, branch) {
+    const customer = await CustomerRepository.findByTaxAndBranch(tax, branch);
     return !!customer;
   },
 };

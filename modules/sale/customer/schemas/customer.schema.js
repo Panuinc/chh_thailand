@@ -9,6 +9,7 @@ import {
 export const customerPostSchema = z.object({
   customerTax: preprocessString("Please provide customer tax"),
   customerName: preprocessString("Please provide the customer name"),
+  customerBranch: preprocessString("Please provide the customer branch"),
   customerAddress: preprocessString("Please provide customer address"),
   customerPhone: preprocessString("Please provide customer phone"),
   customerType: preprocessEnum(
@@ -29,6 +30,7 @@ export const customerPutSchema = z.object({
   customerId: preprocessInt("Please provide the customer ID to update"),
   customerTax: preprocessString("Please provide customer tax"),
   customerName: preprocessString("Please provide the customer name"),
+  customerBranch: preprocessString("Please provide the customer branch"),
   customerAddress: preprocessString("Please provide customer address"),
   customerPhone: preprocessString("Please provide customer phone"),
   customerType: preprocessEnum(

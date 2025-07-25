@@ -51,12 +51,20 @@ export default function UICustomerForm({
       const results = res.data?.results || [];
 
       if (results.length > 0) {
-        const { taxpayerId, companyName, fullAddress } = results[0];
+        const { taxpayerId, companyName, customerBranch, fullAddress } =
+          results[0];
+
         handleInputChange("customerTax")(taxpayerId || vatSearchId);
         handleInputChange("customerName")(companyName || vatSearchName);
+
+        if (customerBranch) {
+          handleInputChange("customerBranch")(customerBranch);
+        }
+
         if (fullAddress) {
           handleInputChange("customerAddress")(fullAddress);
         }
+
         toast.success("🎉 Company data found!");
       } else {
         toast.error("❌ No data found.");
@@ -187,9 +195,6 @@ export default function UICustomerForm({
               errorMessage={errors.customerTax}
             />
           </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="customerName"
@@ -203,6 +208,24 @@ export default function UICustomerForm({
               onChange={handleInputChange("customerName")}
               isInvalid={!!errors.customerName}
               errorMessage={errors.customerName}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="customerBranch"
+              label="Customer Branch"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.customerBranch || ""}
+              onChange={handleInputChange("customerBranch")}
+              isInvalid={!!errors.customerBranch}
+              errorMessage={errors.customerBranch}
             />
           </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
