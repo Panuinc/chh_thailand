@@ -15,6 +15,7 @@ export default function UICustomerForm({
   handleInputChange,
   isUpdate,
   operatedBy,
+  setFormData,
 }) {
   const [vatSearchId, setVatSearchId] = useState("");
   const [vatSearchName, setVatSearchName] = useState("");
@@ -328,6 +329,106 @@ export default function UICustomerForm({
             </div>
           </div>
         )}
+
+        <div className="flex flex-col items-start w-full p-2 gap-2">
+          <div className="bg-black text-white px-4 py-2 rounded">
+            Customer Leaders
+          </div>
+
+          {(Array.isArray(formData.customerLeaders)
+            ? formData.customerLeaders
+            : []
+          ).map((leader, index) => (
+            <div
+              key={index}
+              className="flex flex-col lg:flex-row w-full gap-2 border p-2 rounded"
+            >
+              <Input
+                label="Name"
+                value={leader.customerLeaderName}
+                onChange={(e) => {
+                  const next = [...formData.customerLeaders];
+                  next[index] = {
+                    ...next[index],
+                    customerLeaderName: e.target.value,
+                  };
+                  setFormData({ ...formData, customerLeaders: next });
+                }}
+              />
+              <Input
+                label="Email"
+                value={leader.customerLeaderEmail}
+                onChange={(e) => {
+                  const next = [...formData.customerLeaders];
+                  next[index] = {
+                    ...next[index],
+                    customerLeaderEmail: e.target.value,
+                  };
+                  setFormData({ ...formData, customerLeaders: next });
+                }}
+              />
+              <Input
+                label="Phone"
+                value={leader.customerLeaderPhone}
+                onChange={(e) => {
+                  const next = [...formData.customerLeaders];
+                  next[index] = {
+                    ...next[index],
+                    customerLeaderPhone: e.target.value,
+                  };
+                  setFormData({ ...formData, customerLeaders: next });
+                }}
+              />
+              <Select
+                label="Decision Maker?"
+                selectedKeys={[
+                  leader.customerLeaderIsDecisionMaker ? "true" : "false",
+                ]}
+                onSelectionChange={(keys) => {
+                  const next = [...formData.customerLeaders];
+                  next[index] = {
+                    ...next[index],
+                    customerLeaderIsDecisionMaker: [...keys][0] === "true",
+                  };
+                  setFormData({ ...formData, customerLeaders: next });
+                }}
+              >
+                <SelectItem key="true">Yes</SelectItem>
+                <SelectItem key="false">No</SelectItem>
+              </Select>
+              <Button
+                color="danger"
+                onPress={() => {
+                  const next = [...formData.customerLeaders];
+                  next.splice(index, 1);
+                  setFormData({ ...formData, customerLeaders: next });
+                }}
+              >
+                Remove
+              </Button>
+            </div>
+          ))}
+
+          <Button
+            type="button"
+            color="secondary"
+            onPress={() => {
+              const next = Array.isArray(formData.customerLeaders)
+                ? [...formData.customerLeaders]
+                : [];
+              next.push({
+                customerLeaderId: undefined,
+                customerLeaderName: "",
+                customerLeaderEmail: "",
+                customerLeaderPhone: "",
+                customerLeaderIsDecisionMaker: false,
+              });
+              setFormData({ ...formData, customerLeaders: next });
+            }}
+          >
+            ➕ Add Leader
+          </Button>
+        </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">

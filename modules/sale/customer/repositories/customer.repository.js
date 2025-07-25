@@ -9,6 +9,7 @@ export const CustomerRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
+        leaders: true,
       },
     }),
 
@@ -20,6 +21,7 @@ export const CustomerRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
+        leaders: true,
       },
     }),
 

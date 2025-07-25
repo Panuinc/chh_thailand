@@ -14,7 +14,7 @@ export default function CustomerCreate() {
     userId,
   });
 
-  const { formRef, formData, errors, handleChange, handleSubmit } =
+  const { formRef, formData, errors, handleChange, handleSubmit, setFormData } =
     useFormHandler(
       {
         customerTax: "",
@@ -23,6 +23,7 @@ export default function CustomerCreate() {
         customerAddress: "",
         customerPhone: "",
         customerType: "",
+        customerLeaders: [],
       },
       onSubmitHandler
     );
@@ -37,6 +38,7 @@ export default function CustomerCreate() {
         errors={errors}
         formData={formData}
         handleInputChange={handleChange}
+        setFormData={setFormData}
         operatedBy={userName}
       />
     </>

@@ -16,12 +16,6 @@ export default function CustomerUpdate() {
   const { userId, userName } = useSessionUser();
   const { customer, loading } = useFetchCustomerById(customerId);
 
-  const onSubmitHandler = useSubmitCustomer({
-    mode: "update",
-    customerId,
-    userId,
-  });
-
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
     useFormHandler(
       {
@@ -32,13 +26,28 @@ export default function CustomerUpdate() {
         customerPhone: "",
         customerType: "",
         customerStatus: "",
+        customerLeaders: [],
       },
-      onSubmitHandler
+      useSubmitCustomer({ mode: "update", customerId, userId })
     );
 
   useEffect(() => {
-    if (customer) setFormData(customer);
-  }, [customer, setFormData]);
+    if (customer) {
+      setFormData({
+        ...customer,
+        customerLeaders: Array.isArray(customer.leaders)
+          ? customer.leaders.map((leader) => ({
+              customerLeaderId: leader.customerLeaderId,
+              customerLeaderName: leader.customerLeaderName,
+              customerLeaderEmail: leader.customerLeaderEmail,
+              customerLeaderPhone: leader.customerLeaderPhone,
+              customerLeaderIsDecisionMaker:
+                leader.customerLeaderIsDecisionMaker,
+            }))
+          : [],
+      });
+    }
+  }, [customer]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -52,6 +61,7 @@ export default function CustomerUpdate() {
         errors={errors}
         formData={formData}
         handleInputChange={handleChange}
+        setFormData={setFormData}
         operatedBy={userName}
         isUpdate
       />

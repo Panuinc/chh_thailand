@@ -8,11 +8,25 @@ export function useSubmitCustomer({ mode = "create", customerId, userId }) {
   return useCallback(
     async (formRef, formData, setErrors) => {
       const form = new FormData(formRef);
-      const byField = mode === "create" ? "customerCreateBy" : "customerUpdateBy";
+      const byField =
+        mode === "create" ? "customerCreateBy" : "customerUpdateBy";
       form.append(byField, userId);
 
+      if (formData.customerLeaders) {
+        const cleanedLeaders = formData.customerLeaders.map((leader) => ({
+          customerLeaderId: leader.customerLeaderId || undefined,
+          customerLeaderName: leader.customerLeaderName,
+          customerLeaderEmail: leader.customerLeaderEmail,
+          customerLeaderPhone: leader.customerLeaderPhone,
+          customerLeaderIsDecisionMaker: !!leader.customerLeaderIsDecisionMaker,
+        }));
+        form.append("customerLeaders", JSON.stringify(cleanedLeaders));
+      }
+
       const url =
-        mode === "create" ? "/api/sale/customer" : `/api/sale/customer/${customerId}`;
+        mode === "create"
+          ? "/api/sale/customer"
+          : `/api/sale/customer/${customerId}`;
       const method = mode === "create" ? "POST" : "PUT";
 
       try {

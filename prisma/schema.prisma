@@ -250,22 +250,22 @@ model Customer {
 }
 
 model CustomerLeader {
-  customerLeaderId Int       @id @default(autoincrement())
-  customerId       Int
-  leaderName       String
-  leaderEmail      String
-  leaderPhone      String
-  isDecisionMaker  Boolean   @default(false)
-  leaderCreateBy   Int
-  leaderCreateAt   DateTime  @default(now()) @db.Timestamp(0)
-  leaderUpdateBy   Int?
-  leaderUpdateAt   DateTime? @db.Timestamp(0)
+  customerLeaderId              Int       @id @default(autoincrement())
+  customerId                    Int
+  customerLeaderName            String
+  customerLeaderEmail           String
+  customerLeaderPhone           String
+  customerLeaderIsDecisionMaker Boolean   @default(false)
+  customerLeaderCreateBy        Int
+  customerLeaderCreateAt        DateTime  @default(now()) @db.Timestamp(0)
+  customerLeaderUpdateBy        Int?
+  customerLeaderUpdateAt        DateTime? @db.Timestamp(0)
 
   customer  Customer @relation("CustomerToLeader", fields: [customerId], references: [customerId])
-  createdBy User     @relation("CustomerLeaderCreatedBy", fields: [leaderCreateBy], references: [userId])
-  updatedBy User?    @relation("CustomerLeaderUpdatedBy", fields: [leaderUpdateBy], references: [userId])
+  createdBy User     @relation("CustomerLeaderCreatedBy", fields: [customerLeaderCreateBy], references: [userId])
+  updatedBy User?    @relation("CustomerLeaderUpdatedBy", fields: [customerLeaderUpdateBy], references: [userId])
 
   @@index([customerId])
-  @@index([leaderCreateBy])
-  @@index([leaderUpdateBy])
+  @@index([customerLeaderCreateBy])
+  @@index([customerLeaderUpdateBy])
 }

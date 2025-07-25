@@ -6,6 +6,14 @@ import {
   formatData,
 } from "@/lib/zodSchema";
 
+const customerLeaderSchema = z.object({
+  customerLeaderId: z.coerce.number().optional(),
+  customerLeaderName: preprocessString("Please provide leader name"),
+  customerLeaderEmail: preprocessString("Please provide leader email"),
+  customerLeaderPhone: preprocessString("Please provide leader phone"),
+  customerLeaderIsDecisionMaker: z.coerce.boolean().optional(),
+});
+
 export const customerPostSchema = z.object({
   customerTax: preprocessString("Please provide customer tax"),
   customerName: preprocessString("Please provide the customer name"),
@@ -24,6 +32,7 @@ export const customerPostSchema = z.object({
     "Invalid customer type"
   ),
   customerCreateBy: preprocessInt("Please provide the creator's user ID"),
+  customerLeaders: z.array(customerLeaderSchema).optional(),
 });
 
 export const customerPutSchema = z.object({
@@ -49,6 +58,7 @@ export const customerPutSchema = z.object({
     "Please provide 'Enable' or 'Disable'"
   ),
   customerUpdateBy: preprocessInt("Please provide the updater's user ID"),
+  customerLeaders: z.array(customerLeaderSchema).optional(),
 });
 
 export const formatCustomerData = (customers) =>
