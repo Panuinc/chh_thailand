@@ -19,7 +19,7 @@ export default function UICustomerForm({
   const [vatSearchId, setVatSearchId] = useState("");
   const [vatSearchName, setVatSearchName] = useState("");
   const [vatSearching, setVatSearching] = useState(false);
-  const [vatSearchType, setVatSearchType] = useState("taxId");
+  const [vatSearchType, setVatSearchType] = useState("companyName");
 
   const fetchVATInfo = useCallback(async () => {
     const searchByTaxId = vatSearchType === "taxId";
@@ -105,33 +105,10 @@ export default function UICustomerForm({
                   selectedKeys={[vatSearchType]}
                   onSelectionChange={(keys) => setVatSearchType([...keys][0])}
                 >
-                  <SelectItem key="taxId">Tax ID (13 digits)</SelectItem>
                   <SelectItem key="companyName">Company Name</SelectItem>
+                  <SelectItem key="taxId">Tax ID (13 digits)</SelectItem>
                 </Select>
               </div>
-
-              {vatSearchType === "taxId" && (
-                <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                  <Input
-                    label="Taxpayer ID"
-                    labelPlacement="outside"
-                    placeholder="Enter tax ID"
-                    variant="bordered"
-                    radius="full"
-                    value={vatSearchId}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
-                      if (value.length <= 13) setVatSearchId(value);
-                    }}
-                    isInvalid={vatSearchId && vatSearchId.length !== 13}
-                    errorMessage={
-                      vatSearchId && vatSearchId.length !== 13
-                        ? "Tax ID must be exactly 13 digits."
-                        : ""
-                    }
-                  />
-                </div>
-              )}
 
               {vatSearchType === "companyName" && (
                 <div className="flex items-center justify-center w-full h-full p-2 gap-2">
@@ -155,6 +132,29 @@ export default function UICustomerForm({
                     errorMessage={
                       vatSearchName && /บริษัท/i.test(vatSearchName)
                         ? 'Do not include the word "บริษัท" in the name.'
+                        : ""
+                    }
+                  />
+                </div>
+              )}
+
+              {vatSearchType === "taxId" && (
+                <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                  <Input
+                    label="Taxpayer ID"
+                    labelPlacement="outside"
+                    placeholder="Enter tax ID"
+                    variant="bordered"
+                    radius="full"
+                    value={vatSearchId}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      if (value.length <= 13) setVatSearchId(value);
+                    }}
+                    isInvalid={vatSearchId && vatSearchId.length !== 13}
+                    errorMessage={
+                      vatSearchId && vatSearchId.length !== 13
+                        ? "Tax ID must be exactly 13 digits."
                         : ""
                     }
                   />
