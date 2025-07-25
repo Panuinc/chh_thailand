@@ -9,6 +9,9 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from "@heroui/react";
 import { ChevronDown } from "lucide-react";
 import {
@@ -89,7 +92,20 @@ export default function UICustomerList({
     tax: r.customerTax || "-",
     name: r.customerName || "-",
     branch: r.customerBranch || "-",
-    address: r.customerAddress || "-",
+    address: (
+      <Popover placement="top">
+        <PopoverTrigger>
+          <span className="cursor-pointer">
+            {r.customerAddress?.length > 20
+              ? r.customerAddress.slice(0, 20) + "..."
+              : r.customerAddress || "-"}
+          </span>
+        </PopoverTrigger>
+        <PopoverContent className="max-w-xs whitespace-pre-wrap">
+          {r.customerAddress || "-"}
+        </PopoverContent>
+      </Popover>
+    ),
     phone: r.customerPhone || "-",
     type: (
       <span
