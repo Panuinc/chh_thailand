@@ -185,6 +185,12 @@ export default function UICustomerForm({
           </>
         )}
 
+        <div className="flex flex-col lg:flex-row items-center justify-start w-full p-2 gap-2">
+          <div className="flex items-center justify-center h-full px-8 py-4 gap-2 bg-black text-white font-semibold rounded-lg">
+            Customer Profile
+          </div>
+        </div>
+
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
@@ -377,9 +383,9 @@ export default function UICustomerForm({
                     <td className="p-2 border">{item.fullAddress}</td>
                     <td className="p-2 border text-center">
                       <Button
-                        color="primary"
-                        radius="full"
-                        className="w-full h-full p-3 gap-2"
+                        color="none"
+                        radius="none"
+                        className="w-full h-full p-3 gap-2 hover:text-primary hover:font-semibold"
                         onPress={() => {
                           handleInputChange("customerTax")(item.taxpayerId);
                           handleInputChange("customerName")(item.companyName);
