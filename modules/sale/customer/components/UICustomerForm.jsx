@@ -21,6 +21,9 @@ export default function UICustomerForm({
   const [vatSearching, setVatSearching] = useState(false);
   const [vatSearchType, setVatSearchType] = useState("companyName");
 
+  const [vatSearchResults, setVatSearchResults] = useState([]);
+  const [showResultModal, setShowResultModal] = useState(false);
+
   const fetchVATInfo = useCallback(async () => {
     const searchByTaxId = vatSearchType === "taxId";
     const searchByName = vatSearchType === "companyName";
@@ -50,7 +53,7 @@ export default function UICustomerForm({
 
       const results = res.data?.results || [];
 
-      if (results.length > 0) {
+      if (results.length === 1) {
         const { taxpayerId, companyName, customerBranch, fullAddress } =
           results[0];
 
@@ -66,6 +69,9 @@ export default function UICustomerForm({
         }
 
         toast.success("🎉 Company data found!");
+      } else if (results.length > 1) {
+        setVatSearchResults(results);
+        setShowResultModal(true);
       } else {
         toast.error("❌ No data found.");
       }
@@ -347,6 +353,66 @@ export default function UICustomerForm({
           </div>
         </div>
       </form>
+
+      {showResultModal && (
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg max-w-4xl w-full p-4 overflow-auto max-h-[80vh]">
+            <h2 className="text-xl font-bold mb-4">Select a branch</h2>
+            <table className="w-full border border-gray-300 text-sm">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="p-2 border">Tax ID</th>
+                  <th className="p-2 border">Company</th>
+                  <th className="p-2 border">Branch</th>
+                  <th className="p-2 border">Address</th>
+                  <th className="p-2 border">Select</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vatSearchResults.map((item, index) => (
+                  <tr key={index}>
+                    <td className="p-2 border">{item.taxpayerId}</td>
+                    <td className="p-2 border">{item.companyName}</td>
+                    <td className="p-2 border">{item.customerBranch}</td>
+                    <td className="p-2 border">{item.fullAddress}</td>
+                    <td className="p-2 border text-center">
+                      <Button
+                        color="primary"
+                        radius="full"
+                        className="w-full h-full p-3 gap-2"
+                        onPress={() => {
+                          handleInputChange("customerTax")(item.taxpayerId);
+                          handleInputChange("customerName")(item.companyName);
+                          handleInputChange("customerBranch")(
+                            item.customerBranch
+                          );
+                          handleInputChange("customerAddress")(
+                            item.fullAddress
+                          );
+                          setShowResultModal(false);
+                          toast.success("✅ Data selected!");
+                        }}
+                      >
+                        Select
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="flex items-center justify-end h-full p-2 gap-2">
+              <Button
+                onPress={() => setShowResultModal(false)}
+                color="danger"
+                radius="full"
+                className="w-3/12 h-full p-3 gap-2"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

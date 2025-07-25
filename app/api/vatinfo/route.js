@@ -6,11 +6,12 @@ export const runtime = "nodejs";
 export async function POST(req) {
   try {
     const { taxpayerId, companyName } = await req.json();
-    if (!taxpayerId && !companyName)
+    if (!taxpayerId && !companyName) {
       return NextResponse.json(
         { error: "Missing taxpayer ID or company name" },
         { status: 400 }
       );
+    }
 
     const browser = await puppeteer.launch({
       headless: "new",
@@ -58,49 +59,40 @@ export async function POST(req) {
       );
     }
 
-    const firstRow = await page.$eval("table.table-scroll tbody tr", (row) => {
-      const cells = Array.from(row.querySelectorAll("td"));
-      const rawTaxId = cells[1]?.innerText.trim() || "";
-      const matchTaxId = rawTaxId.match(/(\d{13})$/);
+    const rows = await page.$$eval("table.table-scroll tbody tr", (trs) =>
+      trs
+        .map((row) => {
+          const cells = Array.from(row.querySelectorAll("td"));
+          const rawTaxId = cells[1]?.innerText.trim() || "";
+          const matchTaxId = rawTaxId.match(/(\d{13})$/);
+          const branchText = cells[2]?.innerText.trim() || "";
+          let rawCompanyName =
+            cells[3]?.innerText.trim().replace(/\s+/g, " ") || "";
+          const [firstName] = rawCompanyName.split(" / ");
+          const companyName = firstName.trim();
+          const address = cells[4]?.innerText.trim().replace(/\s+/g, " ");
+          const postalCode = cells[5]?.innerText.trim();
 
-      let rawCompanyName =
-        cells[3]?.innerText.trim().replace(/\s+/g, " ") || "";
-      const [firstName] = rawCompanyName.split(" / ");
-      const companyName = firstName.trim();
+          return {
+            taxpayerId: matchTaxId ? matchTaxId[1] : rawTaxId,
+            companyName,
+            customerBranch: branchText,
+            fullAddress: postalCode ? `${address} ${postalCode}` : address,
+          };
+        })
+        .filter((row) => row.taxpayerId && row.companyName && row.fullAddress)
+    );
 
-      const branchText = cells[2]?.innerText.trim() || "";
-
-      return {
-        taxpayerId: matchTaxId ? matchTaxId[1] : rawTaxId,
-        companyName,
-        branch: branchText,
-        address: cells[4]?.innerText.trim().replace(/\s+/g, " "),
-        postalCode: cells[5]?.innerText.trim(),
-      };
-    });
     await browser.close();
 
-    if (!firstRow || !firstRow.taxpayerId) {
+    if (!rows.length || !rows[0].taxpayerId) {
       return NextResponse.json(
         { error: "No Data Found (empty row)" },
         { status: 404 }
       );
     }
 
-    const fullAddress = firstRow.postalCode
-      ? `${firstRow.address} ${firstRow.postalCode}`
-      : firstRow.address;
-
-    return NextResponse.json({
-      results: [
-        {
-          taxpayerId: firstRow.taxpayerId,
-          companyName: firstRow.companyName,
-          customerBranch: firstRow.branch,
-          fullAddress,
-        },
-      ],
-    });
+    return NextResponse.json({ results: rows });
   } catch (err) {
     return NextResponse.json(
       {
