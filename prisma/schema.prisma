@@ -304,32 +304,88 @@ model Partner {
 
 model Storehouse {
   storehouseId          Int         @id @default(autoincrement())
-  storehouseCode        String
+  storehouseCode        String      @unique
   storehouseName        String
   storehouseLocation    String
-  storehouseDescription String
+  storehouseDescription String?
   storehouseStatus      EnableState @default(Enable)
   storehouseCreateBy    Int
   storehouseCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   storehouseUpdateBy    Int?
   storehouseUpdateAt    DateTime?   @db.Timestamp(0)
 
-  bins      Bin[] @relation("StorehouseToBin")
-  createdBy User  @relation("StorehouseCreateBy", fields: [storehouseCreateBy], references: [userId])
-  updatedBy User? @relation("StorehouseUpdateBy", fields: [storehouseUpdateBy], references: [userId])
+  createdBy       User   @relation("StorehouseCreateBy", fields: [storehouseCreateBy], references: [userId])
+  updatedBy       User?  @relation("StorehouseUpdateBy", fields: [storehouseUpdateBy], references: [userId])
+  storehouseZones Zone[]
 
   @@index([storehouseCreateBy])
   @@index([storehouseUpdateBy])
 }
 
-model Bin {
-  binId         Int    @id @default(autoincrement())
-  binStorehouse Int
-  binCode       String @unique
-  binZone       String
-  binRack       String
-  binRow        String
-  binCapacity   String
+model Zone {
+  zoneId           Int         @id @default(autoincrement())
+  zoneStorehouseId Int
+  zoneCode         String      @unique
+  zoneName         String
+  zoneDescription  String?
+  zoneStatus       EnableState @default(Enable)
+  zoneCreateAt     DateTime    @default(now()) @db.Timestamp(0)
+  zoneUpdateAt     DateTime    @db.Timestamp(0)
 
-  storehouse Storehouse @relation("StorehouseToBin", fields: [binStorehouse], references: [storehouseId])
+  zoneStorehouse Storehouse @relation(fields: [zoneStorehouseId], references: [storehouseId])
+  zoneAisles     Aisle[]
+}
+
+model Aisle {
+  aisleId       Int       @id @default(autoincrement())
+  aisleZoneId   Int
+  aisleCode     String    @unique
+  aisleName     String
+  aisleCreateAt DateTime  @default(now()) @db.Timestamp(0)
+  aisleUpdateAt DateTime? @db.Timestamp(0)
+
+  aisleZone  Zone   @relation(fields: [aisleZoneId], references: [zoneId])
+  aisleRacks Rack[]
+}
+
+model Rack {
+  rackId       Int       @id @default(autoincrement())
+  rackAisleId  Int
+  rackCode     String    @unique
+  rackName     String
+  rackCreateAt DateTime  @default(now()) @db.Timestamp(0)
+  rackUpdateAt DateTime? @db.Timestamp(0)
+
+  rackAisle  Aisle   @relation(fields: [rackAisleId], references: [aisleId])
+  rackLevels Level[]
+}
+
+model Level {
+  levelId       Int       @id @default(autoincrement())
+  levelRackId   Int
+  levelCode     String    @unique
+  levelName     String
+  levelCreateAt DateTime  @default(now()) @db.Timestamp(0)
+  levelUpdateAt DateTime? @db.Timestamp(0)
+
+  levelRack Rack  @relation(fields: [levelRackId], references: [rackId])
+  levelBins Bin[]
+}
+
+model Bin {
+  binId        Int       @id @default(autoincrement())
+  binLevelId   Int
+  binCode      String    @unique
+  binRow       String
+  binType      String
+  binUsage     String
+  binCapacity  Int
+  binRfidTagId String?
+  binPosX      Float?
+  binPosY      Float?
+  binPosZ      Float?
+  binCreateAt  DateTime  @default(now()) @db.Timestamp(0)
+  binUpdateAt  DateTime? @db.Timestamp(0)
+
+  binLevel Level @relation(fields: [binLevelId], references: [levelId])
 }
