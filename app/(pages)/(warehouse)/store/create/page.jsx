@@ -112,7 +112,7 @@ export default function StoreCreate() {
         onAddRack={addRack}
         onAddLevel={addLevel}
         onAddBin={addBin}
-        onNestedChange={handleNestedChange}
+        handleNestedChange={handleNestedChange}
       />
     </>
   );
