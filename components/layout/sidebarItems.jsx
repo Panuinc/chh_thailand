@@ -1,6 +1,7 @@
 import {
   LayoutDashboard,
   User,
+  ShoppingCart,
   Factory,
   BadgeDollarSign,
   Warehouse,
@@ -15,6 +16,7 @@ import { menuList } from "@/lib/menuList";
 const iconMap = {
   LayoutDashboard,
   User,
+  ShoppingCart,
   Factory,
   BadgeDollarSign,
   Warehouse,

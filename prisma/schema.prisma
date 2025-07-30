@@ -29,6 +29,11 @@ enum CustomerType {
   Dealer
 }
 
+enum PartnerType {
+  CUSTOMER
+  SUPPLIER
+}
+
 model Role {
   roleId       Int         @id @default(autoincrement())
   roleName     String
@@ -155,6 +160,9 @@ model User {
   customersCreated Customer[] @relation("CustomerCreatedBy")
   customersUpdated Customer[] @relation("CustomerUpdatedBy")
 
+  storehousesCreated Storehouse[] @relation("StorehouseCreateBy")
+  storehousesUpdated Storehouse[] @relation("StorehouseUpdateBy")
+
   createdBy User? @relation("UserCreatedBy", fields: [userCreateBy], references: [userId])
   updatedBy User? @relation("UserUpdatedBy", fields: [userUpdateBy], references: [userId])
 
@@ -268,4 +276,51 @@ model CustomerLeader {
   @@index([customerId])
   @@index([customerLeaderCreateBy])
   @@index([customerLeaderUpdateBy])
+}
+
+model Storehouse {
+  storehouseId          Int         @id @default(autoincrement())
+  storehouseCode        String
+  storehouseName        String
+  storehouseLocation    String
+  storehouseDescription String
+  storehouseStatus      EnableState
+  storehouseCreateBy    Int
+  storehouseCreateAt    DateTime    @default(now()) @db.Timestamp(0)
+  storehouseUpdateBy    Int?
+  storehouseUpdateAt    DateTime?   @db.Timestamp(0)
+
+  bins      Bin[] @relation("StorehouseToBin")
+  createdBy User  @relation("StorehouseCreateBy", fields: [storehouseCreateBy], references: [userId])
+  updatedBy User? @relation("StorehouseUpdateBy", fields: [storehouseUpdateBy], references: [userId])
+
+  @@index([storehouseCreateBy])
+  @@index([storehouseUpdateBy])
+}
+
+model Bin {
+  binId         Int    @id @default(autoincrement())
+  binStorehouse Int
+  binCode       String @unique
+  binZone       String
+  binRack       String
+  binRow        String
+  binCapacity   String
+
+  storehouse Storehouse @relation("StorehouseToBin", fields: [binStorehouse], references: [storehouseId])
+}
+
+model Partner {
+  partnerId       Int         @id @default(autoincrement())
+  partnerName     String
+  partnerType     PartnerType
+  partnerTaxId    String
+  partnerPhone    String
+  partnerAddress  String
+  partnerEmail    String
+  partnerStatus   EnableState
+  partnerCreateBy Int
+  partnerCreateAt DateTime    @default(now()) @db.Timestamp(0)
+  partnerUpdateBy Int?
+  partnerUpdateAt DateTime?   @db.Timestamp(0)
 }
