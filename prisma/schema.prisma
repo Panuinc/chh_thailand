@@ -281,6 +281,27 @@ model CustomerLeader {
   @@index([customerLeaderUpdateBy])
 }
 
+model Partner {
+  partnerId       Int         @id @default(autoincrement())
+  partnerName     String
+  partnerTaxId    String
+  partnerPhone    String
+  partnerAddress  String
+  partnerEmail    String
+  partnerStatus   EnableState @default(Enable)
+  partnerCreateBy Int
+  partnerCreateAt DateTime    @default(now()) @db.Timestamp(0)
+  partnerUpdateBy Int?
+  partnerUpdateAt DateTime?   @db.Timestamp(0)
+
+  createdBy User  @relation("PartnerCreateBy", fields: [partnerCreateBy], references: [userId])
+  updatedBy User? @relation("PartnerUpdateBy", fields: [partnerUpdateBy], references: [userId])
+
+  @@unique([partnerName, partnerTaxId])
+  @@index([partnerCreateBy])
+  @@index([partnerUpdateBy])
+}
+
 model Storehouse {
   storehouseId          Int         @id @default(autoincrement())
   storehouseCode        String
@@ -311,25 +332,4 @@ model Bin {
   binCapacity   String
 
   storehouse Storehouse @relation("StorehouseToBin", fields: [binStorehouse], references: [storehouseId])
-}
-
-model Partner {
-  partnerId       Int         @id @default(autoincrement())
-  partnerName     String
-  partnerTaxId    String
-  partnerPhone    String
-  partnerAddress  String
-  partnerEmail    String
-  partnerStatus   EnableState @default(Enable)
-  partnerCreateBy Int
-  partnerCreateAt DateTime    @default(now()) @db.Timestamp(0)
-  partnerUpdateBy Int?
-  partnerUpdateAt DateTime?   @db.Timestamp(0)
-
-  createdBy User  @relation("PartnerCreateBy", fields: [partnerCreateBy], references: [userId])
-  updatedBy User? @relation("PartnerUpdateBy", fields: [partnerUpdateBy], references: [userId])
-
-  @@unique([partnerName, partnerTaxId])
-  @@index([partnerCreateBy])
-  @@index([partnerUpdateBy])
 }
