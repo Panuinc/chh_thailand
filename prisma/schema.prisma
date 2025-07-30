@@ -184,8 +184,8 @@ model User {
   customersCreated Customer[] @relation("CustomerCreatedBy")
   customersUpdated Customer[] @relation("CustomerUpdatedBy")
 
-  storehousesCreated Storehouse[] @relation("StorehouseCreateBy")
-  storehousesUpdated Storehouse[] @relation("StorehouseUpdateBy")
+  storesCreated Store[] @relation("StoreCreateBy")
+  storesUpdated Store[] @relation("StoreUpdateBy")
 
   partnersCreated Partner[] @relation("PartnerCreateBy")
   partnersUpdated Partner[] @relation("PartnerUpdateBy")
@@ -331,38 +331,38 @@ model Partner {
   @@index([partnerUpdateBy])
 }
 
-model Storehouse {
-  storehouseId          Int         @id @default(autoincrement())
-  storehouseCode        String      @unique
-  storehouseName        String
-  storehouseLocation    String
-  storehouseDescription String?
-  storehouseStatus      EnableState @default(Enable)
-  storehouseCreateBy    Int
-  storehouseCreateAt    DateTime    @default(now()) @db.Timestamp(0)
-  storehouseUpdateBy    Int?
-  storehouseUpdateAt    DateTime?   @db.Timestamp(0)
+model Store {
+  storeId          Int         @id @default(autoincrement())
+  storeCode        String      @unique
+  storeName        String
+  storeLocation    String
+  storeDescription String?
+  storeStatus      EnableState @default(Enable)
+  storeCreateBy    Int
+  storeCreateAt    DateTime    @default(now()) @db.Timestamp(0)
+  storeUpdateBy    Int?
+  storeUpdateAt    DateTime?   @db.Timestamp(0)
 
-  createdBy       User   @relation("StorehouseCreateBy", fields: [storehouseCreateBy], references: [userId])
-  updatedBy       User?  @relation("StorehouseUpdateBy", fields: [storehouseUpdateBy], references: [userId])
-  storehouseZones Zone[]
+  createdBy  User   @relation("StoreCreateBy", fields: [storeCreateBy], references: [userId])
+  updatedBy  User?  @relation("StoreUpdateBy", fields: [storeUpdateBy], references: [userId])
+  storeZones Zone[]
 
-  @@index([storehouseCreateBy])
-  @@index([storehouseUpdateBy])
+  @@index([storeCreateBy])
+  @@index([storeUpdateBy])
 }
 
 model Zone {
-  zoneId           Int         @id @default(autoincrement())
-  zoneStorehouseId Int
-  zoneCode         String      @unique
-  zoneName         String
-  zoneDescription  String?
-  zoneStatus       EnableState @default(Enable)
-  zoneCreateAt     DateTime    @default(now()) @db.Timestamp(0)
-  zoneUpdateAt     DateTime?   @db.Timestamp(0)
+  zoneId          Int         @id @default(autoincrement())
+  zoneStoreId     Int
+  zoneCode        String      @unique
+  zoneName        String
+  zoneDescription String?
+  zoneStatus      EnableState @default(Enable)
+  zoneCreateAt    DateTime    @default(now()) @db.Timestamp(0)
+  zoneUpdateAt    DateTime?   @db.Timestamp(0)
 
-  zoneStorehouse Storehouse @relation(fields: [zoneStorehouseId], references: [storehouseId])
-  zoneAisles     Aisle[]
+  zoneStore  Store   @relation(fields: [zoneStoreId], references: [storeId])
+  zoneAisles Aisle[]
 }
 
 model Aisle {
