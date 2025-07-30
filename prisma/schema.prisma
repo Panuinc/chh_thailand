@@ -58,6 +58,13 @@ enum MovementType {
   Return
 }
 
+enum BinStatus {
+  Empty
+  Partial
+  Full
+  Reserved
+}
+
 model Role {
   roleId       Int         @id @default(autoincrement())
   roleName     String
@@ -410,9 +417,11 @@ model Bin {
   binUsage     String
   binCapacity  Int
   binRfidTagId String?
-  binPosX      Float?
-  binPosY      Float?
-  binPosZ      Float?
+  binStatus    BinStatus @default(Empty)
+  binFillRate  Float     @default(0.0)
+  binPosX      Float
+  binPosY      Float
+  binPosZ      Float
   binCreateAt  DateTime  @default(now()) @db.Timestamp(0)
   binUpdateAt  DateTime? @db.Timestamp(0)
 
