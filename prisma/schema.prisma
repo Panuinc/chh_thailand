@@ -359,7 +359,7 @@ model Zone {
   zoneDescription  String?
   zoneStatus       EnableState @default(Enable)
   zoneCreateAt     DateTime    @default(now()) @db.Timestamp(0)
-  zoneUpdateAt     DateTime    @db.Timestamp(0)
+  zoneUpdateAt     DateTime?   @db.Timestamp(0)
 
   zoneStorehouse Storehouse @relation(fields: [zoneStorehouseId], references: [storehouseId])
   zoneAisles     Aisle[]
@@ -468,13 +468,12 @@ model StockItem {
   itemLot       String
   itemExpiry    DateTime?
   itemStatus    ItemStatus @default(Available)
+  itemCreateAt  DateTime   @default(now()) @db.Timestamp(0)
+  itemUpdateAt  DateTime?  @db.Timestamp(0)
 
   itemProduct Product @relation(fields: [itemProductId], references: [productId])
   itemBin     Bin     @relation(fields: [itemBinId], references: [binId])
   itemStock   Stock   @relation("StockToItem", fields: [itemStockId], references: [stockId])
-
-  itemCreateAt DateTime @default(now()) @db.Timestamp(0)
-  itemUpdateAt DateTime @db.Timestamp(0)
 }
 
 model StockMovement {
