@@ -7,6 +7,7 @@ import { dateToThai } from "@/lib/date";
 const UITable = dynamic(() => import("@/components/table/UITable"), {
   ssr: false,
 });
+import { Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
@@ -36,7 +37,20 @@ export default function UIPartnerList({
     name: r.partnerName || "-",
     tax: r.partnerTaxId || "-",
     phone: r.partnerPhone || "-",
-    address: r.partnerAddress || "-",
+    address: (
+      <Popover placement="top">
+        <PopoverTrigger>
+          <span className="cursor-pointer">
+            {r.partnerAddress?.length > 20
+              ? r.partnerAddress.slice(0, 20) + "..."
+              : r.partnerAddress || "-"}
+          </span>
+        </PopoverTrigger>
+        <PopoverContent className="max-w-xs whitespace-pre-wrap">
+          {r.partnerAddress || "-"}
+        </PopoverContent>
+      </Popover>
+    ),
     email: r.partnerEmail || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
