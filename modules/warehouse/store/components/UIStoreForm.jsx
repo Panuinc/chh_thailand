@@ -1,7 +1,8 @@
 "use client";
 
+import React from "react";
 import UITopic from "@/components/topic/UITopic";
-import { Input, Textarea, Button, Select, SelectItem } from "@heroui/react";
+import { Input, Button, Select, SelectItem } from "@heroui/react";
 
 export default function UIStoreForm({
   headerContent,
@@ -24,23 +25,12 @@ export default function UIStoreForm({
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
-              name="storeCode"
-              label="Store Code"
-              labelPlacement="outside"
-              placeholder="ST001"
-              variant="bordered"
-              radius="full"
-              value={formData.storeCode || ""}
-              onChange={handleInputChange("storeCode")}
-              isInvalid={!!errors.storeCode}
-              errorMessage={errors.storeCode}
-            />
-            <Input
               name="storeName"
-              label="Store Name"
+              label="Store"
               labelPlacement="outside"
-              placeholder="Display name"
+              placeholder="Please Enter Data"
               variant="bordered"
+              color="default"
               radius="full"
               value={formData.storeName || ""}
               onChange={handleInputChange("storeName")}
@@ -49,37 +39,6 @@ export default function UIStoreForm({
             />
           </div>
         </div>
-
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
-              name="storeLocation"
-              label="Location"
-              labelPlacement="outside"
-              placeholder="Factory A, Bangkok"
-              variant="bordered"
-              radius="full"
-              value={formData.storeLocation || ""}
-              onChange={handleInputChange("storeLocation")}
-              isInvalid={!!errors.storeLocation}
-              errorMessage={errors.storeLocation}
-            />
-            <Textarea
-              name="storeDescription"
-              label="Description"
-              labelPlacement="outside"
-              placeholder="Optional"
-              variant="bordered"
-              radius="lg"
-              className="w-full"
-              value={formData.storeDescription || ""}
-              onChange={handleInputChange("storeDescription")}
-              isInvalid={!!errors.storeDescription}
-              errorMessage={errors.storeDescription}
-            />
-          </div>
-        </div>
-
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2">
@@ -87,12 +46,11 @@ export default function UIStoreForm({
                 name="storeStatus"
                 label="Store Status"
                 labelPlacement="outside"
-                placeholder="Select status"
+                placeholder="Please Select"
                 variant="bordered"
+                color="default"
                 radius="full"
-                selectedKeys={
-                  formData.storeStatus ? [formData.storeStatus] : []
-                }
+                selectedKeys={formData.storeStatus ? [formData.storeStatus] : []}
                 onSelectionChange={(keys) =>
                   handleInputChange("storeStatus")([...keys][0])
                 }
@@ -105,21 +63,22 @@ export default function UIStoreForm({
             </div>
           </div>
         )}
-
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
             <Input
               name="operatedBy"
+              type="text"
               label="Operated By"
               labelPlacement="outside"
+              placeholder="Please Enter Data"
               variant="flat"
+              color="default"
               radius="full"
               isReadOnly
               value={operatedBy}
             />
           </div>
         </div>
-
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
           <div className="flex items-center justify-center h-full p-2 gap-2">
             <Button
