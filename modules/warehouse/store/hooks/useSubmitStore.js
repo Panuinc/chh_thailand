@@ -6,13 +6,17 @@ export function useSubmitStore({ mode = "create", storeId, userId }) {
   const router = useRouter();
 
   return useCallback(
-    async (formRef, formData, setErrors) => {
+    async (formRef, _, setErrors) => {
       const form = new FormData(formRef);
-      const byField = mode === "create" ? "storeCreateBy" : "storeUpdateBy";
-      form.append(byField, userId);
+      form.append(
+        mode === "create" ? "storeCreateBy" : "storeUpdateBy",
+        userId
+      );
 
       const url =
-        mode === "create" ? "/api/warehouse/store" : `/api/warehouse/store/${storeId}`;
+        mode === "create"
+          ? "/api/warehouse/store"
+          : `/api/warehouse/store/${storeId}`;
       const method = mode === "create" ? "POST" : "PUT";
 
       try {
@@ -23,7 +27,6 @@ export function useSubmitStore({ mode = "create", storeId, userId }) {
             "secret-token": process.env.NEXT_PUBLIC_SECRET_TOKEN || "",
           },
         });
-
         const result = await res.json();
 
         if (res.ok) {

@@ -13,15 +13,15 @@ export class StoreService {
     return StoreRepository.findById(storeId);
   }
 
-  static getByName(storeName) {
-    return StoreRepository.findByName(storeName);
-  }
-
-  static create(data) {
-    return StoreRepository.create(data);
+  static createNested(data) {
+    return StoreRepository.createNested(data);
   }
 
   static update(storeId, data) {
     return StoreRepository.update(storeId, data);
+  }
+
+  static replaceNested(storeId, data) {
+    return StoreRepository.replaceNested(storeId, data);
   }
 }

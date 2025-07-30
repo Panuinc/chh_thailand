@@ -5,7 +5,7 @@ export const StoreRepository = {
     prisma.store.findMany({
       skip,
       take,
-      orderBy: { storeCreateAt: "asc" },
+      orderBy: { storeCode: "asc" },
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
@@ -20,19 +20,48 @@ export const StoreRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
+        storeZones: {
+          include: {
+            zoneAisles: {
+              include: {
+                aisleRacks: {
+                  include: {
+                    rackLevels: { include: { levelBins: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     }),
 
-  findByName: (storeName) =>
-    prisma.store.findFirst({
-      where: { storeName: storeName.trim().toLowerCase() },
+  findByCode: (storeCode) =>
+    prisma.store.findUnique({
+      where: { storeCode: storeCode.trim().toUpperCase() },
     }),
 
-  create: (data) => prisma.store.create({ data }),
-
-  update: (storeId, data) =>
-    prisma.store.update({
-      where: { storeId },
+  createNested: (data) =>
+    prisma.store.create({
       data,
+      include: {
+        storeZones: {
+          include: {
+            zoneAisles: {
+              include: {
+                aisleRacks: {
+                  include: { rackLevels: { include: { levelBins: true } } },
+                },
+              },
+            },
+          },
+        },
+      },
     }),
+
+  replaceNested: (storeId, data) =>
+    prisma.$transaction([
+      prisma.zone.deleteMany({ where: { zoneStoreId: storeId } }),
+      prisma.store.update({ where: { storeId }, data }),
+    ]),
 };

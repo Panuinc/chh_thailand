@@ -2,7 +2,10 @@
 
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import { useFetchStoreById, useSubmitStore } from "@/modules/warehouse/store/hooks";
+import {
+  useFetchStoreById,
+  useSubmitStore,
+} from "@/modules/warehouse/store/hooks";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSessionUser } from "@/hooks/useSessionUser";
 import UIStoreForm from "@/modules/warehouse/store/components/UIStoreForm";
@@ -20,7 +23,16 @@ export default function StoreUpdate() {
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useFormHandler({ storeName: "", storeStatus: "" }, onSubmitHandler);
+    useFormHandler(
+      {
+        storeCode: "",
+        storeName: "",
+        storeLocation: "",
+        storeDescription: "",
+        storeStatus: "Enable",
+      },
+      onSubmitHandler
+    );
 
   useEffect(() => {
     if (store) setFormData(store);
