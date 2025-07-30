@@ -313,7 +313,6 @@ model Bin {
 model Partner {
   partnerId       Int         @id @default(autoincrement())
   partnerName     String
-  partnerType     PartnerType
   partnerTaxId    String
   partnerPhone    String
   partnerAddress  String
