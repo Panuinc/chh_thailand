@@ -464,7 +464,7 @@ export default function UICustomerForm({
                 setFormData({ ...formData, customerLeaders: next });
               }}
             >
-              ➕ Add Leader
+              Add Leader
             </Button>
           </div>
         </div>

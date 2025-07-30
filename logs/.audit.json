@@ -39,6 +39,11 @@
             "date": 1753404367880,
             "name": "E:\\chh_thailand\\logs\\application-2025-07-25.log",
             "hash": "a1154b801cb3dc5a68b59d2f56677ce6ddcbe85eba86ce8bdc993dfa858f879c"
+        },
+        {
+            "date": 1753836477008,
+            "name": "E:\\chh_thailand\\logs\\application-2025-07-30.log",
+            "hash": "c486c3171f2ffff3d8766e87eea2a895ba3efa8ebe5eccd201fb0b41145e3ce3"
         }
     ],
     "hashType": "sha256"
