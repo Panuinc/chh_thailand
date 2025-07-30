@@ -11,23 +11,70 @@ export default function UIStoreForm({
   errors,
   formData,
   handleInputChange,
+  setFormData,
   isUpdate,
   operatedBy,
-  zones,
-  onAddZone,
-  onAddAisle,
-  onAddRack,
-  onAddLevel,
-  onAddBin,
-  handleNestedChange,
 }) {
-  const handleFinalSubmit = (e) => {
-    const hiddenInput = document.createElement("input");
-    hiddenInput.type = "hidden";
-    hiddenInput.name = "zones";
-    hiddenInput.value = JSON.stringify(zones);
-    formRef.current.appendChild(hiddenInput);
-    onSubmit(e);
+  const zones = formData.zones || [];
+
+  const updateZones = (newZones) =>
+    setFormData({ ...formData, zones: newZones });
+
+  const handleNestedChange = (zi, path, value) => {
+    const newZones = [...zones];
+    let target = newZones[zi];
+    for (let i = 0; i < path.length - 1; i++) {
+      target = target[path[i]];
+    }
+    target[path[path.length - 1]] = value;
+    updateZones(newZones);
+  };
+
+  const onAddZone = () =>
+    updateZones([
+      ...zones,
+      { zoneCode: "", zoneName: "", zoneDescription: "", aisles: [] },
+    ]);
+
+  const onAddAisle = (zi) => {
+    const newZones = [...zones];
+    newZones[zi].aisles.push({ aisleCode: "", aisleName: "", racks: [] });
+    updateZones(newZones);
+  };
+
+  const onAddRack = (zi, ai) => {
+    const newZones = [...zones];
+    newZones[zi].aisles[ai].racks.push({
+      rackCode: "",
+      rackName: "",
+      levels: [],
+    });
+    updateZones(newZones);
+  };
+
+  const onAddLevel = (zi, ai, ri) => {
+    const newZones = [...zones];
+    newZones[zi].aisles[ai].racks[ri].levels.push({
+      levelCode: "",
+      levelName: "",
+      bins: [],
+    });
+    updateZones(newZones);
+  };
+
+  const onAddBin = (zi, ai, ri, li) => {
+    const newZones = [...zones];
+    newZones[zi].aisles[ai].racks[ri].levels[li].bins.push({
+      binCode: "",
+      binRow: "",
+      binType: "",
+      binUsage: "",
+      binCapacity: 0,
+      binPosX: 0,
+      binPosY: 0,
+      binPosZ: 0,
+    });
+    updateZones(newZones);
   };
 
   return (
@@ -35,7 +82,7 @@ export default function UIStoreForm({
       <UITopic Topic={headerContent} />
       <form
         ref={formRef}
-        onSubmit={handleFinalSubmit}
+        onSubmit={onSubmit}
         className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
       >
         <div className="flex flex-col lg:flex-row items-start justify-start w-full p-2 gap-2">
@@ -62,7 +109,7 @@ export default function UIStoreForm({
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="storeName"
-              label="Store"
+              label="Store Name"
               labelPlacement="outside"
               placeholder="Please Enter Data"
               variant="bordered"
@@ -457,7 +504,7 @@ export default function UIStoreForm({
               type="submit"
               color="primary"
               radius="full"
-              className="w-full lg:w-3/12 p-3 gap-2"
+              className="w-full h-full p-3 gap-2"
             >
               Save
             </Button>
