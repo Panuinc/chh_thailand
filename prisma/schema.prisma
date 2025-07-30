@@ -34,6 +34,30 @@ enum PartnerType {
   SUPPLIER
 }
 
+enum ProductType {
+  RM // Raw Material
+  FG // Finished Goods
+  PK // Packaging
+  SP // Spare Part
+  AP // Asset/Product
+}
+
+enum ItemStatus {
+  Available
+  Allocated
+  Picked
+  Hold
+  Scrap
+}
+
+enum MovementType {
+  Inbound
+  Outbound
+  Relocate
+  Adjust
+  Return
+}
+
 model Role {
   roleId       Int         @id @default(autoincrement())
   roleName     String
@@ -165,6 +189,11 @@ model User {
 
   partnersCreated Partner[] @relation("PartnerCreateBy")
   partnersUpdated Partner[] @relation("PartnerUpdateBy")
+
+  productsCreated Product[] @relation("ProductCreateBy")
+  productsUpdated Product[] @relation("ProductUpdateBy")
+
+  stockMovements StockMovement[] @relation("UserMovedStock")
 
   createdBy User? @relation("UserCreatedBy", fields: [userCreateBy], references: [userId])
   updatedBy User? @relation("UserUpdatedBy", fields: [userUpdateBy], references: [userId])
@@ -387,5 +416,81 @@ model Bin {
   binCreateAt  DateTime  @default(now()) @db.Timestamp(0)
   binUpdateAt  DateTime? @db.Timestamp(0)
 
-  binLevel Level @relation(fields: [binLevelId], references: [levelId])
+  binLevel  Level           @relation(fields: [binLevelId], references: [levelId])
+  binStocks Stock[]
+  binItems  StockItem[]
+  movements StockMovement[]
+}
+
+model Product {
+  productId          Int         @id @default(autoincrement())
+  productSKU         String      @unique
+  productName        String
+  productType        ProductType
+  productUnit        String
+  productDescription String?
+  productStatus      EnableState @default(Enable)
+  productCreateBy    Int
+  productCreateAt    DateTime    @default(now()) @db.Timestamp(0)
+  productUpdateBy    Int?
+  productUpdateAt    DateTime?   @db.Timestamp(0)
+
+  createdBy User  @relation("ProductCreateBy", fields: [productCreateBy], references: [userId])
+  updatedBy User? @relation("ProductUpdateBy", fields: [productUpdateBy], references: [userId])
+
+  productStocks Stock[]
+  productItems  StockItem[]
+  movements     StockMovement[]
+}
+
+model Stock {
+  stockId        Int       @id @default(autoincrement())
+  stockProductId Int
+  stockBinId     Int
+  stockQty       Int
+  stockLot       String
+  stockExpiry    DateTime?
+
+  stockProduct Product     @relation(fields: [stockProductId], references: [productId])
+  stockBin     Bin         @relation(fields: [stockBinId], references: [binId])
+  stockItems   StockItem[] @relation("StockToItem")
+
+  @@unique([stockProductId, stockBinId, stockLot, stockExpiry])
+}
+
+model StockItem {
+  itemId        Int        @id @default(autoincrement())
+  itemStockId   Int
+  itemProductId Int
+  itemBinId     Int
+  itemRFIDTagId String     @unique
+  itemSerialNo  String?
+  itemLot       String
+  itemExpiry    DateTime?
+  itemStatus    ItemStatus @default(Available)
+
+  itemProduct Product @relation(fields: [itemProductId], references: [productId])
+  itemBin     Bin     @relation(fields: [itemBinId], references: [binId])
+  itemStock   Stock   @relation("StockToItem", fields: [itemStockId], references: [stockId])
+
+  itemCreateAt DateTime @default(now()) @db.Timestamp(0)
+  itemUpdateAt DateTime @db.Timestamp(0)
+}
+
+model StockMovement {
+  movementId        Int          @id @default(autoincrement())
+  movementType      MovementType
+  movementProductId Int
+  movementBinId     Int
+  movementQty       Int
+  movementLot       String
+  movementExpiry    DateTime?
+  movementRefNo     String?
+  movementNote      String?
+  movementBy        Int
+  movementAt        DateTime     @default(now()) @db.Timestamp(0)
+
+  movementProduct Product @relation(fields: [movementProductId], references: [productId])
+  movementBin     Bin     @relation(fields: [movementBinId], references: [binId])
+  movedBy         User    @relation("UserMovedStock", fields: [movementBy], references: [userId])
 }
