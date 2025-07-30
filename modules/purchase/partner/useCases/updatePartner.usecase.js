@@ -13,13 +13,12 @@ export async function UpdatePartnerUseCase(data) {
   }
 
   const existing = await PartnerService.getById(parsed.data.partnerId);
-  if (!existing) {
-    throw { status: 404, message: "Partner not found" };
-  }
+  if (!existing) throw { status: 404, message: "Partner not found" };
 
   return PartnerService.update(parsed.data.partnerId, {
     ...parsed.data,
     partnerName: parsed.data.partnerName.trim().toLowerCase(),
+    partnerTaxId: parsed.data.partnerTaxId.trim(),
     partnerUpdateAt: getLocalNow(),
   });
 }

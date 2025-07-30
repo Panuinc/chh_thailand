@@ -1,8 +1,8 @@
 import { PartnerRepository } from "../repositories/partner.repository";
 
 export const PartnerValidator = {
-  async isDuplicatePartnerName(name) {
-    const partner = await PartnerRepository.findByName(name);
+  async isDuplicatePartnerNameAndTax(name, taxId) {
+    const partner = await PartnerRepository.findByNameAndTax(name, taxId);
     return !!partner;
   },
 };

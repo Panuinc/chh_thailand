@@ -8,12 +8,20 @@ import {
 
 export const partnerPostSchema = z.object({
   partnerName: preprocessString("Please provide the partner name"),
+  partnerTaxId: preprocessString("Please provide the tax ID"),
+  partnerPhone: preprocessString("Please provide the phone"),
+  partnerAddress: preprocessString("Please provide the address"),
+  partnerEmail: preprocessString("Please provide the email"),
   partnerCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
 export const partnerPutSchema = z.object({
   partnerId: preprocessInt("Please provide the partner ID to update"),
   partnerName: preprocessString("Please provide the partner name"),
+  partnerTaxId: preprocessString("Please provide the tax ID"),
+  partnerPhone: preprocessString("Please provide the phone"),
+  partnerAddress: preprocessString("Please provide the address"),
+  partnerEmail: preprocessString("Please provide the email"),
   partnerStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"

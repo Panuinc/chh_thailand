@@ -13,15 +13,26 @@ export async function CreatePartnerUseCase(data) {
     };
   }
 
-  const normalizedName = parsed.data.partnerName.trim().toLowerCase();
-  const duplicate = await PartnerValidator.isDuplicatePartnerName(normalizedName);
+  const { partnerName, partnerTaxId } = parsed.data;
+  const normalizedName = partnerName.trim().toLowerCase();
+  const normalizedTax = partnerTaxId.trim();
+
+  const duplicate = await PartnerValidator.isDuplicatePartnerNameAndTax(
+    normalizedName,
+    normalizedTax
+  );
   if (duplicate) {
-    throw { status: 409, message: `Partner '${normalizedName}' already exists` };
+    throw {
+      status: 409,
+      message: `Partner '${partnerName}' with Tax ID '${partnerTaxId}' already exists`,
+    };
   }
 
   return PartnerService.create({
     ...parsed.data,
     partnerName: normalizedName,
+    partnerTaxId: normalizedTax,
+    partnerStatus: "Enable",
     partnerCreateAt: getLocalNow(),
   });
 }

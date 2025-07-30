@@ -11,6 +11,10 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "Partner", uid: "name", sortable: true },
+  { name: "Tax", uid: "tax" },
+  { name: "Phone", uid: "phone" },
+  { name: "Address", uid: "address" },
+  { name: "Email", uid: "email" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -30,6 +34,10 @@ export default function UIPartnerList({
   const partners = rawPartners.map((r) => ({
     id: r.partnerId,
     name: r.partnerName || "-",
+    tax: r.partnerTaxId || "-",
+    phone: r.partnerPhone || "-",
+    address: r.partnerAddress || "-",
+    email: r.partnerEmail || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

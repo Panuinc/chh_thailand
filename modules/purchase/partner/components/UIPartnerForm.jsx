@@ -38,6 +38,66 @@ export default function UIPartnerForm({
               errorMessage={errors.partnerName}
             />
           </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="partnerTaxId"
+              label="Tax ID"
+              labelPlacement="outside"
+              placeholder="Please Enter"
+              variant="bordered"
+              radius="full"
+              value={formData.partnerTaxId || ""}
+              onChange={handleInputChange("partnerTaxId")}
+              isInvalid={!!errors.partnerTaxId}
+              errorMessage={errors.partnerTaxId}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="partnerPhone"
+              label="Phone"
+              labelPlacement="outside"
+              placeholder="Please Enter"
+              variant="bordered"
+              radius="full"
+              value={formData.partnerPhone || ""}
+              onChange={handleInputChange("partnerPhone")}
+              isInvalid={!!errors.partnerPhone}
+              errorMessage={errors.partnerPhone}
+            />
+          </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="partnerAddress"
+              label="Address"
+              labelPlacement="outside"
+              placeholder="Please Enter"
+              variant="bordered"
+              radius="full"
+              value={formData.partnerAddress || ""}
+              onChange={handleInputChange("partnerAddress")}
+              isInvalid={!!errors.partnerAddress}
+              errorMessage={errors.partnerAddress}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="partnerEmail"
+              label="Email"
+              labelPlacement="outside"
+              placeholder="Please Enter"
+              variant="bordered"
+              radius="full"
+              value={formData.partnerEmail || ""}
+              onChange={handleInputChange("partnerEmail")}
+              isInvalid={!!errors.partnerEmail}
+              errorMessage={errors.partnerEmail}
+            />
+          </div>
         </div>
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
@@ -50,7 +110,9 @@ export default function UIPartnerForm({
                 variant="bordered"
                 color="default"
                 radius="full"
-                selectedKeys={formData.partnerStatus ? [formData.partnerStatus] : []}
+                selectedKeys={
+                  formData.partnerStatus ? [formData.partnerStatus] : []
+                }
                 onSelectionChange={(keys) =>
                   handleInputChange("partnerStatus")([...keys][0])
                 }

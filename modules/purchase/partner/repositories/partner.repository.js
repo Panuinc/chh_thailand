@@ -23,9 +23,12 @@ export const PartnerRepository = {
       },
     }),
 
-  findByName: (partnerName) =>
+  findByNameAndTax: (name, taxId) =>
     prisma.partner.findFirst({
-      where: { partnerName: partnerName.trim().toLowerCase() },
+      where: {
+        partnerName: name.trim().toLowerCase(),
+        partnerTaxId: taxId.trim(),
+      },
     }),
 
   create: (data) => prisma.partner.create({ data }),

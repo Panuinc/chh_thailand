@@ -287,7 +287,7 @@ model Storehouse {
   storehouseName        String
   storehouseLocation    String
   storehouseDescription String
-  storehouseStatus      EnableState
+  storehouseStatus      EnableState @default(Enable)
   storehouseCreateBy    Int
   storehouseCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   storehouseUpdateBy    Int?
@@ -320,7 +320,7 @@ model Partner {
   partnerPhone    String
   partnerAddress  String
   partnerEmail    String
-  partnerStatus   EnableState
+  partnerStatus   EnableState @default(Enable)
   partnerCreateBy Int
   partnerCreateAt DateTime    @default(now()) @db.Timestamp(0)
   partnerUpdateBy Int?
@@ -329,6 +329,7 @@ model Partner {
   createdBy User  @relation("PartnerCreateBy", fields: [partnerCreateBy], references: [userId])
   updatedBy User? @relation("PartnerUpdateBy", fields: [partnerUpdateBy], references: [userId])
 
+  @@unique([partnerName, partnerTaxId])
   @@index([partnerCreateBy])
   @@index([partnerUpdateBy])
 }
