@@ -163,6 +163,9 @@ model User {
   storehousesCreated Storehouse[] @relation("StorehouseCreateBy")
   storehousesUpdated Storehouse[] @relation("StorehouseUpdateBy")
 
+  partnersCreated Partner[] @relation("PartnerCreateBy")
+  partnersUpdated Partner[] @relation("PartnerUpdateBy")
+
   createdBy User? @relation("UserCreatedBy", fields: [userCreateBy], references: [userId])
   updatedBy User? @relation("UserUpdatedBy", fields: [userUpdateBy], references: [userId])
 
@@ -322,4 +325,10 @@ model Partner {
   partnerCreateAt DateTime    @default(now()) @db.Timestamp(0)
   partnerUpdateBy Int?
   partnerUpdateAt DateTime?   @db.Timestamp(0)
+
+  createdBy User  @relation("PartnerCreateBy", fields: [partnerCreateBy], references: [userId])
+  updatedBy User? @relation("PartnerUpdateBy", fields: [partnerUpdateBy], references: [userId])
+
+  @@index([partnerCreateBy])
+  @@index([partnerUpdateBy])
 }
