@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   preprocessString,
   preprocessInt,
-  preprocessFloat,
+  preprocessDouble,
   preprocessEnum,
   formatData,
 } from "@/lib/zodSchema";
@@ -19,10 +19,10 @@ const binSchema = z.object({
   binCapacity: preprocessInt("Please provide bin capacity"),
   binRfidTagId: preprocessString("Please provide RFID tag"),
   binStatus: preprocessEnum(binStatusEnum, "Invalid bin status"),
-  binFillRate: preprocessFloat("Please provide fill rate"),
-  binPosX: preprocessFloat("Please provide X position"),
-  binPosY: preprocessFloat("Please provide Y position"),
-  binPosZ: preprocessFloat("Please provide Z position"),
+  binFillRate: preprocessDouble("Please provide fill rate"),
+  binPosX: preprocessDouble("Please provide X position"),
+  binPosY: preprocessDouble("Please provide Y position"),
+  binPosZ: preprocessDouble("Please provide Z position"),
 });
 
 const levelSchema = z.object({
