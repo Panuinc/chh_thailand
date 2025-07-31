@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React from "react";
 import UITopic from "@/components/topic/UITopic";
 import { Input, Button, Select, SelectItem } from "@heroui/react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { Trash2 } from "lucide-react";
 
 export default function UIStoreForm({
   headerContent,
@@ -16,82 +13,7 @@ export default function UIStoreForm({
   handleInputChange,
   isUpdate,
   operatedBy,
-  setFormData,
 }) {
-  const [vatSearchId, setVatSearchId] = useState("");
-  const [vatSearchName, setVatSearchName] = useState("");
-  const [vatSearching, setVatSearching] = useState(false);
-  const [vatSearchType, setVatSearchType] = useState("companyName");
-
-  const [vatSearchResults, setVatSearchResults] = useState([]);
-  const [showResultModal, setShowResultModal] = useState(false);
-
-  const fetchVATInfo = useCallback(async () => {
-    const searchByTaxId = vatSearchType === "taxId";
-    const searchByName = vatSearchType === "companyName";
-
-    if (searchByTaxId && (!vatSearchId || vatSearchId.length !== 13)) {
-      toast.error("Please enter a valid 13-digit Tax ID.");
-      return;
-    }
-
-    if (searchByName) {
-      if (!vatSearchName.trim()) {
-        toast.error("Please enter the company name.");
-        return;
-      }
-      if (/บริษัท/i.test(vatSearchName)) {
-        toast.error('Do not include the word "บริษัท" (Company) in the name.');
-        return;
-      }
-    }
-
-    setVatSearching(true);
-    try {
-      const res = await axios.post("/api/vatinfo", {
-        taxpayerId: searchByTaxId ? vatSearchId.trim() : undefined,
-        companyName: searchByName ? vatSearchName.trim() : undefined,
-      });
-
-      const results = res.data?.results || [];
-
-      if (results.length === 1) {
-        const { taxpayerId, companyName, storeBranch, fullAddress } =
-          results[0];
-
-        handleInputChange("storeTax")(taxpayerId || vatSearchId);
-        handleInputChange("storeName")(companyName || vatSearchName);
-
-        if (storeBranch) {
-          handleInputChange("storeBranch")(storeBranch);
-        }
-
-        if (fullAddress) {
-          handleInputChange("storeAddress")(fullAddress);
-        }
-
-        toast.success("🎉 Company data found!");
-      } else if (results.length > 1) {
-        setVatSearchResults(results);
-        setShowResultModal(true);
-      } else {
-        toast.error("❌ No data found.");
-      }
-    } catch (err) {
-      const apiMsg = err?.response?.data?.error || "Unknown error.";
-      if (/^No Data Found/i.test(apiMsg)) {
-        toast.error("❌ No data found.");
-      } else {
-        toast.error(`❌ ${apiMsg}`);
-      }
-      if (process.env.NODE_ENV === "development") {
-        console.debug("❌ VATINFO Error:", err);
-      }
-    } finally {
-      setVatSearching(false);
-    }
-  }, [vatSearchType, vatSearchId, vatSearchName, handleInputChange]);
-
   return (
     <>
       <UITopic Topic={headerContent} />
@@ -100,119 +22,11 @@ export default function UIStoreForm({
         onSubmit={onSubmit}
         className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
       >
-        {!isUpdate && (
-          <>
-            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                <Select
-                  label="Search By"
-                  labelPlacement="outside"
-                  variant="flat"
-                  color="default"
-                  radius="full"
-                  selectedKeys={[vatSearchType]}
-                  onSelectionChange={(keys) => setVatSearchType([...keys][0])}
-                >
-                  <SelectItem key="companyName">Company Name</SelectItem>
-                  <SelectItem key="taxId">Tax ID (13 digits)</SelectItem>
-                </Select>
-              </div>
-
-              {vatSearchType === "companyName" && (
-                <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                  <Input
-                    label="Company Name"
-                    labelPlacement="outside"
-                    placeholder="Enter company name"
-                    variant="bordered"
-                    radius="full"
-                    value={vatSearchName}
-                    onChange={(e) => {
-                      const inputValue = e.target.value;
-                      if (/บริษัท/i.test(inputValue)) {
-                        toast.error(
-                          'Do not include the word "บริษัท" in the name.'
-                        );
-                      }
-                      setVatSearchName(inputValue);
-                    }}
-                    isInvalid={vatSearchName && /บริษัท/i.test(vatSearchName)}
-                    errorMessage={
-                      vatSearchName && /บริษัท/i.test(vatSearchName)
-                        ? 'Do not include the word "บริษัท" in the name.'
-                        : ""
-                    }
-                  />
-                </div>
-              )}
-
-              {vatSearchType === "taxId" && (
-                <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                  <Input
-                    label="Taxpayer ID"
-                    labelPlacement="outside"
-                    placeholder="Enter tax ID"
-                    variant="bordered"
-                    radius="full"
-                    value={vatSearchId}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
-                      if (value.length <= 13) setVatSearchId(value);
-                    }}
-                    isInvalid={vatSearchId && vatSearchId.length !== 13}
-                    errorMessage={
-                      vatSearchId && vatSearchId.length !== 13
-                        ? "Tax ID must be exactly 13 digits."
-                        : ""
-                    }
-                  />
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
-              <div className="flex items-center justify-center h-full p-2 gap-2">
-                <Button
-                  type="button"
-                  color="warning"
-                  radius="full"
-                  className="w-full h-full p-3 gap-2"
-                  isLoading={vatSearching}
-                  onPress={fetchVATInfo}
-                >
-                  Search Data
-                </Button>
-              </div>
-            </div>
-          </>
-        )}
-
-        <div className="flex flex-col lg:flex-row items-start justify-start w-full p-2 gap-2">
-          <div className="flex items-center justify-center h-full px-8 py-4 gap-2 bg-black text-white font-semibold rounded-lg">
-            Store Profile
-          </div>
-        </div>
-
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
-              name="storeTax"
-              label="Store Tax"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="bordered"
-              color="default"
-              radius="full"
-              value={formData.storeTax || ""}
-              onChange={handleInputChange("storeTax")}
-              isInvalid={!!errors.storeTax}
-              errorMessage={errors.storeTax}
-            />
-          </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
               name="storeName"
-              label="Store Name"
+              label="Store"
               labelPlacement="outside"
               placeholder="Please Enter Data"
               variant="bordered"
@@ -225,85 +39,6 @@ export default function UIStoreForm({
             />
           </div>
         </div>
-
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
-              name="storeBranch"
-              label="Store Branch"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="bordered"
-              color="default"
-              radius="full"
-              value={formData.storeBranch || ""}
-              onChange={handleInputChange("storeBranch")}
-              isInvalid={!!errors.storeBranch}
-              errorMessage={errors.storeBranch}
-            />
-          </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
-              name="storeAddress"
-              label="Store Address"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="bordered"
-              color="default"
-              radius="full"
-              value={formData.storeAddress || ""}
-              onChange={handleInputChange("storeAddress")}
-              isInvalid={!!errors.storeAddress}
-              errorMessage={errors.storeAddress}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
-              type="number"
-              name="storePhone"
-              label="Store Phone"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="bordered"
-              color="default"
-              radius="full"
-              value={formData.storePhone || ""}
-              onChange={handleInputChange("storePhone")}
-              isInvalid={!!errors.storePhone}
-              errorMessage={errors.storePhone}
-            />
-          </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Select
-              name="storeType"
-              label="Store Type"
-              labelPlacement="outside"
-              placeholder="Please Select"
-              variant="bordered"
-              color="default"
-              radius="full"
-              selectedKeys={
-                formData.storeType ? [formData.storeType] : []
-              }
-              onSelectionChange={(keys) =>
-                handleInputChange("storeType")([...keys][0])
-              }
-              isInvalid={!!errors.storeType}
-              errorMessage={errors.storeType}
-            >
-              <SelectItem key="Owner">Owner</SelectItem>
-              <SelectItem key="CM">CM</SelectItem>
-              <SelectItem key="MainConstruction">MainConstruction</SelectItem>
-              <SelectItem key="DesignerArchitect">DesignerArchitect</SelectItem>
-              <SelectItem key="EndUser">EndUser</SelectItem>
-              <SelectItem key="Dealer">Dealer</SelectItem>
-            </Select>
-          </div>
-        </div>
-
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2">
@@ -315,9 +50,7 @@ export default function UIStoreForm({
                 variant="bordered"
                 color="default"
                 radius="full"
-                selectedKeys={
-                  formData.storeStatus ? [formData.storeStatus] : []
-                }
+                selectedKeys={formData.storeStatus ? [formData.storeStatus] : []}
                 onSelectionChange={(keys) =>
                   handleInputChange("storeStatus")([...keys][0])
                 }
@@ -330,145 +63,6 @@ export default function UIStoreForm({
             </div>
           </div>
         )}
-
-        <div className="flex flex-col lg:flex-row items-start justify-start w-full p-2 gap-2">
-          <div className="flex items-center justify-center h-full px-8 py-4 gap-2 bg-black text-white font-semibold rounded-lg">
-            Leaders Personal
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center justify-center w-full gap-2">
-          {(Array.isArray(formData.storeLeaders)
-            ? formData.storeLeaders
-            : []
-          ).map((leader, index) => (
-            <div
-              key={index}
-              className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border-b-1 border-default"
-            >
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                <Input
-                  label="Leader Name"
-                  labelPlacement="outside"
-                  placeholder="Please Enter Data"
-                  variant="bordered"
-                  color="default"
-                  radius="full"
-                  value={leader.storeLeaderName}
-                  onChange={(e) => {
-                    const next = [...formData.storeLeaders];
-                    next[index] = {
-                      ...next[index],
-                      storeLeaderName: e.target.value,
-                    };
-                    setFormData({ ...formData, storeLeaders: next });
-                  }}
-                />
-              </div>
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                <Input
-                  label="Leader Email"
-                  labelPlacement="outside"
-                  placeholder="Please Enter Data"
-                  variant="bordered"
-                  color="default"
-                  radius="full"
-                  value={leader.storeLeaderEmail}
-                  onChange={(e) => {
-                    const next = [...formData.storeLeaders];
-                    next[index] = {
-                      ...next[index],
-                      storeLeaderEmail: e.target.value,
-                    };
-                    setFormData({ ...formData, storeLeaders: next });
-                  }}
-                />
-              </div>
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                <Input
-                  label="Leader Phone"
-                  labelPlacement="outside"
-                  placeholder="Please Enter Data"
-                  variant="bordered"
-                  color="default"
-                  radius="full"
-                  value={leader.storeLeaderPhone}
-                  onChange={(e) => {
-                    const next = [...formData.storeLeaders];
-                    next[index] = {
-                      ...next[index],
-                      storeLeaderPhone: e.target.value,
-                    };
-                    setFormData({ ...formData, storeLeaders: next });
-                  }}
-                />
-              </div>
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-                <Select
-                  label="Decision Maker?"
-                  labelPlacement="outside"
-                  placeholder="Please Select"
-                  variant="bordered"
-                  color="default"
-                  radius="full"
-                  selectedKeys={[
-                    leader.storeLeaderIsDecisionMaker ? "true" : "false",
-                  ]}
-                  onSelectionChange={(keys) => {
-                    const next = [...formData.storeLeaders];
-                    next[index] = {
-                      ...next[index],
-                      storeLeaderIsDecisionMaker: [...keys][0] === "true",
-                    };
-                    setFormData({ ...formData, storeLeaders: next });
-                  }}
-                >
-                  <SelectItem key="true">Yes</SelectItem>
-                  <SelectItem key="false">No</SelectItem>
-                </Select>
-              </div>
-
-              <div className="flex items-end justify-end w-full lg:w-auto h-full p-2 gap-2">
-                <Button
-                  color="danger"
-                  radius="full"
-                  className="p-3 gap-2"
-                  onPress={() => {
-                    const next = [...formData.storeLeaders];
-                    next.splice(index, 1);
-                    setFormData({ ...formData, storeLeaders: next });
-                  }}
-                >
-                  <Trash2 />
-                </Button>
-              </div>
-            </div>
-          ))}
-          <div className="flex items-center justify-end w-full h-full p-2 gap-2">
-            <Button
-              type="button"
-              color="secondary"
-              radius="full"
-              className="h-full p-3 gap-2"
-              onPress={() => {
-                const next = Array.isArray(formData.storeLeaders)
-                  ? [...formData.storeLeaders]
-                  : [];
-                next.push({
-                  storeLeaderId: undefined,
-                  storeLeaderName: "",
-                  storeLeaderEmail: "",
-                  storeLeaderPhone: "",
-                  storeLeaderIsDecisionMaker: false,
-                });
-                setFormData({ ...formData, storeLeaders: next });
-              }}
-            >
-              Add Leader
-            </Button>
-          </div>
-        </div>
-
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
             <Input
@@ -485,7 +79,6 @@ export default function UIStoreForm({
             />
           </div>
         </div>
-
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
           <div className="flex items-center justify-center h-full p-2 gap-2">
             <Button
@@ -499,66 +92,6 @@ export default function UIStoreForm({
           </div>
         </div>
       </form>
-
-      {showResultModal && (
-        <div className="fixed z-50 inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg max-w-4xl w-full p-4 overflow-auto max-h-[80vh]">
-            <h2 className="text-xl font-bold mb-4">Select a branch</h2>
-            <table className="w-full border border-gray-300 text-sm">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="p-2 border">Tax ID</th>
-                  <th className="p-2 border">Company</th>
-                  <th className="p-2 border">Branch</th>
-                  <th className="p-2 border">Address</th>
-                  <th className="p-2 border">Select</th>
-                </tr>
-              </thead>
-              <tbody>
-                {vatSearchResults.map((item, index) => (
-                  <tr key={index}>
-                    <td className="p-2 border">{item.taxpayerId}</td>
-                    <td className="p-2 border">{item.companyName}</td>
-                    <td className="p-2 border">{item.storeBranch}</td>
-                    <td className="p-2 border">{item.fullAddress}</td>
-                    <td className="p-2 border text-center">
-                      <Button
-                        color="none"
-                        radius="none"
-                        className="w-full h-full p-3 gap-2 hover:text-primary hover:font-semibold"
-                        onPress={() => {
-                          handleInputChange("storeTax")(item.taxpayerId);
-                          handleInputChange("storeName")(item.companyName);
-                          handleInputChange("storeBranch")(
-                            item.storeBranch
-                          );
-                          handleInputChange("storeAddress")(
-                            item.fullAddress
-                          );
-                          setShowResultModal(false);
-                          toast.success("✅ Data selected!");
-                        }}
-                      >
-                        Select
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="flex items-center justify-end h-full p-2 gap-2">
-              <Button
-                onPress={() => setShowResultModal(false)}
-                color="danger"
-                radius="full"
-                className="w-3/12 h-full p-3 gap-2"
-              >
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
