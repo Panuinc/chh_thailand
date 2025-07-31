@@ -18,6 +18,7 @@ export default function UIStoreForm({
   const addZone = () => {
     const updated = [...(formData.storeZones || [])];
     updated.push({
+      zoneId: undefined,
       zoneCode: "",
       zoneName: "",
       zoneDescription: "",
