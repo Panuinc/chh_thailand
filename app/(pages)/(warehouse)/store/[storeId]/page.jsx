@@ -24,7 +24,7 @@ export default function StoreUpdate() {
         storeLocation: "",
         storeDescription: "",
         storeStatus: "",
-        zones: [],
+        storeZones: [],
       },
       useSubmitStore({ mode: "update", storeId, userId })
     );
@@ -37,8 +37,8 @@ export default function StoreUpdate() {
         storeLocation: store.storeLocation,
         storeDescription: store.storeDescription,
         storeStatus: store.storeStatus,
-        zones: Array.isArray(store.leaders)
-          ? store.leaders.map((zone) => ({
+        storeZones: Array.isArray(store.storeZones)
+          ? store.storeZones.map((zone) => ({
               zoneId: zone.zoneId,
               zoneCode: zone.zoneCode,
               zoneName: zone.zoneName,

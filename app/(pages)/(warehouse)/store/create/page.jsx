@@ -21,7 +21,7 @@ export default function StoreCreate() {
         storeName: "",
         storeLocation: "",
         storeDescription: "",
-        zones: [],
+        storeZones: [],
       },
       onSubmitHandler
     );

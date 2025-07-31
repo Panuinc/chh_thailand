@@ -63,7 +63,7 @@ export const storePostSchema = z.object({
   storeLocation: preprocessString("Please provide store location"),
   storeDescription: preprocessString("Please provide store description"),
   storeCreateBy: preprocessInt("Please provide store creator"),
-  zones: z.array(zoneSchema).optional(),
+  storeZones: z.array(zoneSchema).optional(),
 });
 
 export const storePutSchema = z.object({
@@ -77,7 +77,7 @@ export const storePutSchema = z.object({
     "Please provide 'Enable' or 'Disable'"
   ),
   storeUpdateBy: preprocessInt("Please provide store updater"),
-  zones: z.array(zoneSchema).optional(),
+  storeZones: z.array(zoneSchema).optional(),
 });
 
 export const formatStoreData = (stores) =>

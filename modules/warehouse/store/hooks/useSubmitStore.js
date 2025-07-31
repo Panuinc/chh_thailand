@@ -11,14 +11,15 @@ export function useSubmitStore({ mode = "create", storeId, userId }) {
       const byField = mode === "create" ? "storeCreateBy" : "storeUpdateBy";
       form.append(byField, userId);
 
-      if (formData.zones) {
-        const cleanedZones = formData.zones.map((zone) => ({
+      if (formData.storeZones) {
+        const cleanedZones = formData.storeZones.map((zone) => ({
           zoneCode: zone.zoneCode,
           zoneName: zone.zoneName,
           zoneDescription: zone.zoneDescription || "",
           zoneStatus: zone.zoneStatus,
+          ...(mode === "update" && zone.zoneId && { zoneId: zone.zoneId }),
         }));
-        form.append("zones", JSON.stringify(cleanedZones));
+        form.append("storeZones", JSON.stringify(cleanedZones));
       }
 
       const url =

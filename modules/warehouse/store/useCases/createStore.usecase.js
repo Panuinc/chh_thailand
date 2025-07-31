@@ -4,11 +4,11 @@ import { StoreValidator } from "../validators/store.validator";
 import { getLocalNow } from "@/lib/getLocalNow";
 
 export async function CreateStoreUseCase(data) {
-  if (typeof data.zones === "string") {
+  if (typeof data.storeZones === "string") {
     try {
-      data.zones = JSON.parse(data.zones);
+      data.storeZones = JSON.parse(data.storeZones);
     } catch (e) {
-      data.zones = [];
+      data.storeZones = [];
     }
   }
 
@@ -36,23 +36,21 @@ export async function CreateStoreUseCase(data) {
     storeName: parsed.data.storeName.trim(),
     storeLocation: parsed.data.storeLocation.trim(),
     storeDescription: parsed.data.storeDescription.trim(),
-    storeStatus: parsed.data.storeStatus,
+    storeStatus: parsed.data.storeStatus || "Enable",
     storeCreateAt: getLocalNow(),
     createdBy: {
       connect: { userId: parsed.data.storeCreateBy },
     },
-    zones: {
+    storeZones: {
       create:
-        parsed.data.zones?.map((zone) => ({
+        parsed.data.storeZones?.map((zone) => ({
           zoneCode: zone.zoneCode,
           zoneName: zone.zoneName,
           zoneDescription: zone.zoneDescription,
           zoneStatus: zone.zoneStatus,
           zoneCreateAt: getLocalNow(),
-          createdBy: {
-            connect: { userId: parsed.data.storeCreateBy },
-          },
-        })) ?? [],
+          zoneCreateBy: parsed.data.storeCreateBy,
+        })) || [],
     },
   });
 }

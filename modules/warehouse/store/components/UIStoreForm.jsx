@@ -16,26 +16,26 @@ export default function UIStoreForm({
   operatedBy,
 }) {
   const addZone = () => {
-    const updated = [...(formData.zones || [])];
+    const updated = [...(formData.storeZones || [])];
     updated.push({
       zoneCode: "",
       zoneName: "",
       zoneDescription: "",
       zoneStatus: "Enable",
     });
-    setFormData({ ...formData, zones: updated });
+    setFormData({ ...formData, storeZones: updated });
   };
 
   const updateZoneField = (index, field, value) => {
-    const updated = [...formData.zones];
+    const updated = [...formData.storeZones];
     updated[index][field] = value;
-    setFormData({ ...formData, zones: updated });
+    setFormData({ ...formData, storeZones: updated });
   };
 
   const removeZone = (index) => {
-    const updated = [...formData.zones];
+    const updated = [...formData.storeZones];
     updated.splice(index, 1);
-    setFormData({ ...formData, zones: updated });
+    setFormData({ ...formData, storeZones: updated });
   };
 
   return (
@@ -139,7 +139,7 @@ export default function UIStoreForm({
           </div>
         )}
 
-        {formData.zones?.map((zone, index) => (
+        {formData.storeZones?.map((zone, index) => (
           <div
             key={index}
             className="flex flex-col w-full p-2 gap-2 border border-gray-300 rounded-xl"

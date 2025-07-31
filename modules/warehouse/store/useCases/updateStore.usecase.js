@@ -5,11 +5,11 @@ import { getLocalNow } from "@/lib/getLocalNow";
 import prisma from "@/lib/prisma";
 
 export async function UpdateStoreUseCase(data) {
-  if (typeof data.zones === "string") {
+  if (typeof data.storeZones === "string") {
     try {
-      data.zones = JSON.parse(data.zones);
+      data.storeZones = JSON.parse(data.storeZones);
     } catch (e) {
-      data.zones = [];
+      data.storeZones = [];
     }
   }
 
@@ -24,7 +24,7 @@ export async function UpdateStoreUseCase(data) {
 
   const {
     storeId,
-    zones,
+    storeZones,
     storeUpdateBy,
     storeCode,
     storeName,
@@ -51,11 +51,11 @@ export async function UpdateStoreUseCase(data) {
   }
 
   const currentZones = await prisma.zone.findMany({
-    where: { storeId },
+    where: { zoneStoreId: storeId },
   });
 
   const submittedIds = new Set(
-    zones
+    storeZones
       .map((z) => Number(z.zoneId))
       .filter((id) => Number.isInteger(id) && id > 0)
   );
@@ -70,7 +70,7 @@ export async function UpdateStoreUseCase(data) {
     },
   });
 
-  for (const zone of zones) {
+  for (const zone of storeZones) {
     if (zone.zoneId) {
       await prisma.zone.update({
         where: { zoneId: Number(zone.zoneId) },
@@ -80,23 +80,19 @@ export async function UpdateStoreUseCase(data) {
           zoneDescription: zone.zoneDescription,
           zoneStatus: zone.zoneStatus,
           zoneUpdateAt: getLocalNow(),
-          updatedBy: {
-            connect: { userId: storeUpdateBy },
-          },
+          zoneUpdateBy: storeUpdateBy,
         },
       });
     } else {
       await prisma.zone.create({
         data: {
-          storeId,
+          zoneStoreId: storeId,
           zoneCode: zone.zoneCode,
           zoneName: zone.zoneName,
           zoneDescription: zone.zoneDescription,
           zoneStatus: zone.zoneStatus,
           zoneCreateAt: getLocalNow(),
-          createdBy: {
-            connect: { userId: storeUpdateBy },
-          },
+          zoneCreateBy: storeUpdateBy,
         },
       });
     }
@@ -109,8 +105,6 @@ export async function UpdateStoreUseCase(data) {
     storeDescription: storeDescription.trim(),
     storeStatus,
     storeUpdateAt: getLocalNow(),
-    updatedBy: {
-      connect: { userId: storeUpdateBy },
-    },
+    storeUpdateBy: storeUpdateBy,
   });
 }

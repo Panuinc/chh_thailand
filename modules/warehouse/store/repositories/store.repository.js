@@ -9,10 +9,9 @@ export const StoreRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
-        zones: true,
+        storeZones: true,
       },
     }),
-
   countAll: () => prisma.store.count(),
 
   findById: (storeId) =>
@@ -21,7 +20,7 @@ export const StoreRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
-        zones: true,
+        storeZones: true,
       },
     }),
 
@@ -32,7 +31,12 @@ export const StoreRepository = {
       },
     }),
 
-  create: (data) => prisma.store.create({ data }),
+  create: async (data) => {
+    return prisma.$transaction(async (prisma) => {
+      const store = await prisma.store.create({ data });
+      return store;
+    });
+  },
 
   update: (storeId, data) =>
     prisma.store.update({
