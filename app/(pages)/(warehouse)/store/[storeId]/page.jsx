@@ -19,14 +19,12 @@ export default function StoreUpdate() {
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
     useFormHandler(
       {
-        storeTax: "",
+        storeCode: "",
         storeName: "",
-        storeBranch: "",
-        storeAddress: "",
-        storePhone: "",
-        storeType: "",
+        storeLocation: "",
+        storeDescription: "",
         storeStatus: "",
-        storeLeaders: [],
+        zones: [],
       },
       useSubmitStore({ mode: "update", storeId, userId })
     );
@@ -34,15 +32,18 @@ export default function StoreUpdate() {
   useEffect(() => {
     if (store) {
       setFormData({
-        ...store,
-        storeLeaders: Array.isArray(store.leaders)
-          ? store.leaders.map((leader) => ({
-              storeLeaderId: leader.storeLeaderId,
-              storeLeaderName: leader.storeLeaderName,
-              storeLeaderEmail: leader.storeLeaderEmail,
-              storeLeaderPhone: leader.storeLeaderPhone,
-              storeLeaderIsDecisionMaker:
-                leader.storeLeaderIsDecisionMaker,
+        storeCode: store.storeCode,
+        storeName: store.storeName,
+        storeLocation: store.storeLocation,
+        storeDescription: store.storeDescription,
+        storeStatus: store.storeStatus,
+        zones: Array.isArray(store.leaders)
+          ? store.leaders.map((zone) => ({
+              zoneId: zone.zoneId,
+              zoneCode: zone.zoneCode,
+              zoneName: zone.zoneName,
+              zoneDescription: zone.zoneDescription,
+              zoneStatus: zone.zoneStatus,
             }))
           : [],
       });

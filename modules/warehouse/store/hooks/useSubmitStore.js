@@ -8,19 +8,17 @@ export function useSubmitStore({ mode = "create", storeId, userId }) {
   return useCallback(
     async (formRef, formData, setErrors) => {
       const form = new FormData(formRef);
-      const byField =
-        mode === "create" ? "storeCreateBy" : "storeUpdateBy";
+      const byField = mode === "create" ? "storeCreateBy" : "storeUpdateBy";
       form.append(byField, userId);
 
-      if (formData.storeLeaders) {
-        const cleanedLeaders = formData.storeLeaders.map((leader) => ({
-          storeLeaderId: leader.storeLeaderId || undefined,
-          storeLeaderName: leader.storeLeaderName,
-          storeLeaderEmail: leader.storeLeaderEmail,
-          storeLeaderPhone: leader.storeLeaderPhone,
-          storeLeaderIsDecisionMaker: !!leader.storeLeaderIsDecisionMaker,
+      if (formData.zones) {
+        const cleanedZones = formData.zones.map((zone) => ({
+          zoneCode: zone.zoneCode,
+          zoneName: zone.zoneName,
+          zoneDescription: zone.zoneDescription || "",
+          zoneStatus: zone.zoneStatus,
         }));
-        form.append("storeLeaders", JSON.stringify(cleanedLeaders));
+        form.append("zones", JSON.stringify(cleanedZones));
       }
 
       const url =

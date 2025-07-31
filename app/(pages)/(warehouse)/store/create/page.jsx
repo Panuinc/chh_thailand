@@ -17,13 +17,11 @@ export default function StoreCreate() {
   const { formRef, formData, errors, handleChange, handleSubmit, setFormData } =
     useFormHandler(
       {
-        storeTax: "",
+        storeCode: "",
         storeName: "",
-        storeBranch: "",
-        storeAddress: "",
-        storePhone: "",
-        storeType: "",
-        storeLeaders: [],
+        storeLocation: "",
+        storeDescription: "",
+        zones: [],
       },
       onSubmitHandler
     );

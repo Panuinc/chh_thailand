@@ -5,11 +5,11 @@ import { getLocalNow } from "@/lib/getLocalNow";
 import prisma from "@/lib/prisma";
 
 export async function UpdateStoreUseCase(data) {
-  if (typeof data.storeLeaders === "string") {
+  if (typeof data.zones === "string") {
     try {
-      data.storeLeaders = JSON.parse(data.storeLeaders);
+      data.zones = JSON.parse(data.zones);
     } catch (e) {
-      data.storeLeaders = [];
+      data.zones = [];
     }
   }
 
@@ -24,14 +24,12 @@ export async function UpdateStoreUseCase(data) {
 
   const {
     storeId,
-    storeLeaders,
+    zones,
     storeUpdateBy,
-    storeTax,
-    storeBranch,
+    storeCode,
     storeName,
-    storeAddress,
-    storePhone,
-    storeType,
+    storeLocation,
+    storeDescription,
     storeStatus,
   } = parsed.data;
 
@@ -40,80 +38,75 @@ export async function UpdateStoreUseCase(data) {
     throw { status: 404, message: "Store not found" };
   }
 
-  const normalizedTax = storeTax.trim();
-  const normalizedBranch = storeBranch.trim();
+  const normalizedCode = storeCode.trim();
 
-  if (
-    normalizedTax !== existing.storeTax ||
-    normalizedBranch !== existing.storeBranch
-  ) {
-    const duplicate = await StoreValidator.isDuplicateStoreTaxBranch(
-      normalizedTax,
-      normalizedBranch
-    );
+  if (normalizedCode !== existing.storeCode) {
+    const duplicate = await StoreValidator.isDuplicateStoreCode(normalizedCode);
     if (duplicate) {
       throw {
         status: 409,
-        message: `Store with Tax ID '${normalizedTax}' and Branch '${normalizedBranch}' already exists`,
+        message: `Store with code '${normalizedCode}' already exists`,
       };
     }
   }
 
-  const currentLeaders = await prisma.storeLeader.findMany({
+  const currentZones = await prisma.zone.findMany({
     where: { storeId },
   });
 
   const submittedIds = new Set(
-    storeLeaders
-      .map((l) => Number(l.storeLeaderId))
+    zones
+      .map((z) => Number(z.zoneId))
       .filter((id) => Number.isInteger(id) && id > 0)
   );
 
-  const toDelete = currentLeaders.filter(
-    (leader) => !submittedIds.has(leader.storeLeaderId)
+  const toDelete = currentZones.filter(
+    (zone) => !submittedIds.has(zone.zoneId)
   );
 
-  await prisma.storeLeader.deleteMany({
+  await prisma.zone.deleteMany({
     where: {
-      storeLeaderId: { in: toDelete.map((l) => l.storeLeaderId) },
+      zoneId: { in: toDelete.map((z) => z.zoneId) },
     },
   });
 
-  for (const leader of storeLeaders) {
-    if (leader.storeLeaderId) {
-      await prisma.storeLeader.update({
-        where: { storeLeaderId: Number(leader.storeLeaderId) },
+  for (const zone of zones) {
+    if (zone.zoneId) {
+      await prisma.zone.update({
+        where: { zoneId: Number(zone.zoneId) },
         data: {
-          storeLeaderName: leader.storeLeaderName,
-          storeLeaderEmail: leader.storeLeaderEmail,
-          storeLeaderPhone: leader.storeLeaderPhone,
-          storeLeaderIsDecisionMaker: leader.storeLeaderIsDecisionMaker,
-          storeLeaderUpdateBy: storeUpdateBy,
-          storeLeaderUpdateAt: getLocalNow(),
+          zoneCode: zone.zoneCode,
+          zoneName: zone.zoneName,
+          zoneDescription: zone.zoneDescription,
+          zoneStatus: zone.zoneStatus,
+          zoneUpdateAt: getLocalNow(),
+          updatedBy: {
+            connect: { userId: storeUpdateBy },
+          },
         },
       });
     } else {
-      await prisma.storeLeader.create({
+      await prisma.zone.create({
         data: {
           storeId,
-          storeLeaderName: leader.storeLeaderName,
-          storeLeaderEmail: leader.storeLeaderEmail,
-          storeLeaderPhone: leader.storeLeaderPhone,
-          storeLeaderIsDecisionMaker: leader.storeLeaderIsDecisionMaker,
-          storeLeaderCreateBy: storeUpdateBy,
-          storeLeaderCreateAt: getLocalNow(),
+          zoneCode: zone.zoneCode,
+          zoneName: zone.zoneName,
+          zoneDescription: zone.zoneDescription,
+          zoneStatus: zone.zoneStatus,
+          zoneCreateAt: getLocalNow(),
+          createdBy: {
+            connect: { userId: storeUpdateBy },
+          },
         },
       });
     }
   }
 
   return StoreService.update(storeId, {
-    storeTax: normalizedTax,
+    storeCode: normalizedCode,
     storeName: storeName.trim(),
-    storeBranch: normalizedBranch,
-    storeAddress: storeAddress.trim(),
-    storePhone: storePhone.trim(),
-    storeType,
+    storeLocation: storeLocation.trim(),
+    storeDescription: storeDescription.trim(),
     storeStatus,
     storeUpdateAt: getLocalNow(),
     updatedBy: {

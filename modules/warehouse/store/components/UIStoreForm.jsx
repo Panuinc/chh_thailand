@@ -11,9 +11,33 @@ export default function UIStoreForm({
   errors,
   formData,
   handleInputChange,
+  setFormData,
   isUpdate,
   operatedBy,
 }) {
+  const addZone = () => {
+    const updated = [...(formData.zones || [])];
+    updated.push({
+      zoneCode: "",
+      zoneName: "",
+      zoneDescription: "",
+      zoneStatus: "Enable",
+    });
+    setFormData({ ...formData, zones: updated });
+  };
+
+  const updateZoneField = (index, field, value) => {
+    const updated = [...formData.zones];
+    updated[index][field] = value;
+    setFormData({ ...formData, zones: updated });
+  };
+
+  const removeZone = (index) => {
+    const updated = [...formData.zones];
+    updated.splice(index, 1);
+    setFormData({ ...formData, zones: updated });
+  };
+
   return (
     <>
       <UITopic Topic={headerContent} />
@@ -41,7 +65,7 @@ export default function UIStoreForm({
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="storeName"
-              label="Store"
+              label="Store Name"
               labelPlacement="outside"
               placeholder="Please Enter Data"
               variant="bordered"
@@ -54,6 +78,7 @@ export default function UIStoreForm({
             />
           </div>
         </div>
+
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
@@ -86,6 +111,7 @@ export default function UIStoreForm({
             />
           </div>
         </div>
+
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2">
@@ -112,6 +138,105 @@ export default function UIStoreForm({
             </div>
           </div>
         )}
+
+        {formData.zones?.map((zone, index) => (
+          <div
+            key={index}
+            className="flex flex-col w-full p-2 gap-2 border border-gray-300 rounded-xl"
+          >
+            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                <Input
+                  label="Zone Code"
+                  labelPlacement="outside"
+                  placeholder="Enter Zone Code"
+                  variant="bordered"
+                  radius="full"
+                  value={zone.zoneCode}
+                  onChange={(e) =>
+                    updateZoneField(index, "zoneCode", e.target.value)
+                  }
+                  isInvalid={!!errors.zones?.[index]?.zoneCode}
+                  errorMessage={errors.zones?.[index]?.zoneCode}
+                />
+              </div>
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                <Input
+                  label="Zone Name"
+                  labelPlacement="outside"
+                  placeholder="Enter Zone Name"
+                  variant="bordered"
+                  radius="full"
+                  value={zone.zoneName}
+                  onChange={(e) =>
+                    updateZoneField(index, "zoneName", e.target.value)
+                  }
+                  isInvalid={!!errors.zones?.[index]?.zoneName}
+                  errorMessage={errors.zones?.[index]?.zoneName}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                <Input
+                  label="Zone Description"
+                  labelPlacement="outside"
+                  placeholder="Enter Zone Description"
+                  variant="bordered"
+                  radius="full"
+                  value={zone.zoneDescription}
+                  onChange={(e) =>
+                    updateZoneField(index, "zoneDescription", e.target.value)
+                  }
+                />
+              </div>
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+                <Select
+                  label="Zone Status"
+                  labelPlacement="outside"
+                  placeholder="Please Select"
+                  variant="bordered"
+                  radius="full"
+                  selectedKeys={[zone.zoneStatus]}
+                  onSelectionChange={(keys) =>
+                    updateZoneField(index, "zoneStatus", [...keys][0])
+                  }
+                >
+                  <SelectItem key="Enable">Enable</SelectItem>
+                  <SelectItem key="Disable">Disable</SelectItem>
+                </Select>
+              </div>
+            </div>
+            <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+              <div className="flex items-center justify-center h-full p-2 gap-2">
+                <Button
+                  type="button"
+                  color="danger"
+                  radius="full"
+                  className="w-full h-full p-3 gap-2"
+                  onPress={() => removeZone(index)}
+                >
+                  Remove Zone
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+          <div className="flex items-center justify-center h-full p-2 gap-2">
+            <Button
+              type="button"
+              color="secondary"
+              radius="full"
+              className="w-full h-full p-3 gap-2"
+              onPress={addZone}
+            >
+              Add Zone
+            </Button>
+          </div>
+        </div>
+
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
             <Input
@@ -128,6 +253,7 @@ export default function UIStoreForm({
             />
           </div>
         </div>
+
         <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
           <div className="flex items-center justify-center h-full p-2 gap-2">
             <Button

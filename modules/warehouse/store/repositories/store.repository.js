@@ -9,7 +9,7 @@ export const StoreRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
-        leaders: true,
+        zones: true,
       },
     }),
 
@@ -21,15 +21,14 @@ export const StoreRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
-        leaders: true,
+        zones: true,
       },
     }),
 
-  findByTaxAndBranch: (tax, branch) =>
+  findByCode: (storeCode) =>
     prisma.store.findFirst({
       where: {
-        storeTax: tax.trim(),
-        storeBranch: branch.trim(),
+        storeCode: storeCode.trim(),
       },
     }),
 

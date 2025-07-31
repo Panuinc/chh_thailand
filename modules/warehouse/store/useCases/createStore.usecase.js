@@ -4,11 +4,11 @@ import { StoreValidator } from "../validators/store.validator";
 import { getLocalNow } from "@/lib/getLocalNow";
 
 export async function CreateStoreUseCase(data) {
-  if (typeof data.storeLeaders === "string") {
+  if (typeof data.zones === "string") {
     try {
-      data.storeLeaders = JSON.parse(data.storeLeaders);
+      data.zones = JSON.parse(data.zones);
     } catch (e) {
-      data.storeLeaders = [];
+      data.zones = [];
     }
   }
 
@@ -21,38 +21,37 @@ export async function CreateStoreUseCase(data) {
     };
   }
 
-  const normalizedTax = parsed.data.storeTax.trim();
-  const normalizedBranch = parsed.data.storeBranch.trim();
+  const normalizedCode = parsed.data.storeCode.trim();
 
-  const duplicate = await StoreValidator.isDuplicateStoreTaxBranch(
-    normalizedTax,
-    normalizedBranch
-  );
-
+  const duplicate = await StoreValidator.isDuplicateStoreCode(normalizedCode);
   if (duplicate) {
     throw {
       status: 409,
-      message: `Store with Tax ID '${normalizedTax}' and Branch '${normalizedBranch}' already exists`,
+      message: `Store with code '${normalizedCode}' already exists`,
     };
   }
 
   return StoreService.create({
-    storeTax: normalizedTax,
+    storeCode: normalizedCode,
     storeName: parsed.data.storeName.trim(),
-    storeBranch: normalizedBranch,
-    storeAddress: parsed.data.storeAddress.trim(),
-    storePhone: parsed.data.storePhone.trim(),
-    storeType: parsed.data.storeType,
+    storeLocation: parsed.data.storeLocation.trim(),
+    storeDescription: parsed.data.storeDescription.trim(),
+    storeStatus: parsed.data.storeStatus,
     storeCreateAt: getLocalNow(),
     createdBy: {
       connect: { userId: parsed.data.storeCreateBy },
     },
-    leaders: {
+    zones: {
       create:
-        parsed.data.storeLeaders?.map((leader) => ({
-          ...leader,
-          storeLeaderCreateBy: parsed.data.storeCreateBy,
-          storeLeaderCreateAt: getLocalNow(),
+        parsed.data.zones?.map((zone) => ({
+          zoneCode: zone.zoneCode,
+          zoneName: zone.zoneName,
+          zoneDescription: zone.zoneDescription,
+          zoneStatus: zone.zoneStatus,
+          zoneCreateAt: getLocalNow(),
+          createdBy: {
+            connect: { userId: parsed.data.storeCreateBy },
+          },
         })) ?? [],
     },
   });

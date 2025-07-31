@@ -1,8 +1,8 @@
 import { StoreRepository } from "../repositories/store.repository";
 
 export const StoreValidator = {
-  async isDuplicateStoreTaxBranch(tax, branch) {
-    const store = await StoreRepository.findByTaxAndBranch(tax, branch);
+  async isDuplicateStoreCode(storeCode) {
+    const store = await StoreRepository.findByCode(storeCode);
     return !!store;
   },
 };
