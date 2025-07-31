@@ -47,6 +47,7 @@ import {
 // });
 
 const zoneSchema = z.object({
+  zoneId: z.coerce.number().optional(),
   zoneCode: preprocessString("Please provide zone code"),
   zoneName: preprocessString("Please provide zone name"),
   zoneDescription: z.string().optional(),
