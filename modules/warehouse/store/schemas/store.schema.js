@@ -1,64 +1,78 @@
 import { z } from "zod";
 import {
-  preprocessInt,
   preprocessString,
+  preprocessInt,
+  preprocessFloat,
   preprocessEnum,
   formatData,
 } from "@/lib/zodSchema";
 
-const storeLeaderSchema = z.object({
-  storeLeaderId: z.coerce.number().optional(),
-  storeLeaderName: preprocessString("Please provide leader name"),
-  storeLeaderEmail: preprocessString("Please provide leader email"),
-  storeLeaderPhone: preprocessString("Please provide leader phone"),
-  storeLeaderIsDecisionMaker: z.coerce.boolean().optional(),
+const enableStateEnum = ["Enable", "Disable"];
+const binStatusEnum = ["Empty", "Partial", "Full", "Reserved"];
+
+const binSchema = z.object({
+  binCode: preprocessString("Please provide bin code"),
+  binDescription: z.string().optional(),
+  binRow: preprocessString("Please provide bin row"),
+  binType: preprocessString("Please provide bin type"),
+  binUsage: preprocessString("Please provide bin usage"),
+  binCapacity: preprocessInt("Please provide bin capacity"),
+  binRfidTagId: preprocessString("Please provide RFID tag"),
+  binStatus: preprocessEnum(binStatusEnum, "Invalid bin status"),
+  binFillRate: preprocessFloat("Please provide fill rate"),
+  binPosX: preprocessFloat("Please provide X position"),
+  binPosY: preprocessFloat("Please provide Y position"),
+  binPosZ: preprocessFloat("Please provide Z position"),
+});
+
+const levelSchema = z.object({
+  levelCode: preprocessString("Please provide level code"),
+  levelName: preprocessString("Please provide level name"),
+  levelDescription: z.string().optional(),
+  levelBins: z.array(binSchema),
+});
+
+const rackSchema = z.object({
+  rackCode: preprocessString("Please provide rack code"),
+  rackName: preprocessString("Please provide rack name"),
+  rackDescription: z.string().optional(),
+  rackLevels: z.array(levelSchema),
+});
+
+const aisleSchema = z.object({
+  aisleCode: preprocessString("Please provide aisle code"),
+  aisleName: preprocessString("Please provide aisle name"),
+  aisleDescription: z.string().optional(),
+  aisleRacks: z.array(rackSchema),
+});
+
+const zoneSchema = z.object({
+  zoneCode: preprocessString("Please provide zone code"),
+  zoneName: preprocessString("Please provide zone name"),
+  zoneDescription: z.string().optional(),
+  zoneStatus: preprocessEnum(enableStateEnum, "Invalid zone status"),
+  zoneAisles: z.array(aisleSchema),
 });
 
 export const storePostSchema = z.object({
-  storeTax: preprocessString("Please provide store tax"),
-  storeName: preprocessString("Please provide the store name"),
-  storeBranch: preprocessString("Please provide the store branch"),
-  storeAddress: preprocessString("Please provide store address"),
-  storePhone: preprocessString("Please provide store phone"),
-  storeType: preprocessEnum(
-    [
-      "Owner",
-      "CM",
-      "MainConstruction",
-      "DesignerArchitect",
-      "EndUser",
-      "Dealer",
-    ],
-    "Invalid store type"
-  ),
-  storeCreateBy: preprocessInt("Please provide the creator's user ID"),
-  storeLeaders: z.array(storeLeaderSchema).optional(),
+  storeCode: preprocessString("Please provide store code"),
+  storeName: preprocessString("Please provide store name"),
+  storeLocation: preprocessString("Please provide store location"),
+  storeDescription: preprocessString("Please provide store description"),
+  storeStatus: preprocessEnum(enableStateEnum, "Invalid store status"),
+  storeCreateBy: preprocessInt("Please provide store creator"),
+  zones: z.array(zoneSchema).optional(),
 });
 
 export const storePutSchema = z.object({
-  storeId: preprocessInt("Please provide the store ID to update"),
-  storeTax: preprocessString("Please provide store tax"),
-  storeName: preprocessString("Please provide the store name"),
-  storeBranch: preprocessString("Please provide the store branch"),
-  storeAddress: preprocessString("Please provide store address"),
-  storePhone: preprocessString("Please provide store phone"),
-  storeType: preprocessEnum(
-    [
-      "Owner",
-      "CM",
-      "MainConstruction",
-      "DesignerArchitect",
-      "EndUser",
-      "Dealer",
-    ],
-    "Invalid store type"
-  ),
-  storeStatus: preprocessEnum(
-    ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable'"
-  ),
-  storeUpdateBy: preprocessInt("Please provide the updater's user ID"),
-  storeLeaders: z.array(storeLeaderSchema).optional(),
+  storeId: preprocessInt("Please provide store ID"),
+  storeCode: preprocessString("Please provide store code"),
+  storeName: preprocessString("Please provide store name"),
+  storeLocation: preprocessString("Please provide store location"),
+  storeDescription: preprocessString("Please provide store description"),
+  storeStatus: preprocessEnum(enableStateEnum, "Invalid store status"),
+  storeUpdateBy: preprocessInt("Please provide store updater"),
+  zones: z.array(zoneSchema).optional(),
 });
 
 export const formatStoreData = (stores) =>
