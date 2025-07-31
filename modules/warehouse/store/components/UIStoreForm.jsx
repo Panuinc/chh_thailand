@@ -45,10 +45,10 @@ export default function UIStoreForm({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 overflow-auto"
+        className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border_custom overflow-auto"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="storeCode"
               label="Store Code"
@@ -63,7 +63,7 @@ export default function UIStoreForm({
               errorMessage={errors.storeCode}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="storeName"
               label="Store Name"
@@ -80,8 +80,8 @@ export default function UIStoreForm({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="storeLocation"
               label="Store Location"
@@ -96,7 +96,7 @@ export default function UIStoreForm({
               errorMessage={errors.storeLocation}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
             <Input
               name="storeDescription"
               label="Store Description"
@@ -114,8 +114,8 @@ export default function UIStoreForm({
         </div>
 
         {isUpdate && (
-          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
               <Select
                 name="storeStatus"
                 label="Store Status"
@@ -143,15 +143,16 @@ export default function UIStoreForm({
         {formData.storeZones?.map((zone, index) => (
           <div
             key={index}
-            className="flex flex-col w-full p-2 gap-2 border border-gray-300 rounded-xl"
+            className="flex flex-col w-full p-2 gap-2 border-2 border-danger border-dashed"
           >
-            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
                 <Input
                   label="Zone Code"
                   labelPlacement="outside"
                   placeholder="Enter Zone Code"
                   variant="bordered"
+                  color="default"
                   radius="full"
                   value={zone.zoneCode}
                   onChange={(e) =>
@@ -161,12 +162,13 @@ export default function UIStoreForm({
                   errorMessage={errors.zones?.[index]?.zoneCode}
                 />
               </div>
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
                 <Input
                   label="Zone Name"
                   labelPlacement="outside"
                   placeholder="Enter Zone Name"
                   variant="bordered"
+                  color="default"
                   radius="full"
                   value={zone.zoneName}
                   onChange={(e) =>
@@ -177,13 +179,14 @@ export default function UIStoreForm({
                 />
               </div>
             </div>
-            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2 border_custom">
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
                 <Input
                   label="Zone Description"
                   labelPlacement="outside"
                   placeholder="Enter Zone Description"
                   variant="bordered"
+                  color="default"
                   radius="full"
                   value={zone.zoneDescription}
                   onChange={(e) =>
@@ -191,12 +194,13 @@ export default function UIStoreForm({
                   }
                 />
               </div>
-              <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+              <div className="flex items-center justify-center w-full h-full p-2 gap-2 border_custom">
                 <Select
                   label="Zone Status"
                   labelPlacement="outside"
                   placeholder="Please Select"
                   variant="bordered"
+                  color="default"
                   radius="full"
                   selectedKeys={[zone.zoneStatus]}
                   onSelectionChange={(keys) =>
@@ -208,13 +212,13 @@ export default function UIStoreForm({
                 </Select>
               </div>
             </div>
-            <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
-              <div className="flex items-center justify-center h-full p-2 gap-2">
+            <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+              <div className="flex items-center justify-center h-full p-2 gap-2 border_custom">
                 <Button
                   type="button"
                   color="danger"
                   radius="full"
-                  className="w-full h-full p-3 gap-2"
+                  className="w-full h-full p-3 gap-2 border_custom"
                   onPress={() => removeZone(index)}
                 >
                   Remove Zone
@@ -224,13 +228,13 @@ export default function UIStoreForm({
           </div>
         ))}
 
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
-          <div className="flex items-center justify-center h-full p-2 gap-2">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center h-full p-2 gap-2 border_custom">
             <Button
               type="button"
               color="secondary"
               radius="full"
-              className="w-full h-full p-3 gap-2"
+              className="w-full h-full p-3 gap-2 border_custom"
               onPress={addZone}
             >
               Add Zone
@@ -238,8 +242,8 @@ export default function UIStoreForm({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2 border_custom">
             <Input
               name="operatedBy"
               type="text"
@@ -255,13 +259,13 @@ export default function UIStoreForm({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
-          <div className="flex items-center justify-center h-full p-2 gap-2">
+        <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2 border_custom">
+          <div className="flex items-center justify-center h-full p-2 gap-2 border_custom">
             <Button
               type="submit"
               color="primary"
               radius="full"
-              className="w-full h-full p-3 gap-2"
+              className="w-full h-full p-3 gap-2 border_custom"
             >
               Save
             </Button>
