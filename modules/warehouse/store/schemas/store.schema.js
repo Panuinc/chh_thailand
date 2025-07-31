@@ -2,49 +2,54 @@ import { z } from "zod";
 import {
   preprocessString,
   preprocessInt,
+  preprocessDouble,
   preprocessEnum,
   formatData,
 } from "@/lib/zodSchema";
 
-// const binSchema = z.object({
-//   binCode: preprocessString("Please provide bin code"),
-//   binDescription: z.string().optional(),
-//   binRow: preprocessString("Please provide bin row"),
-//   binType: preprocessString("Please provide bin type"),
-//   binUsage: preprocessString("Please provide bin usage"),
-//   binCapacity: preprocessInt("Please provide bin capacity"),
-//   binRfidTagId: preprocessString("Please provide RFID tag"),
-//   binStatus: preprocessEnum(
-//     ["Empty", "Partial", "Full", "Reserved"],
-//     "Please provide 'Empty' or 'Partial' or 'Full' or 'Reserved'"
-//   ),
+const binSchema = z.object({
+  binId: z.coerce.number().optional(),
+  binCode: preprocessString("Please provide bin code"),
+  binDescription: z.string().optional(),
+  binRow: preprocessString("Please provide bin row"),
+  binType: preprocessString("Please provide bin type"),
+  binUsage: preprocessString("Please provide bin usage"),
+  binCapacity: preprocessInt("Please provide bin capacity"),
+  binRfidTagId: preprocessString("Please provide RFID tag"),
+  binStatus: preprocessEnum(
+    ["Empty", "Partial", "Full", "Reserved"],
+    "Please provide 'Empty' or 'Partial' or 'Full' or 'Reserved'"
+  ),
 
-//   binFillRate: preprocessDouble("Please provide fill rate"),
-//   binPosX: preprocessDouble("Please provide X position"),
-//   binPosY: preprocessDouble("Please provide Y position"),
-//   binPosZ: preprocessDouble("Please provide Z position"),
-// });
+  binFillRate: preprocessDouble("Please provide fill rate"),
+  binPosX: preprocessDouble("Please provide X position"),
+  binPosY: preprocessDouble("Please provide Y position"),
+  binPosZ: preprocessDouble("Please provide Z position"),
+});
 
-// const levelSchema = z.object({
-//   levelCode: preprocessString("Please provide level code"),
-//   levelName: preprocessString("Please provide level name"),
-//   levelDescription: z.string().optional(),
-//   levelBins: z.array(binSchema),
-// });
+const levelSchema = z.object({
+  levelId: z.coerce.number().optional(),
+  levelCode: preprocessString("Please provide level code"),
+  levelName: preprocessString("Please provide level name"),
+  levelDescription: z.string().optional(),
+  levelBins: z.array(binSchema),
+});
 
-// const rackSchema = z.object({
-//   rackCode: preprocessString("Please provide rack code"),
-//   rackName: preprocessString("Please provide rack name"),
-//   rackDescription: z.string().optional(),
-//   rackLevels: z.array(levelSchema),
-// });
+const rackSchema = z.object({
+  rackId: z.coerce.number().optional(),
+  rackCode: preprocessString("Please provide rack code"),
+  rackName: preprocessString("Please provide rack name"),
+  rackDescription: z.string().optional(),
+  rackLevels: z.array(levelSchema),
+});
 
-// const aisleSchema = z.object({
-//   aisleCode: preprocessString("Please provide aisle code"),
-//   aisleName: preprocessString("Please provide aisle name"),
-//   aisleDescription: z.string().optional(),
-//   aisleRacks: z.array(rackSchema),
-// });
+const aisleSchema = z.object({
+  aisleId: z.coerce.number().optional(),
+  aisleCode: preprocessString("Please provide aisle code"),
+  aisleName: preprocessString("Please provide aisle name"),
+  aisleDescription: z.string().optional(),
+  aisleRacks: z.array(rackSchema),
+});
 
 const zoneSchema = z.object({
   zoneId: z.coerce.number().optional(),
@@ -55,7 +60,7 @@ const zoneSchema = z.object({
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"
   ),
-  // zoneAisles: z.array(aisleSchema),
+  zoneAisles: z.array(aisleSchema),
 });
 
 export const storePostSchema = z.object({
