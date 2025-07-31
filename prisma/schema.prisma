@@ -194,13 +194,28 @@ model User {
   storesCreated Store[] @relation("StoreCreateBy")
   storesUpdated Store[] @relation("StoreUpdateBy")
 
+  zonesCreated Zone[] @relation("ZoneCreatedBy")
+  zonesUpdated Zone[] @relation("ZoneUpdatedBy")
+
+  aislesCreated Aisle[] @relation("AisleCreatedBy")
+  aislesUpdated Aisle[] @relation("AisleUpdatedBy")
+
+  racksCreated Rack[] @relation("RackCreatedBy")
+  racksUpdated Rack[] @relation("RackUpdatedBy")
+
+  levelsCreated Level[] @relation("LevelCreatedBy")
+  levelsUpdated Level[] @relation("LevelUpdatedBy")
+
+  binsCreated Bin[] @relation("BinCreatedBy")
+  binsUpdated Bin[] @relation("BinUpdatedBy")
+
   partnersCreated Partner[] @relation("PartnerCreateBy")
   partnersUpdated Partner[] @relation("PartnerUpdateBy")
 
-  productsCreated Product[] @relation("ProductCreateBy")
-  productsUpdated Product[] @relation("ProductUpdateBy")
+  // productsCreated Product[] @relation("ProductCreateBy")
+  // productsUpdated Product[] @relation("ProductUpdateBy")
 
-  stockMovements StockMovement[] @relation("UserMovedStock")
+  // stockMovements StockMovement[] @relation("UserMovedStock")
 
   createdBy User? @relation("UserCreatedBy", fields: [userCreateBy], references: [userId])
   updatedBy User? @relation("UserUpdatedBy", fields: [userUpdateBy], references: [userId])
@@ -365,11 +380,19 @@ model Zone {
   zoneName        String
   zoneDescription String?
   zoneStatus      EnableState @default(Enable)
+  zoneCreateBy    Int
   zoneCreateAt    DateTime    @default(now()) @db.Timestamp(0)
+  zoneUpdateBy    Int?
   zoneUpdateAt    DateTime?   @db.Timestamp(0)
 
   zoneStore  Store   @relation(fields: [zoneStoreId], references: [storeId])
   zoneAisles Aisle[]
+
+  createdBy User  @relation("ZoneCreatedBy", fields: [zoneCreateBy], references: [userId])
+  updatedBy User? @relation("ZoneUpdatedBy", fields: [zoneUpdateBy], references: [userId])
+
+  @@index([zoneCreateBy])
+  @@index([zoneUpdateBy])
 }
 
 model Aisle {
@@ -377,11 +400,19 @@ model Aisle {
   aisleZoneId   Int
   aisleCode     String    @unique
   aisleName     String
+  aisleCreateBy Int
   aisleCreateAt DateTime  @default(now()) @db.Timestamp(0)
+  aisleUpdateBy Int?
   aisleUpdateAt DateTime? @db.Timestamp(0)
 
   aisleZone  Zone   @relation(fields: [aisleZoneId], references: [zoneId])
   aisleRacks Rack[]
+
+  createdBy User  @relation("AisleCreatedBy", fields: [aisleCreateBy], references: [userId])
+  updatedBy User? @relation("AisleUpdatedBy", fields: [aisleUpdateBy], references: [userId])
+
+  @@index([aisleCreateBy])
+  @@index([aisleUpdateBy])
 }
 
 model Rack {
@@ -389,11 +420,19 @@ model Rack {
   rackAisleId  Int
   rackCode     String    @unique
   rackName     String
+  rackCreateBy Int
   rackCreateAt DateTime  @default(now()) @db.Timestamp(0)
+  rackUpdateBy Int?
   rackUpdateAt DateTime? @db.Timestamp(0)
 
   rackAisle  Aisle   @relation(fields: [rackAisleId], references: [aisleId])
   rackLevels Level[]
+
+  createdBy User  @relation("RackCreatedBy", fields: [rackCreateBy], references: [userId])
+  updatedBy User? @relation("RackUpdatedBy", fields: [rackUpdateBy], references: [userId])
+
+  @@index([rackCreateBy])
+  @@index([rackUpdateBy])
 }
 
 model Level {
@@ -401,11 +440,19 @@ model Level {
   levelRackId   Int
   levelCode     String    @unique
   levelName     String
+  levelCreateBy Int
   levelCreateAt DateTime  @default(now()) @db.Timestamp(0)
+  levelUpdateBy Int?
   levelUpdateAt DateTime? @db.Timestamp(0)
 
   levelRack Rack  @relation(fields: [levelRackId], references: [rackId])
   levelBins Bin[]
+
+  createdBy User  @relation("LevelCreatedBy", fields: [levelCreateBy], references: [userId])
+  updatedBy User? @relation("LevelUpdatedBy", fields: [levelUpdateBy], references: [userId])
+
+  @@index([levelCreateBy])
+  @@index([levelUpdateBy])
 }
 
 model Bin {
@@ -422,83 +469,91 @@ model Bin {
   binPosX      Float
   binPosY      Float
   binPosZ      Float
+  binCreateBy  Int
   binCreateAt  DateTime  @default(now()) @db.Timestamp(0)
+  binUpdateBy  Int?
   binUpdateAt  DateTime? @db.Timestamp(0)
 
   binLevel  Level           @relation(fields: [binLevelId], references: [levelId])
-  binStocks Stock[]
-  binItems  StockItem[]
-  movements StockMovement[]
+  // binStocks Stock[]
+  // binItems  StockItem[]
+  // movements StockMovement[]
+
+  createdBy User  @relation("BinCreatedBy", fields: [binCreateBy], references: [userId])
+  updatedBy User? @relation("BinUpdatedBy", fields: [binUpdateBy], references: [userId])
+
+  @@index([binCreateBy])
+  @@index([binUpdateBy])
 }
 
-model Product {
-  productId          Int         @id @default(autoincrement())
-  productSKU         String      @unique
-  productName        String
-  productType        ProductType
-  productUnit        String
-  productDescription String?
-  productStatus      EnableState @default(Enable)
-  productCreateBy    Int
-  productCreateAt    DateTime    @default(now()) @db.Timestamp(0)
-  productUpdateBy    Int?
-  productUpdateAt    DateTime?   @db.Timestamp(0)
+// model Product {
+//   productId          Int         @id @default(autoincrement())
+//   productSKU         String      @unique
+//   productName        String
+//   productType        ProductType
+//   productUnit        String
+//   productDescription String?
+//   productStatus      EnableState @default(Enable)
+//   productCreateBy    Int
+//   productCreateAt    DateTime    @default(now()) @db.Timestamp(0)
+//   productUpdateBy    Int?
+//   productUpdateAt    DateTime?   @db.Timestamp(0)
 
-  createdBy User  @relation("ProductCreateBy", fields: [productCreateBy], references: [userId])
-  updatedBy User? @relation("ProductUpdateBy", fields: [productUpdateBy], references: [userId])
+//   createdBy User  @relation("ProductCreateBy", fields: [productCreateBy], references: [userId])
+//   updatedBy User? @relation("ProductUpdateBy", fields: [productUpdateBy], references: [userId])
 
-  productStocks Stock[]
-  productItems  StockItem[]
-  movements     StockMovement[]
-}
+//   productStocks Stock[]
+//   productItems  StockItem[]
+//   movements     StockMovement[]
+// }
 
-model Stock {
-  stockId        Int       @id @default(autoincrement())
-  stockProductId Int
-  stockBinId     Int
-  stockQty       Int
-  stockLot       String
-  stockExpiry    DateTime?
+// model Stock {
+//   stockId        Int       @id @default(autoincrement())
+//   stockProductId Int
+//   stockBinId     Int
+//   stockQty       Int
+//   stockLot       String
+//   stockExpiry    DateTime?
 
-  stockProduct Product     @relation(fields: [stockProductId], references: [productId])
-  stockBin     Bin         @relation(fields: [stockBinId], references: [binId])
-  stockItems   StockItem[] @relation("StockToItem")
+//   stockProduct Product     @relation(fields: [stockProductId], references: [productId])
+//   stockBin     Bin         @relation(fields: [stockBinId], references: [binId])
+//   stockItems   StockItem[] @relation("StockToItem")
 
-  @@unique([stockProductId, stockBinId, stockLot, stockExpiry])
-}
+//   @@unique([stockProductId, stockBinId, stockLot, stockExpiry])
+// }
 
-model StockItem {
-  itemId        Int        @id @default(autoincrement())
-  itemStockId   Int
-  itemProductId Int
-  itemBinId     Int
-  itemRFIDTagId String     @unique
-  itemSerialNo  String?
-  itemLot       String
-  itemExpiry    DateTime?
-  itemStatus    ItemStatus @default(Available)
-  itemCreateAt  DateTime   @default(now()) @db.Timestamp(0)
-  itemUpdateAt  DateTime?  @db.Timestamp(0)
+// model StockItem {
+//   itemId        Int        @id @default(autoincrement())
+//   itemStockId   Int
+//   itemProductId Int
+//   itemBinId     Int
+//   itemRFIDTagId String     @unique
+//   itemSerialNo  String?
+//   itemLot       String
+//   itemExpiry    DateTime?
+//   itemStatus    ItemStatus @default(Available)
+//   itemCreateAt  DateTime   @default(now()) @db.Timestamp(0)
+//   itemUpdateAt  DateTime?  @db.Timestamp(0)
 
-  itemProduct Product @relation(fields: [itemProductId], references: [productId])
-  itemBin     Bin     @relation(fields: [itemBinId], references: [binId])
-  itemStock   Stock   @relation("StockToItem", fields: [itemStockId], references: [stockId])
-}
+//   itemProduct Product @relation(fields: [itemProductId], references: [productId])
+//   itemBin     Bin     @relation(fields: [itemBinId], references: [binId])
+//   itemStock   Stock   @relation("StockToItem", fields: [itemStockId], references: [stockId])
+// }
 
-model StockMovement {
-  movementId        Int          @id @default(autoincrement())
-  movementType      MovementType
-  movementProductId Int
-  movementBinId     Int
-  movementQty       Int
-  movementLot       String
-  movementExpiry    DateTime?
-  movementRefNo     String?
-  movementNote      String?
-  movementBy        Int
-  movementAt        DateTime     @default(now()) @db.Timestamp(0)
+// model StockMovement {
+//   movementId        Int          @id @default(autoincrement())
+//   movementType      MovementType
+//   movementProductId Int
+//   movementBinId     Int
+//   movementQty       Int
+//   movementLot       String
+//   movementExpiry    DateTime?
+//   movementRefNo     String?
+//   movementNote      String?
+//   movementBy        Int
+//   movementAt        DateTime     @default(now()) @db.Timestamp(0)
 
-  movementProduct Product @relation(fields: [movementProductId], references: [productId])
-  movementBin     Bin     @relation(fields: [movementBinId], references: [binId])
-  movedBy         User    @relation("UserMovedStock", fields: [movementBy], references: [userId])
-}
+//   movementProduct Product @relation(fields: [movementProductId], references: [productId])
+//   movementBin     Bin     @relation(fields: [movementBinId], references: [binId])
+//   movedBy         User    @relation("UserMovedStock", fields: [movementBy], references: [userId])
+// }
