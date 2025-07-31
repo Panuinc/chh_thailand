@@ -25,6 +25,21 @@ export default function UIStoreForm({
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
+              name="storeCode"
+              label="Store Code"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.storeCode || ""}
+              onChange={handleInputChange("storeCode")}
+              isInvalid={!!errors.storeCode}
+              errorMessage={errors.storeCode}
+            />
+          </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
               name="storeName"
               label="Store"
               labelPlacement="outside"
@@ -39,6 +54,38 @@ export default function UIStoreForm({
             />
           </div>
         </div>
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="storeLocation"
+              label="Store Location"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.storeLocation || ""}
+              onChange={handleInputChange("storeLocation")}
+              isInvalid={!!errors.storeLocation}
+              errorMessage={errors.storeLocation}
+            />
+          </div>
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Input
+              name="storeDescription"
+              label="Store Description"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.storeDescription || ""}
+              onChange={handleInputChange("storeDescription")}
+              isInvalid={!!errors.storeDescription}
+              errorMessage={errors.storeDescription}
+            />
+          </div>
+        </div>
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2">
@@ -50,7 +97,9 @@ export default function UIStoreForm({
                 variant="bordered"
                 color="default"
                 radius="full"
-                selectedKeys={formData.storeStatus ? [formData.storeStatus] : []}
+                selectedKeys={
+                  formData.storeStatus ? [formData.storeStatus] : []
+                }
                 onSelectionChange={(keys) =>
                   handleInputChange("storeStatus")([...keys][0])
                 }
