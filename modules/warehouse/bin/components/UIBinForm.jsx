@@ -249,37 +249,59 @@ export default function UIBinForm({
             />
           </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
+            <Select
               name="binType"
               label="Bin Type"
               labelPlacement="outside"
-              placeholder="Please Enter Data"
+              placeholder="Please Select"
               variant="bordered"
               color="default"
               radius="full"
-              value={formData.binType || ""}
-              onChange={handleInputChange("binType")}
+              selectedKeys={formData.binType ? [formData.binType] : []}
+              onSelectionChange={(keys) =>
+                handleInputChange("binType")([...keys][0])
+              }
               isInvalid={!!errors.binType}
               errorMessage={errors.binType}
-            />
+            >
+              <SelectItem key="Standard">Standard</SelectItem>
+              <SelectItem key="Pallet">Pallet</SelectItem>
+              <SelectItem key="Shelf">Shelf</SelectItem>
+              <SelectItem key="Drawer">Drawer</SelectItem>
+              <SelectItem key="Container">Container</SelectItem>
+              <SelectItem key="Bulk">Bulk</SelectItem>
+              <SelectItem key="ColdStorage">ColdStorage</SelectItem>
+              <SelectItem key="Hazmat">Hazmat</SelectItem>
+            </Select>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
+            <Select
               name="binUsage"
               label="Bin Usage"
               labelPlacement="outside"
-              placeholder="Please Enter Data"
+              placeholder="Please Select"
               variant="bordered"
               color="default"
               radius="full"
-              value={formData.binUsage || ""}
-              onChange={handleInputChange("binUsage")}
+              selectedKeys={formData.binUsage ? [formData.binUsage] : []}
+              onSelectionChange={(keys) =>
+                handleInputChange("binUsage")([...keys][0])
+              }
               isInvalid={!!errors.binUsage}
               errorMessage={errors.binUsage}
-            />
+            >
+              <SelectItem key="Picking">Picking</SelectItem>
+              <SelectItem key="Storage">Storage</SelectItem>
+              <SelectItem key="Buffer">Buffer</SelectItem>
+              <SelectItem key="Inbound">Inbound</SelectItem>
+              <SelectItem key="Outbound">Outbound</SelectItem>
+              <SelectItem key="Return">Return</SelectItem>
+              <SelectItem key="QC">QC</SelectItem>
+              <SelectItem key="Quarantine">Quarantine</SelectItem>
+            </Select>
           </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
