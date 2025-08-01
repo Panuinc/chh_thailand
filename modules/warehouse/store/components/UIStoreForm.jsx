@@ -2,7 +2,7 @@
 
 import React from "react";
 import UITopic from "@/components/topic/UITopic";
-import { Input, Button, Select, SelectItem } from "@heroui/react";
+import { Input, Button, Select, SelectItem, Textarea } from "@heroui/react";
 
 export default function UIStoreForm({
   headerContent,
@@ -55,7 +55,7 @@ export default function UIStoreForm({
           </div>
         </div>
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
             <Input
               name="storeLocation"
               label="Store Location"
@@ -71,7 +71,7 @@ export default function UIStoreForm({
             />
           </div>
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
-            <Input
+            <Textarea
               name="storeDescription"
               label="Store Description"
               labelPlacement="outside"
