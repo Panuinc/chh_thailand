@@ -191,8 +191,8 @@ model User {
   customersCreated Customer[] @relation("CustomerCreatedBy")
   customersUpdated Customer[] @relation("CustomerUpdatedBy")
 
-  storesCreated Store[] @relation("StoreCreateBy")
-  storesUpdated Store[] @relation("StoreUpdateBy")
+  storesCreated Store[] @relation("StoreCreatedBy")
+  storesUpdated Store[] @relation("StoreUpdatedBy")
 
   zonesCreated Zone[] @relation("ZoneCreatedBy")
   zonesUpdated Zone[] @relation("ZoneUpdatedBy")
@@ -365,9 +365,14 @@ model Store {
   storeUpdateBy    Int?
   storeUpdateAt    DateTime?   @db.Timestamp(0)
 
-  createdBy  User   @relation("StoreCreateBy", fields: [storeCreateBy], references: [userId])
-  updatedBy  User?  @relation("StoreUpdateBy", fields: [storeUpdateBy], references: [userId])
-  storeZones Zone[]
+  storeZones  Zone[]  @relation("StoreToZone")
+  storeAisles Aisle[] @relation("StoreToAisle")
+  storeRacks  Rack[]  @relation("StoreToRack")
+  storeLevels Level[] @relation("StoreToLevel")
+  storeBins   Bin[]   @relation("StoreToBin")
+
+  createdBy User? @relation("StoreCreatedBy", fields: [storeCreateBy], references: [userId])
+  updatedBy User? @relation("StoreUpdatedBy", fields: [storeUpdateBy], references: [userId])
 
   @@index([storeCreateBy])
   @@index([storeUpdateBy])
@@ -385,18 +390,25 @@ model Zone {
   zoneUpdateBy    Int?
   zoneUpdateAt    DateTime?   @db.Timestamp(0)
 
-  zoneStore  Store   @relation(fields: [zoneStoreId], references: [storeId])
-  zoneAisles Aisle[]
+  zoneStore Store @relation("StoreToZone", fields: [zoneStoreId], references: [storeId])
 
-  createdBy User  @relation("ZoneCreatedBy", fields: [zoneCreateBy], references: [userId])
+  zoneAisles Aisle[] @relation("ZoneToAisle")
+  zoneRacks  Rack[]  @relation("ZoneToRack")
+  zoneLevels Level[] @relation("ZoneToLevel")
+  zoneBins   Bin[]   @relation("ZoneToBin")
+
+  createdBy User? @relation("ZoneCreatedBy", fields: [zoneCreateBy], references: [userId])
   updatedBy User? @relation("ZoneUpdatedBy", fields: [zoneUpdateBy], references: [userId])
 
+  @@unique([zoneStoreId, zoneName])
+  @@index([zoneStoreId])
   @@index([zoneCreateBy])
   @@index([zoneUpdateBy])
 }
 
 model Aisle {
   aisleId          Int       @id @default(autoincrement())
+  aisleStoreId     Int
   aisleZoneId      Int
   aisleCode        String    @unique
   aisleName        String
@@ -406,18 +418,27 @@ model Aisle {
   aisleUpdateBy    Int?
   aisleUpdateAt    DateTime? @db.Timestamp(0)
 
-  aisleZone  Zone   @relation(fields: [aisleZoneId], references: [zoneId])
-  aisleRacks Rack[]
+  aisleStore Store @relation("StoreToAisle", fields: [aisleStoreId], references: [storeId])
+  aisleZone  Zone  @relation("ZoneToAisle", fields: [aisleZoneId], references: [zoneId])
 
-  createdBy User  @relation("AisleCreatedBy", fields: [aisleCreateBy], references: [userId])
+  aisleRacks  Rack[]  @relation("AisleToRack")
+  aisleLevels Level[] @relation("AisleToLevel")
+  aisleBins   Bin[]   @relation("AisleToBin")
+
+  createdBy User? @relation("AisleCreatedBy", fields: [aisleCreateBy], references: [userId])
   updatedBy User? @relation("AisleUpdatedBy", fields: [aisleUpdateBy], references: [userId])
 
+  @@unique([aisleZoneId, aisleName])
+  @@index([aisleStoreId])
+  @@index([aisleZoneId])
   @@index([aisleCreateBy])
   @@index([aisleUpdateBy])
 }
 
 model Rack {
   rackId          Int       @id @default(autoincrement())
+  rackStoreId     Int
+  rackZoneId      Int
   rackAisleId     Int
   rackCode        String    @unique
   rackName        String
@@ -427,18 +448,29 @@ model Rack {
   rackUpdateBy    Int?
   rackUpdateAt    DateTime? @db.Timestamp(0)
 
-  rackAisle  Aisle   @relation(fields: [rackAisleId], references: [aisleId])
-  rackLevels Level[]
+  rackStore Store @relation("StoreToRack", fields: [rackStoreId], references: [storeId])
+  rackZone  Zone  @relation("ZoneToRack", fields: [rackZoneId], references: [zoneId])
+  rackAisle Aisle @relation("AisleToRack", fields: [rackAisleId], references: [aisleId])
 
-  createdBy User  @relation("RackCreatedBy", fields: [rackCreateBy], references: [userId])
+  rackLevels Level[] @relation("RackToLevel")
+  rackBins   Bin[]   @relation("RackToBin")
+
+  createdBy User? @relation("RackCreatedBy", fields: [rackCreateBy], references: [userId])
   updatedBy User? @relation("RackUpdatedBy", fields: [rackUpdateBy], references: [userId])
 
+  @@unique([rackAisleId, rackName])
+  @@index([rackStoreId])
+  @@index([rackZoneId])
+  @@index([rackAisleId])
   @@index([rackCreateBy])
   @@index([rackUpdateBy])
 }
 
 model Level {
   levelId          Int       @id @default(autoincrement())
+  levelStoreId     Int
+  levelZoneId      Int
+  levelAisleId     Int
   levelRackId      Int
   levelCode        String    @unique
   levelName        String
@@ -448,18 +480,31 @@ model Level {
   levelUpdateBy    Int?
   levelUpdateAt    DateTime? @db.Timestamp(0)
 
-  levelRack Rack  @relation(fields: [levelRackId], references: [rackId])
-  levelBins Bin[]
+  levelStore Store @relation("StoreToLevel", fields: [levelStoreId], references: [storeId])
+  levelZone  Zone  @relation("ZoneToLevel", fields: [levelZoneId], references: [zoneId])
+  levelAisle Aisle @relation("AisleToLevel", fields: [levelAisleId], references: [aisleId])
+  levelRack  Rack  @relation("RackToLevel", fields: [levelRackId], references: [rackId])
 
-  createdBy User  @relation("LevelCreatedBy", fields: [levelCreateBy], references: [userId])
+  levelBins Bin[] @relation("LevelToBin")
+
+  createdBy User? @relation("LevelCreatedBy", fields: [levelCreateBy], references: [userId])
   updatedBy User? @relation("LevelUpdatedBy", fields: [levelUpdateBy], references: [userId])
 
+  @@unique([levelRackId, levelName])
+  @@index([levelStoreId])
+  @@index([levelZoneId])
+  @@index([levelAisleId])
+  @@index([levelRackId])
   @@index([levelCreateBy])
   @@index([levelUpdateBy])
 }
 
 model Bin {
   binId          Int       @id @default(autoincrement())
+  binStoreId     Int
+  binZoneId      Int
+  binAisleId     Int
+  binRackId      Int
   binLevelId     Int
   binCode        String    @unique
   binDescription String
@@ -473,19 +518,32 @@ model Bin {
   binPosX        Float
   binPosY        Float
   binPosZ        Float
+  binRotationX   Float     @default(0.0)
+  binRotationY   Float     @default(0.0)
+  binRotationZ   Float     @default(0.0)
+  binWidth       Float
+  binHeight      Float
+  binDepth       Float
   binCreateBy    Int
   binCreateAt    DateTime  @default(now()) @db.Timestamp(0)
   binUpdateBy    Int?
   binUpdateAt    DateTime? @db.Timestamp(0)
 
-  binLevel Level @relation(fields: [binLevelId], references: [levelId])
-  // binStocks Stock[]
-  // binItems  StockItem[]
-  // movements StockMovement[]
+  binStore Store @relation("StoreToBin", fields: [binStoreId], references: [storeId])
+  binZone  Zone  @relation("ZoneToBin", fields: [binZoneId], references: [zoneId])
+  binAisle Aisle @relation("AisleToBin", fields: [binAisleId], references: [aisleId])
+  binRack  Rack  @relation("RackToBin", fields: [binRackId], references: [rackId])
+  binLevel Level @relation("LevelToBin", fields: [binLevelId], references: [levelId])
 
-  createdBy User  @relation("BinCreatedBy", fields: [binCreateBy], references: [userId])
+  createdBy User? @relation("BinCreatedBy", fields: [binCreateBy], references: [userId])
   updatedBy User? @relation("BinUpdatedBy", fields: [binUpdateBy], references: [userId])
 
+  @@unique([binLevelId, binCode])
+  @@index([binStoreId])
+  @@index([binZoneId])
+  @@index([binAisleId])
+  @@index([binRackId])
+  @@index([binLevelId])
   @@index([binCreateBy])
   @@index([binUpdateBy])
 }
