@@ -11,9 +11,11 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "Store", uid: "store", sortable: true },
-  { name: "Zone Code", uid: "zoneCode", sortable: true },
-  { name: "Zone Name", uid: "name", sortable: true },
-  { name: "Zone Description", uid: "zoneDescription" },
+  { name: "Zone", uid: "zone", sortable: true },
+  { name: "Aisle", uid: "aisle", sortable: true },
+  { name: "Rack Code", uid: "rackCode", sortable: true },
+  { name: "Rack Name", uid: "name", sortable: true },
+  { name: "Rack Description", uid: "rackDescription" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -25,41 +27,43 @@ const statusOptions = [
   { name: "Disable", uid: "disable" },
 ];
 
-export default function UIZoneList({
+export default function UIRackList({
   headerContent,
-  zones: rawZones = [],
+  racks: rawRacks = [],
   isLoading,
 }) {
-  const zones = rawZones.map((r) => ({
-    id: r.zoneId,
-    store: r.zoneStore?.storeName || "-",
-    zoneCode: r.zoneCode || "-",
-    name: r.zoneName || "-",
-    zoneDescription: r.zoneDescription || "-",
+  const racks = rawRacks.map((r) => ({
+    id: r.rackId,
+    store: r.rackStore?.storeName || "-",
+    zone: r.rackZone?.zoneName || "-",
+    aisle: r.rackAisle?.aisleName || "-",
+    rackCode: r.rackCode || "-",
+    name: r.rackName || "-",
+    rackDescription: r.rackDescription || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)
         .join(" ") || "-",
-    createAt: dateToThai(r.zoneCreateAt),
+    createAt: dateToThai(r.rackCreateAt),
     updateBy:
       [r.updatedBy?.userFirstName, r.updatedBy?.userLastName]
         .filter(Boolean)
         .join(" ") || "-",
-    updateAt: dateToThai(r.zoneUpdateAt),
-    status: r.zoneStatus?.toLowerCase() || "enable",
+    updateAt: dateToThai(r.rackUpdateAt),
+    status: r.rackStatus?.toLowerCase() || "enable",
   }));
   return (
     <>
       <UITopic Topic={headerContent} />
       <div className="flex items-center justify-center w-full p-2 gap-2">
         <UITable
-          data={zones}
+          data={racks}
           isLoading={isLoading}
           columns={columns}
           statusOptions={statusOptions}
-          entityNamePlural="zones"
-          searchPlaceholder="Search by zone name..."
-          basePath="/zone"
+          entityNamePlural="racks"
+          searchPlaceholder="Search by rack name..."
+          basePath="/rack"
         />
       </div>
     </>

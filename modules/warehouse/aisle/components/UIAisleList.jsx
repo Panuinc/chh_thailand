@@ -12,7 +12,8 @@ const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "Store", uid: "store", sortable: true },
   { name: "Zone", uid: "zone", sortable: true },
-  { name: "Aisle", uid: "name", sortable: true },
+  { name: "Aisle Code", uid: "aisleCode", sortable: true },
+  { name: "Aisle Name", uid: "name", sortable: true },
   { name: "Aisle Description", uid: "aisleDescription" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
@@ -34,6 +35,7 @@ export default function UIAisleList({
     id: r.aisleId,
     store: r.aisleStore?.storeName || "-",
     zone: r.aisleZone?.zoneName || "-",
+    aisleCode: r.aisleCode || "-",
     name: r.aisleName || "-",
     aisleDescription: r.aisleDescription || "-",
     creator:
