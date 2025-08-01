@@ -15,7 +15,10 @@ export default function StoreCreate() {
   });
 
   const { formRef, formData, errors, handleChange, handleSubmit } =
-    useFormHandler({ storeName: "" }, onSubmitHandler);
+    useFormHandler(
+      { storeCode: "", storeName: "", storeLocation: "", storeDescription: "" },
+      onSubmitHandler
+    );
 
   return (
     <>

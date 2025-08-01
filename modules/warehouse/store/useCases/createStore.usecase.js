@@ -14,9 +14,14 @@ export async function CreateStoreUseCase(data) {
   }
 
   const normalizedName = parsed.data.storeName.trim().toLowerCase();
-  const duplicate = await StoreValidator.isDuplicateStoreName(normalizedName);
-  if (duplicate) {
-    throw { status: 409, message: `Store '${normalizedName}' already exists` };
+  const duplicateCode = await StoreValidator.isDuplicateStoreCode(
+    parsed.data.storeCode
+  );
+  if (duplicateCode) {
+    throw {
+      status: 409,
+      message: `Store code '${parsed.data.storeCode}' already exists`,
+    };
   }
 
   return StoreService.create({

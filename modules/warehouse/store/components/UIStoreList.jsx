@@ -10,7 +10,10 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
-  { name: "Store", uid: "name", sortable: true },
+  { name: "Store Code", uid: "storeCode", sortable: true },
+  { name: "Store Name", uid: "name", sortable: true },
+  { name: "Store Location", uid: "storeLocation" },
+  { name: "Store Description", uid: "storeDescription" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -29,7 +32,10 @@ export default function UIStoreList({
 }) {
   const stores = rawStores.map((r) => ({
     id: r.storeId,
+    storeCode: r.storeCode || "-",
     name: r.storeName || "-",
+    storeLocation: r.storeLocation || "-",
+    storeDescription: r.storeDescription || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

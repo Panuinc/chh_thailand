@@ -23,9 +23,9 @@ export const StoreRepository = {
       },
     }),
 
-  findByName: (storeName) =>
+  findByCode: (storeCode) =>
     prisma.store.findFirst({
-      where: { storeName: storeName.trim().toLowerCase() },
+      where: { storeCode: storeCode.trim().toLowerCase() },
     }),
 
   create: (data) => prisma.store.create({ data }),
