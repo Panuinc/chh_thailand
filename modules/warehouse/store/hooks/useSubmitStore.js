@@ -18,6 +18,43 @@ export function useSubmitStore({ mode = "create", storeId, userId }) {
           zoneName: zone.zoneName,
           zoneDescription: zone.zoneDescription || "",
           zoneStatus: zone.zoneStatus,
+          zoneAisles:
+            zone.zoneAisles?.map((aisle) => ({
+              aisleId: aisle.aisleId || undefined,
+              aisleCode: aisle.aisleCode,
+              aisleName: aisle.aisleName,
+              aisleDescription: aisle.aisleDescription || "",
+              aisleRacks:
+                aisle.aisleRacks?.map((rack) => ({
+                  rackId: rack.rackId || undefined,
+                  rackCode: rack.rackCode,
+                  rackName: rack.rackName,
+                  rackDescription: rack.rackDescription || "",
+                  rackLevels:
+                    rack.rackLevels?.map((level) => ({
+                      levelId: level.levelId || undefined,
+                      levelCode: level.levelCode,
+                      levelName: level.levelName,
+                      levelDescription: level.levelDescription || "",
+                      levelBins:
+                        level.levelBins?.map((bin) => ({
+                          binId: bin.binId || undefined,
+                          binCode: bin.binCode,
+                          binDescription: bin.binDescription || "",
+                          binRow: bin.binRow,
+                          binType: bin.binType,
+                          binUsage: bin.binUsage,
+                          binCapacity: bin.binCapacity,
+                          binRfidTagId: bin.binRfidTagId,
+                          binStatus: bin.binStatus,
+                          binFillRate: bin.binFillRate,
+                          binPosX: bin.binPosX,
+                          binPosY: bin.binPosY,
+                          binPosZ: bin.binPosZ,
+                        })) || [],
+                    })) || [],
+                })) || [],
+            })) || [],
         }));
         form.append("storeZones", JSON.stringify(cleanedZones));
       }

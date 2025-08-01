@@ -36,7 +36,6 @@ export async function CreateStoreUseCase(data) {
     storeName: parsed.data.storeName.trim(),
     storeLocation: parsed.data.storeLocation.trim(),
     storeDescription: parsed.data.storeDescription.trim(),
-    storeStatus: parsed.data.storeStatus || "Enable",
     storeCreateAt: getLocalNow(),
     createdBy: {
       connect: { userId: parsed.data.storeCreateBy },
@@ -50,6 +49,55 @@ export async function CreateStoreUseCase(data) {
           zoneStatus: zone.zoneStatus,
           zoneCreateAt: getLocalNow(),
           zoneCreateBy: parsed.data.storeCreateBy,
+          zoneAisles: {
+            create:
+              zone.zoneAisles?.map((aisle) => ({
+                aisleCode: aisle.aisleCode,
+                aisleName: aisle.aisleName,
+                aisleDescription: aisle.aisleDescription,
+                aisleCreateAt: getLocalNow(),
+                aisleCreateBy: parsed.data.storeCreateBy,
+                aisleRacks: {
+                  create:
+                    aisle.aisleRacks?.map((rack) => ({
+                      rackCode: rack.rackCode,
+                      rackName: rack.rackName,
+                      rackDescription: rack.rackDescription,
+                      rackCreateAt: getLocalNow(),
+                      rackCreateBy: parsed.data.storeCreateBy,
+                      rackLevels: {
+                        create:
+                          rack.rackLevels?.map((level) => ({
+                            levelCode: level.levelCode,
+                            levelName: level.levelName,
+                            levelDescription: level.levelDescription,
+                            levelCreateAt: getLocalNow(),
+                            levelCreateBy: parsed.data.storeCreateBy,
+                            levelBins: {
+                              create:
+                                level.levelBins?.map((bin) => ({
+                                  binCode: bin.binCode,
+                                  binDescription: bin.binDescription,
+                                  binRow: bin.binRow,
+                                  binType: bin.binType,
+                                  binUsage: bin.binUsage,
+                                  binCapacity: bin.binCapacity,
+                                  binRfidTagId: bin.binRfidTagId,
+                                  binStatus: bin.binStatus,
+                                  binFillRate: bin.binFillRate,
+                                  binPosX: bin.binPosX,
+                                  binPosY: bin.binPosY,
+                                  binPosZ: bin.binPosZ,
+                                  binCreateAt: getLocalNow(),
+                                  binCreateBy: parsed.data.storeCreateBy,
+                                })) || [],
+                            },
+                          })) || [],
+                      },
+                    })) || [],
+                },
+              })) || [],
+          },
         })) || [],
     },
   });
