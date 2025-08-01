@@ -8,6 +8,7 @@ export const AisleRepository = {
       orderBy: { aisleCreateAt: "asc" },
       include: {
         aisleStore: true,
+        aisleZone: true,
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
       },
@@ -20,15 +21,17 @@ export const AisleRepository = {
       where: { aisleId },
       include: {
         aisleStore: true,
+        aisleZone: true,
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
       },
     }),
 
-  findByName: (aisleName, storeId) =>
+  findByName: (aisleName, storeId, zoneId) =>
     prisma.aisle.findFirst({
       where: {
         aisleStoreId: storeId,
+        aisleZoneId: zoneId,
         aisleName: aisleName.trim().toLowerCase(),
       },
     }),

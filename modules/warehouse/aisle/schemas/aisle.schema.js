@@ -8,6 +8,7 @@ import {
 
 export const aislePostSchema = z.object({
   aisleStoreId: preprocessInt("Please select store"),
+  aisleZoneId: preprocessInt("Please select zone"),
   aisleCode: preprocessString("Please provide the aisle code"),
   aisleName: preprocessString("Please provide the aisle name"),
   aisleDescription: preprocessString("Please provide the aisle description"),

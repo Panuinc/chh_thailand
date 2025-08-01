@@ -22,13 +22,14 @@ export async function UpdateAisleUseCase(data) {
   const duplicate = await AisleValidator.isDuplicateAisleNameExceptSelf(
     normalizedName,
     parsed.data.aisleStoreId,
+    parsed.data.aisleZoneId,
     parsed.data.aisleId
   );
 
   if (duplicate) {
     throw {
       status: 409,
-      message: `Aisle '${normalizedName}' already exists in this store`,
+      message: `Aisle '${normalizedName}' already exists in this store-zone`,
     };
   }
 

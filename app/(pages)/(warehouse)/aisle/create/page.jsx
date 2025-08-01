@@ -4,17 +4,22 @@ import { useSessionUser } from "@/hooks/useSessionUser";
 import { useSubmitAisle } from "@/modules/warehouse/aisle/hooks";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useFetchStores } from "@/modules/warehouse/store/hooks";
+import { useFetchZones } from "@/modules/warehouse/zone/hooks";
 import UIAisleForm from "@/modules/warehouse/aisle/components/UIAisleForm";
 import { Toaster } from "react-hot-toast";
 
 export default function AisleCreate() {
   const { userId, userName } = useSessionUser();
-  const { stores, loading } = useFetchStores();
+  const { stores, loading: loadingStore } = useFetchStores();
+  const { zones, loading: loadingZone } = useFetchZones();
 
-  const onSubmitHandler = useSubmitAisle({
-    mode: "create",
-    userId,
-  });
+  const zonesByStore = zones.reduce((acc, zone) => {
+    if (!acc[zone.zoneStoreId]) acc[zone.zoneStoreId] = [];
+    acc[zone.zoneStoreId].push(zone);
+    return acc;
+  }, {});
+
+  const onSubmitHandler = useSubmitAisle({ mode: "create", userId });
 
   const { formRef, formData, errors, handleChange, handleSubmit } =
     useFormHandler(
@@ -28,7 +33,7 @@ export default function AisleCreate() {
       onSubmitHandler
     );
 
-  if (loading) return <div>Loading...</div>;
+  if (loadingStore || loadingZone) return <div>Loading...</div>;
 
   return (
     <>
@@ -42,6 +47,7 @@ export default function AisleCreate() {
         handleInputChange={handleChange}
         operatedBy={userName}
         stores={stores}
+        zonesByStore={zonesByStore}
       />
     </>
   );

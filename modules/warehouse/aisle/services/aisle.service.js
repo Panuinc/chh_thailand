@@ -13,8 +13,8 @@ export class AisleService {
     return AisleRepository.findById(aisleId);
   }
 
-  static getByName(aisleName) {
-    return AisleRepository.findByName(aisleName);
+  static getByName(aisleName, storeId, zoneId) {
+    return AisleRepository.findByName(aisleName, storeId, zoneId);
   }
 
   static create(data) {

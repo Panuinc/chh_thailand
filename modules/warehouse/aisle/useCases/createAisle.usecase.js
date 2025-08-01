@@ -16,13 +16,14 @@ export async function CreateAisleUseCase(data) {
   const normalizedName = parsed.data.aisleName.trim().toLowerCase();
   const duplicate = await AisleValidator.isDuplicateAisleName(
     normalizedName,
-    parsed.data.aisleStoreId
+    parsed.data.aisleStoreId,
+    parsed.data.aisleZoneId
   );
 
   if (duplicate) {
     throw {
       status: 409,
-      message: `Aisle '${normalizedName}' already exists in this store`,
+      message: `Aisle '${normalizedName}' already exists in this store-zone`,
     };
   }
 

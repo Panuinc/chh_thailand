@@ -14,6 +14,7 @@ export default function UIAisleForm({
   isUpdate,
   operatedBy,
   stores,
+  zonesByStore,
 }) {
   return (
     <>
@@ -43,12 +44,39 @@ export default function UIAisleForm({
               isInvalid={!!errors.aisleStoreId}
               errorMessage={errors.aisleStoreId}
             >
-              {stores.map((div) => (
-                <SelectItem key={div.storeId}>{div.storeName}</SelectItem>
+              {stores.map((store) => (
+                <SelectItem key={store.storeId}>{store.storeName}</SelectItem>
               ))}
             </Select>
           </div>
 
+          <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+            <Select
+              name="aisleZoneId"
+              label="Zone"
+              labelPlacement="outside"
+              placeholder="Please Select"
+              variant="bordered"
+              color="default"
+              radius="full"
+              isDisabled={isUpdate || !formData.aisleStoreId}
+              selectedKeys={
+                formData.aisleZoneId ? [String(formData.aisleZoneId)] : []
+              }
+              onSelectionChange={(keys) =>
+                handleInputChange("aisleZoneId")([...keys][0])
+              }
+              isInvalid={!!errors.aisleZoneId}
+              errorMessage={errors.aisleZoneId}
+            >
+              {(zonesByStore[formData.aisleStoreId] || []).map((zone) => (
+                <SelectItem key={zone.zoneId}>{zone.zoneName}</SelectItem>
+              ))}
+            </Select>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
               name="aisleCode"
@@ -64,9 +92,6 @@ export default function UIAisleForm({
               errorMessage={errors.aisleCode}
             />
           </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-start justify-center w-full h-full p-2 gap-2">
             <Input
               name="aisleName"
@@ -82,6 +107,9 @@ export default function UIAisleForm({
               errorMessage={errors.aisleName}
             />
           </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Textarea
               name="aisleDescription"
@@ -110,7 +138,9 @@ export default function UIAisleForm({
                 variant="bordered"
                 color="default"
                 radius="full"
-                selectedKeys={formData.aisleStatus ? [formData.aisleStatus] : []}
+                selectedKeys={
+                  formData.aisleStatus ? [formData.aisleStatus] : []
+                }
                 onSelectionChange={(keys) =>
                   handleInputChange("aisleStatus")([...keys][0])
                 }

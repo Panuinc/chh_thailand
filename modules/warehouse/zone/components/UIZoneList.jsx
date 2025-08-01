@@ -12,6 +12,7 @@ const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "Store", uid: "store", sortable: true },
   { name: "Zone", uid: "name", sortable: true },
+  { name: "Zone Description", uid: "zoneDescription" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -32,6 +33,7 @@ export default function UIZoneList({
     id: r.zoneId,
     store: r.zoneStore?.storeName || "-",
     name: r.zoneName || "-",
+    zoneDescription: r.zoneDescription || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

@@ -11,7 +11,9 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "Store", uid: "store", sortable: true },
+  { name: "Zone", uid: "zone", sortable: true },
   { name: "Aisle", uid: "name", sortable: true },
+  { name: "Aisle Description", uid: "aisleDescription" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -31,7 +33,9 @@ export default function UIAisleList({
   const aisles = rawAisles.map((r) => ({
     id: r.aisleId,
     store: r.aisleStore?.storeName || "-",
+    zone: r.aisleZone?.zoneName || "-",
     name: r.aisleName || "-",
+    aisleDescription: r.aisleDescription || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)
