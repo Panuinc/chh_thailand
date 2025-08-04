@@ -40,6 +40,9 @@ export default function AisleUpdate() {
         aisleCode: "",
         aisleName: "",
         aisleDescription: "",
+        aislePosX: "",
+        aislePosY: "",
+        aislePosZ: "",
         aisleStatus: "",
       },
       onSubmitHandler

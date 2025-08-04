@@ -11,12 +11,13 @@ export default function Sidebar({ sidebarItems }) {
       {sidebarItems.map((item, index) => {
         const Icon = item.icon;
         const hrefList = Array.isArray(item.href) ? item.href : [item.href];
-        const isActive = hrefList.some((href) => pathname.startsWith(href));
+        const isActive = hrefList.some(
+          (href) => pathname === href || pathname.startsWith(href + "/")
+        );
         const isExternal = hrefList[0]?.startsWith("http");
 
         const button = (
           <div
-            key={index}
             onClick={item.onClick}
             className={`flex items-center justify-center w-12 h-12 p-2 gap-2 hover:bg-primary hover:text-white shadow-lg rounded-lg cursor-pointer ${
               isActive ? "bg-primary text-white" : "text-white"

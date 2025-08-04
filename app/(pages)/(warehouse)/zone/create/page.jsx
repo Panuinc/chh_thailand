@@ -18,7 +18,15 @@ export default function ZoneCreate() {
 
   const { formRef, formData, errors, handleChange, handleSubmit } =
     useFormHandler(
-      { zoneStoreId: "", zoneCode: "", zoneName: "", zoneDescription: "" },
+      {
+        zoneStoreId: "",
+        zoneCode: "",
+        zoneName: "",
+        zoneDescription: "",
+        zonePosX: "",
+        zonePosY: "",
+        zonePosZ: "",
+      },
       onSubmitHandler
     );
 

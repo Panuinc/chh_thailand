@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   preprocessInt,
+  preprocessDouble,
   preprocessString,
   preprocessEnum,
   formatData,
@@ -13,6 +14,9 @@ export const rackPostSchema = z.object({
   rackCode: preprocessString("Please provide the rack code"),
   rackName: preprocessString("Please provide the rack name"),
   rackDescription: preprocessString("Please provide the rack description"),
+  rackPosX: preprocessDouble("Please provide rack X position"),
+  rackPosY: preprocessDouble("Please provide rack Y position"),
+  rackPosZ: preprocessDouble("Please provide rack XZ position"),
   rackCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
@@ -21,6 +25,9 @@ export const rackPutSchema = z.object({
   rackCode: preprocessString("Please provide the rack code"),
   rackName: preprocessString("Please provide the rack name"),
   rackDescription: preprocessString("Please provide the rack description"),
+  rackPosX: preprocessDouble("Please provide rack X position"),
+  rackPosY: preprocessDouble("Please provide rack Y position"),
+  rackPosZ: preprocessDouble("Please provide rack XZ position"),
   rackStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"

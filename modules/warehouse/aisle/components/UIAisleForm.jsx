@@ -127,6 +127,57 @@ export default function UIAisleForm({
           </div>
         </div>
 
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="aislePosX"
+              label="Aisle Pos X"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.aislePosX || ""}
+              onChange={handleInputChange("aislePosX")}
+              isInvalid={!!errors.aislePosX}
+              errorMessage={errors.aislePosX}
+            />
+          </div>
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="aislePosY"
+              label="Aisle Pos Y"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.aislePosY || ""}
+              onChange={handleInputChange("aislePosY")}
+              isInvalid={!!errors.aislePosY}
+              errorMessage={errors.aislePosY}
+            />
+          </div>
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="aislePosZ"
+              label="Aisle Pos Z"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.aislePosZ || ""}
+              onChange={handleInputChange("aislePosZ")}
+              isInvalid={!!errors.aislePosZ}
+              errorMessage={errors.aislePosZ}
+            />
+          </div>
+        </div>
+
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2">

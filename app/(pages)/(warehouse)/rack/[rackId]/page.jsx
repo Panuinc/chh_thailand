@@ -51,6 +51,9 @@ export default function RackUpdate() {
         rackCode: "",
         rackName: "",
         rackDescription: "",
+        rackPosX: "",
+        rackPosY: "",
+        rackPosZ: "",
         rackStatus: "",
       },
       onSubmitHandler

@@ -385,6 +385,9 @@ model Zone {
   zoneName        String
   zoneDescription String
   zoneStatus      EnableState @default(Enable)
+  zonePosX        Float       @default(0)
+  zonePosY        Float       @default(0)
+  zonePosZ        Float       @default(0)
   zoneCreateBy    Int
   zoneCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   zoneUpdateBy    Int?
@@ -414,6 +417,9 @@ model Aisle {
   aisleName        String
   aisleDescription String
   aisleStatus      EnableState @default(Enable)
+  aislePosX        Float       @default(0)
+  aislePosY        Float       @default(0)
+  aislePosZ        Float       @default(0)
   aisleCreateBy    Int
   aisleCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   aisleUpdateBy    Int?
@@ -445,6 +451,9 @@ model Rack {
   rackName        String
   rackDescription String
   rackStatus      EnableState @default(Enable)
+  rackPosX        Float       @default(0)
+  rackPosY        Float       @default(0)
+  rackPosZ        Float       @default(0)
   rackCreateBy    Int
   rackCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   rackUpdateBy    Int?

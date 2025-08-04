@@ -99,6 +99,57 @@ export default function UIZoneForm({
           </div>
         </div>
 
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="zonePosX"
+              label="Zone Pos X"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.zonePosX || ""}
+              onChange={handleInputChange("zonePosX")}
+              isInvalid={!!errors.zonePosX}
+              errorMessage={errors.zonePosX}
+            />
+          </div>
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="zonePosY"
+              label="Zone Pos Y"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.zonePosY || ""}
+              onChange={handleInputChange("zonePosY")}
+              isInvalid={!!errors.zonePosY}
+              errorMessage={errors.zonePosY}
+            />
+          </div>
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="zonePosZ"
+              label="Zone Pos Z"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.zonePosZ || ""}
+              onChange={handleInputChange("zonePosZ")}
+              isInvalid={!!errors.zonePosZ}
+              errorMessage={errors.zonePosZ}
+            />
+          </div>
+        </div>
+
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2">

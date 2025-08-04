@@ -29,6 +29,9 @@ export default function AisleCreate() {
         aisleCode: "",
         aisleName: "",
         aisleDescription: "",
+        aislePosX: "",
+        aislePosY: "",
+        aislePosZ: "",
       },
       onSubmitHandler
     );

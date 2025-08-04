@@ -14,6 +14,9 @@ const columns = [
   { name: "Zone Code", uid: "zoneCode", sortable: true },
   { name: "Zone Name", uid: "name", sortable: true },
   { name: "Zone Description", uid: "zoneDescription" },
+  { name: "zonePosX", uid: "zonePosX" },
+  { name: "zonePosY", uid: "zonePosY" },
+  { name: "zonePosZ", uid: "zonePosZ" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -36,6 +39,9 @@ export default function UIZoneList({
     zoneCode: r.zoneCode || "-",
     name: r.zoneName || "-",
     zoneDescription: r.zoneDescription || "-",
+    zonePosX: r.zonePosX || "-",
+    zonePosY: r.zonePosY || "-",
+    zonePosZ: r.zonePosZ || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

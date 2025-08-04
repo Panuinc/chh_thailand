@@ -158,6 +158,57 @@ export default function UIRackForm({
           </div>
         </div>
 
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="rackPosX"
+              label="Rack Pos X"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.rackPosX || ""}
+              onChange={handleInputChange("rackPosX")}
+              isInvalid={!!errors.rackPosX}
+              errorMessage={errors.rackPosX}
+            />
+          </div>
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="rackPosY"
+              label="Rack Pos Y"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.rackPosY || ""}
+              onChange={handleInputChange("rackPosY")}
+              isInvalid={!!errors.rackPosY}
+              errorMessage={errors.rackPosY}
+            />
+          </div>
+          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
+            <Input
+              type="number"
+              name="rackPosZ"
+              label="Rack Pos Z"
+              labelPlacement="outside"
+              placeholder="Please Enter Data"
+              variant="bordered"
+              color="default"
+              radius="full"
+              value={formData.rackPosZ || ""}
+              onChange={handleInputChange("rackPosZ")}
+              isInvalid={!!errors.rackPosZ}
+              errorMessage={errors.rackPosZ}
+            />
+          </div>
+        </div>
+
         {isUpdate && (
           <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
             <div className="flex items-center justify-center w-full h-full p-2 gap-2">
