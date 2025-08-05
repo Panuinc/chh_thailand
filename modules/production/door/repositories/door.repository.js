@@ -7,8 +7,23 @@ export const DoorRepository = {
       take,
       orderBy: { doorCreateAt: "asc" },
       include: {
+        customer: true,
+        userSale: { select: { userFirstName: true, userLastName: true } },
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
+        grooveLines: true,
+        hinges: true,
+        locks: true,
+        louvers: true,
+        glassPanels: true,
+        peepHole: true,
+        skeleton: {
+          include: {
+            rails: true,
+            stiles: true,
+            lockSet: true,
+          },
+        },
       },
     }),
 
@@ -18,8 +33,23 @@ export const DoorRepository = {
     prisma.door.findUnique({
       where: { doorId },
       include: {
+        customer: true,
+        userSale: { select: { userFirstName: true, userLastName: true } },
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
+        grooveLines: true,
+        hinges: true,
+        locks: true,
+        louvers: true,
+        glassPanels: true,
+        peepHole: true,
+        skeleton: {
+          include: {
+            rails: true,
+            stiles: true,
+            lockSet: true,
+          },
+        },
       },
     }),
 
