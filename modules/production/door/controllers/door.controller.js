@@ -98,7 +98,7 @@ export async function createDoor(request) {
 
     logger.info({
       action: "createDoor",
-      message: `✅ Door '${door.doorName}' created`,
+      message: `✅ Door '${door.doorProjectCode}' created`,
       createdBy: door.doorCreateBy,
       ip,
       door,
