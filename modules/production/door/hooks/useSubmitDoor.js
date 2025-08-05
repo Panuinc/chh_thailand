@@ -11,8 +11,121 @@ export function useSubmitDoor({ mode = "create", doorId, userId }) {
       const byField = mode === "create" ? "doorCreateBy" : "doorUpdateBy";
       form.append(byField, userId);
 
+      if (formData.doorGrooveLines) {
+        const cleanedGrooveLines = formData.doorGrooveLines.map(
+          (GrooveLines) => ({
+            DoorGrooveLinesId: GrooveLines.DoorGrooveLinesId || undefined,
+            DoorGrooveLinesDistanceFromTop:
+              GrooveLines.DoorGrooveLinesDistanceFromTop,
+            DoorGrooveLinesDistanceFromLeft:
+              GrooveLines.DoorGrooveLinesDistanceFromLeft,
+            DoorGrooveLinesWidth: GrooveLines.DoorGrooveLinesWidth,
+            DoorGrooveLinesLength: GrooveLines.DoorGrooveLinesLength,
+          })
+        );
+        form.append("grooveLines", JSON.stringify(cleanedGrooveLines));
+      }
+
+      if (formData.hinges) {
+        const cleanedHinges = formData.hinges.map((hinge) => ({
+          doorHingesId: hinge.doorHingesId || undefined,
+          doorHingesDistanceFromTop: hinge.doorHingesDistanceFromTop,
+          doorHingesSide: hinge.doorHingesSide,
+        }));
+        form.append("hinges", JSON.stringify(cleanedHinges));
+      }
+
+      if (formData.locks) {
+        const cleanedLocks = formData.locks.map((lock) => ({
+          doorLocksId: lock.doorLocksId || undefined,
+          doorLocksDistanceFromTop: lock.doorLocksDistanceFromTop,
+          doorLocksDistanceFromEdge: lock.doorLocksDistanceFromEdge,
+          doorLocksSide: lock.doorLocksSide,
+          doorLocksType: lock.doorLocksType,
+        }));
+        form.append("locks", JSON.stringify(cleanedLocks));
+      }
+
+      if (formData.peepHole) {
+        const cleanedPeepHole = {
+          doorPeepHoleId: formData.peepHole.doorPeepHoleId || undefined,
+          doorPeepHoleDistanceFromBottom:
+            formData.peepHole.doorPeepHoleDistanceFromBottom,
+          doorPeepHoleDiameter: formData.peepHole.doorPeepHoleDiameter,
+        };
+        form.append("peepHole", JSON.stringify(cleanedPeepHole));
+      }
+
+      if (formData.louvers) {
+        const cleanedLouvers = formData.louvers.map((louver) => ({
+          doorLouversId: louver.doorLouversId || undefined,
+          doorLouversDistanceFromTop: louver.doorLouversDistanceFromTop,
+          doorLouversDistanceFromLeft: louver.doorLouversDistanceFromLeft,
+          doorLouversWidth: louver.doorLouversWidth,
+          doorLouversHeight: louver.doorLouversHeight,
+        }));
+        form.append("louvers", JSON.stringify(cleanedLouvers));
+      }
+
+      if (formData.glassPanels) {
+        const cleanedGlassPanels = formData.glassPanels.map((panel) => ({
+          doorGlassPanelsId: panel.doorGlassPanelsId || undefined,
+          doorGlassPanelsDistanceFromTop: panel.doorGlassPanelsDistanceFromTop,
+          doorGlassPanelsDistanceFromLeft:
+            panel.doorGlassPanelsDistanceFromLeft,
+          doorGlassPanelsWidth: panel.doorGlassPanelsWidth,
+          doorGlassPanelsHeight: panel.doorGlassPanelsHeight,
+          doorGlassPanelsType: panel.doorGlassPanelsType,
+        }));
+        form.append("glassPanels", JSON.stringify(cleanedGlassPanels));
+      }
+
+      if (formData.skeleton) {
+        const skeleton = formData.skeleton;
+        const cleanedSkeleton = {
+          doorSkeletonId: skeleton.doorSkeletonId || undefined,
+          doorSkeletonMaterialType: skeleton.doorSkeletonMaterialType,
+          doorSkeletonRails: skeleton.doorSkeletonRails,
+          doorSkeletonStiles: skeleton.doorSkeletonStiles,
+          rails: skeleton.rails?.map((rail) => ({
+            doorSkeletonRailsId: rail.doorSkeletonRailsId || undefined,
+            doorSkeletonRailsWidth: rail.doorSkeletonRailsWidth,
+            doorSkeletonRailsQuantity: rail.doorSkeletonRailsQuantity,
+            doorSkeletonRailsEquallySpaced: rail.doorSkeletonRailsEquallySpaced,
+            doorSkeletonRailsEquallySpacedPositionsFromTop:
+              rail.doorSkeletonRailsEquallySpacedPositionsFromTop,
+          })),
+          stiles: skeleton.stiles?.map((stile) => ({
+            doorSkeletonStilesId: stile.doorSkeletonStilesId || undefined,
+            doorSkeletonStilesWidth: stile.doorSkeletonStilesWidth,
+            doorSkeletonStilesQuantity: stile.doorSkeletonStilesQuantity,
+            doorSkeletonStilesEquallySpaced:
+              stile.doorSkeletonStilesEquallySpaced,
+            doorSkeletonStilesPositionsFromLeft:
+              stile.doorSkeletonStilesPositionsFromLeft,
+          })),
+          lockSet: skeleton.lockSet
+            ? {
+                doorSkeletonLockSetId:
+                  skeleton.lockSet.doorSkeletonLockSetId || undefined,
+                doorSkeletonLockSetWidth:
+                  skeleton.lockSet.doorSkeletonLockSetWidth,
+                doorSkeletonLockSetHeight:
+                  skeleton.lockSet.doorSkeletonLockSetHeight,
+                doorSkeletonLockSetDistanceFromTopToCenter:
+                  skeleton.lockSet.doorSkeletonLockSetDistanceFromTopToCenter,
+                doorSkeletonLockSetSide:
+                  skeleton.lockSet.doorSkeletonLockSetSide,
+              }
+            : undefined,
+        };
+        form.append("skeleton", JSON.stringify(cleanedSkeleton));
+      }
+
       const url =
-        mode === "create" ? "/api/production/door" : `/api/production/door/${doorId}`;
+        mode === "create"
+          ? "/api/production/door"
+          : `/api/production/door/${doorId}`;
       const method = mode === "create" ? "POST" : "PUT";
 
       try {
