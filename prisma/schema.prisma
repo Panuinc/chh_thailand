@@ -217,6 +217,11 @@ model User {
 
   // stockMovements StockMovement[] @relation("UserMovedStock")
 
+  doorsCreated Door[] @relation("DoorCreatedBy")
+  doorsUpdated Door[] @relation("DoorUpdatedBy")
+
+  doorsSales Door[] @relation("DoorSaleBy")
+
   createdBy User? @relation("UserCreatedBy", fields: [userCreateBy], references: [userId])
   updatedBy User? @relation("UserUpdatedBy", fields: [userUpdateBy], references: [userId])
 
@@ -304,6 +309,7 @@ model Customer {
   customerUpdateAt DateTime?    @db.Timestamp(0)
 
   leaders   CustomerLeader[] @relation("CustomerToLeader")
+  doors     Door[]           @relation("CustomerToDoor")
   createdBy User?            @relation("CustomerCreatedBy", fields: [customerCreateBy], references: [userId])
   updatedBy User?            @relation("CustomerUpdatedBy", fields: [customerUpdateBy], references: [userId])
 
@@ -633,3 +639,246 @@ model Bin {
 //   movementBin     Bin     @relation(fields: [movementBinId], references: [binId])
 //   movedBy         User    @relation("UserMovedStock", fields: [movementBy], references: [userId])
 // }
+
+model Door {
+  doorId             Int    @id @default(autoincrement())
+  doorProjectCode    String
+  doorCode           String
+  doorRevisionNumber Int
+  doorProjectName    String
+  doorCustomerId     Int
+  doorUserSaleId     Int
+
+  doorDimensionsWidth     Float
+  doorDimensionsHeight    Float
+  doorDimensionsThickness Float
+
+  doorType             doorType
+  doorSurfaceMaterial  doorSurfaceMaterial
+  doorSurfaceThickness Float
+  doorCoreMaterial     DoorCoreMaterial
+
+  doorSurfaceTypeTop               DoorSurfaceTypeTopBottom
+  doorSurfaceTypeTopCode           String
+  doorSurfaceTypeTopThickness      String?
+  doorSurfaceTypeTopDescription    String?
+  doorSurfaceTypeBottom            DoorSurfaceTypeTopBottom
+  doorSurfaceTypeBottomCode        String
+  doorSurfaceTypeBottomThickness   String?
+  doorSurfaceTypeBottomDescription String?
+
+  doorCreateBy Int
+  doorCreateAt DateTime  @default(now()) @db.Timestamp(0)
+  doorUpdateBy Int?
+  doorUpdateAt DateTime? @db.Timestamp(0)
+
+  grooveLines DoorGrooveLines[]
+  hinges      DoorHinges[]
+  locks       DoorLocks[]
+  peepHole    DoorPeepHole?
+  louvers     DoorLouvers[]
+  glassPanels DoorGlassPanels[]
+  skeleton    DoorSkeleton?
+
+  customer  Customer @relation("CustomerToDoor", fields: [doorCustomerId], references: [customerId])
+  userSale  User     @relation("DoorSaleBy", fields: [doorUserSaleId], references: [userId])
+  createdBy User?    @relation("DoorCreatedBy", fields: [doorCreateBy], references: [userId])
+  updatedBy User?    @relation("DoorUpdatedBy", fields: [doorUpdateBy], references: [userId])
+
+  @@index([doorCreateBy])
+  @@index([doorUpdateBy])
+  @@index([doorCustomerId])
+  @@index([doorUserSaleId])
+}
+
+model DoorGrooveLines {
+  DoorGrooveLinesId               Int   @id @default(autoincrement())
+  DoorGrooveLinesDoorId           Int
+  DoorGrooveLinesDistanceFromTop  Float
+  DoorGrooveLinesDistanceFromLeft Float
+  DoorGrooveLinesWidth            Float
+  DoorGrooveLinesLength           Float
+
+  doorGrooveLines Door @relation(fields: [DoorGrooveLinesDoorId], references: [doorId])
+
+  @@index([DoorGrooveLinesDoorId])
+}
+
+model DoorHinges {
+  doorHingesId              Int            @id @default(autoincrement())
+  doorHingesDoorId          Int
+  doorHingesDistanceFromTop Float
+  doorHingesSide            DoorHingesSide
+
+  doorHinges Door @relation(fields: [doorHingesDoorId], references: [doorId])
+
+  @@index([doorHingesDoorId])
+}
+
+model DoorLocks {
+  doorLocksId               Int           @id @default(autoincrement())
+  doorLocksDoorId           Int
+  doorLocksDistanceFromTop  Float
+  doorLocksDistanceFromEdge Float
+  doorLocksSide             DoorLocksSide
+  doorLocksType             DoorLocksType
+
+  doorLocks Door @relation(fields: [doorLocksDoorId], references: [doorId])
+
+  @@index([doorLocksDoorId])
+}
+
+model DoorPeepHole {
+  doorPeepHoleId                 Int   @id @default(autoincrement())
+  doorPeepHoleDoorId             Int   @unique
+  doorPeepHoleDistanceFromBottom Float
+  doorPeepHoleDiameter           Float
+
+  doorPeepHole Door @relation(fields: [doorPeepHoleDoorId], references: [doorId])
+}
+
+model DoorLouvers {
+  doorLouversId               Int   @id @default(autoincrement())
+  doorLouversDoorId           Int
+  doorLouversDistanceFromTop  Float
+  doorLouversDistanceFromLeft Float
+  doorLouversWidth            Float
+  doorLouversHeight           Float
+
+  doorLouvers Door @relation(fields: [doorLouversDoorId], references: [doorId])
+
+  @@index([doorLouversDoorId])
+}
+
+model DoorGlassPanels {
+  doorGlassPanelsId               Int                 @id @default(autoincrement())
+  doorGlassPanelsDoorId           Int
+  doorGlassPanelsDistanceFromTop  Float
+  doorGlassPanelsDistanceFromLeft Float
+  doorGlassPanelsWidth            Float
+  doorGlassPanelsHeight           Float
+  doorGlassPanelsType             DoorGlassPanelsType
+
+  doorGlassPanels Door @relation(fields: [doorGlassPanelsDoorId], references: [doorId])
+
+  @@index([doorGlassPanelsDoorId])
+}
+
+model DoorSkeleton {
+  doorSkeletonId           Int                      @id @default(autoincrement())
+  doorSkeletonDoorId       Int                      @unique
+  doorSkeletonMaterialType DoorSkeletonMaterialType
+  doorSkeletonRails        Float
+  doorSkeletonStiles       Float
+
+  rails   DoorSkeletonRails[]
+  stiles  DoorSkeletonStiles[]
+  lockSet DoorSkeletonLockSet?
+
+  doorSkeleton Door @relation(fields: [doorSkeletonDoorId], references: [doorId])
+}
+
+model DoorSkeletonRails {
+  doorSkeletonRailsId                            Int     @id @default(autoincrement())
+  doorSkeletonRailsDoorSkeletonId                Int
+  doorSkeletonRailsWidth                         Float
+  doorSkeletonRailsQuantity                      Float
+  doorSkeletonRailsEquallySpaced                 YesOrNo
+  doorSkeletonRailsEquallySpacedPositionsFromTop Float
+
+  doorSkeletonRails DoorSkeleton @relation(fields: [doorSkeletonRailsDoorSkeletonId], references: [doorSkeletonId])
+
+  @@index([doorSkeletonRailsDoorSkeletonId])
+}
+
+model DoorSkeletonStiles {
+  doorSkeletonStilesId                Int     @id @default(autoincrement())
+  doorSkeletonStilesDoorSkeletonId    Int
+  doorSkeletonStilesWidth             Float
+  doorSkeletonStilesQuantity          Float
+  doorSkeletonStilesEquallySpaced     YesOrNo
+  doorSkeletonStilesPositionsFromLeft Float
+
+  doorSkeletonStiles DoorSkeleton @relation(fields: [doorSkeletonStilesDoorSkeletonId], references: [doorSkeletonId])
+
+  @@index([doorSkeletonStilesDoorSkeletonId])
+}
+
+model DoorSkeletonLockSet {
+  doorSkeletonLockSetId                      Int                     @id @default(autoincrement())
+  doorSkeletonLockSetDoorSkeletonId          Int                     @unique
+  doorSkeletonLockSetWidth                   Float
+  doorSkeletonLockSetHeight                  Float
+  doorSkeletonLockSetDistanceFromTopToCenter Float
+  doorSkeletonLockSetSide                    DoorSkeletonLockSetSide
+
+  doorSkeleton DoorSkeleton @relation(fields: [doorSkeletonLockSetDoorSkeletonId], references: [doorSkeletonId])
+}
+
+enum DoorSkeletonLockSetSide {
+  Right
+  Left
+  BothSides
+}
+
+enum DoorSkeletonMaterialType {
+  RubberWood
+  LaminatedVeneerLumber
+  WoodPlasticComposite
+}
+
+enum doorType {
+  SolidShaft
+  HollowCore
+}
+
+enum doorSurfaceMaterial {
+  Hardboard
+  Plywood
+  Mdf
+  Metal
+  Wpc
+  Upvc
+  Mgo
+}
+
+enum DoorCoreMaterial {
+  ParticleBoard
+  LumberCore
+  MineralCore
+}
+
+enum DoorSurfaceTypeTopBottom {
+  Paint
+  Hpl
+  Melamine
+  Plain
+  Other
+}
+
+enum DoorHingesSide {
+  Left
+  Right
+}
+
+enum DoorLocksSide {
+  Left
+  Right
+}
+
+enum DoorLocksType {
+  Mortise
+  Cylindrical
+  Deadbolt
+}
+
+enum DoorGlassPanelsType {
+  ClearGlass
+  FrostedGlass
+  TintedGlass
+}
+
+enum YesOrNo {
+  Yes
+  No
+}
