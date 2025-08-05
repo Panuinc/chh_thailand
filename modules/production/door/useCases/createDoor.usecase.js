@@ -14,7 +14,7 @@ export async function CreateDoorUseCase(data) {
   }
 
   const normalizedName = parsed.data.doorProjectName.trim().toLowerCase();
-  const duplicate = await DoorValidator.isDuplicatedoorProjectName(normalizedName);
+  const duplicate = await DoorValidator.isDuplicateDoorProjectName(normalizedName);
   if (duplicate) {
     throw { status: 409, message: `Door '${normalizedName}' already exists` };
   }
