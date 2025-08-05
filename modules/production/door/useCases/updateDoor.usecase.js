@@ -19,7 +19,7 @@ export async function UpdateDoorUseCase(data) {
 
   return DoorService.update(parsed.data.doorId, {
     ...parsed.data,
-    doorName: parsed.data.doorName.trim().toLowerCase(),
+    doorProjectName: parsed.data.doorProjectName.trim().toLowerCase(),
     doorUpdateAt: getLocalNow(),
   });
 }

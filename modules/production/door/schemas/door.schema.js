@@ -7,13 +7,13 @@ import {
 } from "@/lib/zodSchema";
 
 export const doorPostSchema = z.object({
-  doorName: preprocessString("Please provide the door name"),
+  doorProjectName: preprocessString("Please provide the door name"),
   doorCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
 export const doorPutSchema = z.object({
   doorId: preprocessInt("Please provide the door ID to update"),
-  doorName: preprocessString("Please provide the door name"),
+  doorProjectName: preprocessString("Please provide the door name"),
   doorStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"

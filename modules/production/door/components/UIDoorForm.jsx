@@ -25,17 +25,17 @@ export default function UIDoorForm({
         <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
           <div className="flex items-center justify-center w-full h-full p-2 gap-2">
             <Input
-              name="doorName"
+              name="doorProjectName"
               label="Door"
               labelPlacement="outside"
               placeholder="Please Enter Data"
               variant="bordered"
               color="default"
               radius="full"
-              value={formData.doorName || ""}
-              onChange={handleInputChange("doorName")}
-              isInvalid={!!errors.doorName}
-              errorMessage={errors.doorName}
+              value={formData.doorProjectName || ""}
+              onChange={handleInputChange("doorProjectName")}
+              isInvalid={!!errors.doorProjectName}
+              errorMessage={errors.doorProjectName}
             />
           </div>
         </div>

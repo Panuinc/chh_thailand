@@ -13,15 +13,15 @@ export async function CreateDoorUseCase(data) {
     };
   }
 
-  const normalizedName = parsed.data.doorName.trim().toLowerCase();
-  const duplicate = await DoorValidator.isDuplicateDoorName(normalizedName);
+  const normalizedName = parsed.data.doorProjectName.trim().toLowerCase();
+  const duplicate = await DoorValidator.isDuplicatedoorProjectName(normalizedName);
   if (duplicate) {
     throw { status: 409, message: `Door '${normalizedName}' already exists` };
   }
 
   return DoorService.create({
     ...parsed.data,
-    doorName: normalizedName,
+    doorProjectName: normalizedName,
     doorCreateAt: getLocalNow(),
   });
 }

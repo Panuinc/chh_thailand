@@ -13,8 +13,8 @@ export class DoorService {
     return DoorRepository.findById(doorId);
   }
 
-  static getByName(doorName) {
-    return DoorRepository.findByName(doorName);
+  static getByName(doorProjectName) {
+    return DoorRepository.findByName(doorProjectName);
   }
 
   static create(data) {

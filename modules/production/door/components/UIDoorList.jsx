@@ -29,7 +29,7 @@ export default function UIDoorList({
 }) {
   const doors = rawDoors.map((r) => ({
     id: r.doorId,
-    name: r.doorName || "-",
+    name: r.doorProjectName || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

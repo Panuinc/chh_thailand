@@ -20,7 +20,7 @@ export default function DoorUpdate() {
   });
 
   const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useFormHandler({ doorName: "", doorStatus: "" }, onSubmitHandler);
+    useFormHandler({ doorProjectName: "", doorStatus: "" }, onSubmitHandler);
 
   useEffect(() => {
     if (door) setFormData(door);

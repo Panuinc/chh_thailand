@@ -23,9 +23,9 @@ export const DoorRepository = {
       },
     }),
 
-  findByName: (doorName) =>
+  findByName: (doorProjectName) =>
     prisma.door.findFirst({
-      where: { doorName: doorName.trim().toLowerCase() },
+      where: { doorProjectName: doorProjectName.trim().toLowerCase() },
     }),
 
   create: (data) => prisma.door.create({ data }),

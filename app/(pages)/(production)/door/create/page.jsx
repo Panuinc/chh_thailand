@@ -15,7 +15,7 @@ export default function DoorCreate() {
   });
 
   const { formRef, formData, errors, handleChange, handleSubmit } =
-    useFormHandler({ doorName: "" }, onSubmitHandler);
+    useFormHandler({ doorProjectName: "" }, onSubmitHandler);
 
   return (
     <>
