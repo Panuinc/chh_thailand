@@ -35,11 +35,11 @@ enum PartnerType {
 }
 
 enum ProductType {
-  RM // Raw Material
-  FG // Finished Goods
-  PK // Packaging
-  SP // Spare Part
-  AP // Asset/Product
+  RM
+  FG
+  PK
+  SP
+  AP
 }
 
 enum ItemStatus {
