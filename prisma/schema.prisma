@@ -34,29 +34,29 @@ enum PartnerType {
   SUPPLIER
 }
 
-enum ProductType {
-  RM
-  FG
-  PK
-  SP
-  AP
-}
+// enum ProductType {
+//   RM
+//   FG
+//   PK
+//   SP
+//   AP
+// }
 
-enum ItemStatus {
-  Available
-  Allocated
-  Picked
-  Hold
-  Scrap
-}
+// enum ItemStatus {
+//   Available
+//   Allocated
+//   Picked
+//   Hold
+//   Scrap
+// }
 
-enum MovementType {
-  Inbound
-  Outbound
-  Relocate
-  Adjust
-  Return
-}
+// enum MovementType {
+//   Inbound
+//   Outbound
+//   Relocate
+//   Adjust
+//   Return
+// }
 
 enum binOccupancy {
   Empty
