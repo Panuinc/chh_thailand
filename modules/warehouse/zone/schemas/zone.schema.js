@@ -14,7 +14,6 @@ export const zonePostSchema = z.object({
   zoneDescription: preprocessString("Please provide the zone description"),
   zonePosX: preprocessDouble("Please provide zone X position"),
   zonePosY: preprocessDouble("Please provide zone Y position"),
-  zonePosZ: preprocessDouble("Please provide zone Z position"),
   zoneCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
@@ -25,7 +24,6 @@ export const zonePutSchema = z.object({
   zoneDescription: preprocessString("Please provide the zone description"),
   zonePosX: preprocessDouble("Please provide zone X position"),
   zonePosY: preprocessDouble("Please provide zone Y position"),
-  zonePosZ: preprocessDouble("Please provide zone Z position"),
   zoneStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"

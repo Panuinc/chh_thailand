@@ -33,7 +33,6 @@ export default function ZoneUpdate() {
         zoneDescription: "",
         zonePosX: "",
         zonePosY: "",
-        zonePosZ: "",
         zoneStatus: "",
       },
       onSubmitHandler

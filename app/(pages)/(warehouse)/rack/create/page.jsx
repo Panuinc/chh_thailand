@@ -42,7 +42,6 @@ export default function RackCreate() {
         rackDescription: "",
         rackPosX: "",
         rackPosY: "",
-        rackPosZ: "",
       },
       onSubmitHandler
     );

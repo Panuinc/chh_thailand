@@ -17,7 +17,6 @@ const columns = [
   { name: "Aisle Description", uid: "aisleDescription" },
   { name: "aislePosX", uid: "aislePosX" },
   { name: "aislePosY", uid: "aislePosY" },
-  { name: "aislePosZ", uid: "aislePosZ" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -43,7 +42,6 @@ export default function UIAisleList({
     aisleDescription: r.aisleDescription || "-",
     aislePosX: r.aislePosX || "-",
     aislePosY: r.aislePosY || "-",
-    aislePosZ: r.aislePosZ || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

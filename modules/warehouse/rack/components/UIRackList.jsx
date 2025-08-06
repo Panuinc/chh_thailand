@@ -18,7 +18,6 @@ const columns = [
   { name: "Rack Description", uid: "rackDescription" },
   { name: "rackPosX", uid: "rackPosX" },
   { name: "rackPosY", uid: "rackPosY" },
-  { name: "rackPosZ", uid: "rackPosZ" },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -45,7 +44,6 @@ export default function UIRackList({
     rackDescription: r.rackDescription || "-",
     rackPosX: r.rackPosX || "-",
     rackPosY: r.rackPosY || "-",
-    rackPosZ: r.rackPosZ || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

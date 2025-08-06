@@ -191,22 +191,6 @@ export default function UIRackForm({
               errorMessage={errors.rackPosY}
             />
           </div>
-          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
-            <Input
-              type="number"
-              name="rackPosZ"
-              label="Rack Pos Z"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="bordered"
-              color="default"
-              radius="full"
-              value={formData.rackPosZ || ""}
-              onChange={handleInputChange("rackPosZ")}
-              isInvalid={!!errors.rackPosZ}
-              errorMessage={errors.rackPosZ}
-            />
-          </div>
         </div>
 
         {isUpdate && (

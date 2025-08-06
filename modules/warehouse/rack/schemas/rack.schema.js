@@ -16,7 +16,6 @@ export const rackPostSchema = z.object({
   rackDescription: preprocessString("Please provide the rack description"),
   rackPosX: preprocessDouble("Please provide rack X position"),
   rackPosY: preprocessDouble("Please provide rack Y position"),
-  rackPosZ: preprocessDouble("Please provide rack XZ position"),
   rackCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
@@ -27,7 +26,6 @@ export const rackPutSchema = z.object({
   rackDescription: preprocessString("Please provide the rack description"),
   rackPosX: preprocessDouble("Please provide rack X position"),
   rackPosY: preprocessDouble("Please provide rack Y position"),
-  rackPosZ: preprocessDouble("Please provide rack XZ position"),
   rackStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"

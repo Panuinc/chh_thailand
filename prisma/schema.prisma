@@ -393,7 +393,6 @@ model Zone {
   zoneStatus      EnableState @default(Enable)
   zonePosX        Float       @default(0)
   zonePosY        Float       @default(0)
-  zonePosZ        Float       @default(0)
   zoneCreateBy    Int
   zoneCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   zoneUpdateBy    Int?
@@ -425,7 +424,6 @@ model Aisle {
   aisleStatus      EnableState @default(Enable)
   aislePosX        Float       @default(0)
   aislePosY        Float       @default(0)
-  aislePosZ        Float       @default(0)
   aisleCreateBy    Int
   aisleCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   aisleUpdateBy    Int?
@@ -459,7 +457,6 @@ model Rack {
   rackStatus      EnableState @default(Enable)
   rackPosX        Float       @default(0)
   rackPosY        Float       @default(0)
-  rackPosZ        Float       @default(0)
   rackCreateBy    Int
   rackCreateAt    DateTime    @default(now()) @db.Timestamp(0)
   rackUpdateBy    Int?
@@ -537,10 +534,6 @@ model Bin {
   binFillRate    Float        @default(0.0)
   binPosX        Float
   binPosY        Float
-  binPosZ        Float
-  binRotationX   Float        @default(0.0)
-  binRotationY   Float        @default(0.0)
-  binRotationZ   Float        @default(0.0)
   binWidth       Float
   binHeight      Float
   binDepth       Float

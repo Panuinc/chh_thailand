@@ -25,7 +25,6 @@ export default function ZoneCreate() {
         zoneDescription: "",
         zonePosX: "",
         zonePosY: "",
-        zonePosZ: "",
       },
       onSubmitHandler
     );

@@ -15,7 +15,6 @@ export const aislePostSchema = z.object({
   aisleDescription: preprocessString("Please provide the aisle description"),
   aislePosX: preprocessDouble("Please provide aisle X position"),
   aislePosY: preprocessDouble("Please provide aisle Y position"),
-  aislePosZ: preprocessDouble("Please provide aisle Z position"),
   aisleCreateBy: preprocessInt("Please provide the creator's user ID"),
 });
 
@@ -26,7 +25,6 @@ export const aislePutSchema = z.object({
   aisleDescription: preprocessString("Please provide the aisle description"),
   aislePosX: preprocessDouble("Please provide aisle X position"),
   aislePosY: preprocessDouble("Please provide aisle Y position"),
-  aislePosZ: preprocessDouble("Please provide aisle Z position"),
   aisleStatus: preprocessEnum(
     ["Enable", "Disable"],
     "Please provide 'Enable' or 'Disable'"

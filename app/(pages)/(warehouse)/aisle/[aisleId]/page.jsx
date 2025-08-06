@@ -42,7 +42,6 @@ export default function AisleUpdate() {
         aisleDescription: "",
         aislePosX: "",
         aislePosY: "",
-        aislePosZ: "",
         aisleStatus: "",
       },
       onSubmitHandler

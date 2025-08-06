@@ -132,22 +132,6 @@ export default function UIZoneForm({
               errorMessage={errors.zonePosY}
             />
           </div>
-          <div className="flex items-start justify-center w-full h-full p-2 gap-2">
-            <Input
-              type="number"
-              name="zonePosZ"
-              label="Zone Pos Z"
-              labelPlacement="outside"
-              placeholder="Please Enter Data"
-              variant="bordered"
-              color="default"
-              radius="full"
-              value={formData.zonePosZ || ""}
-              onChange={handleInputChange("zonePosZ")}
-              isInvalid={!!errors.zonePosZ}
-              errorMessage={errors.zonePosZ}
-            />
-          </div>
         </div>
 
         {isUpdate && (
