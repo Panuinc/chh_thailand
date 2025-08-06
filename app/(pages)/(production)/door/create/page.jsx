@@ -14,8 +14,47 @@ export default function DoorCreate() {
     userId,
   });
 
-  const { formRef, formData, errors, handleChange, handleSubmit } =
-    useFormHandler({ doorProjectName: "" }, onSubmitHandler);
+  const { formRef, formData, errors, handleChange, handleSubmit, setFormData } =
+    useFormHandler(
+      {
+        doorProjectCode: "",
+        doorCode: "",
+        doorRevisionNumber: "",
+        doorProjectName: "",
+        doorCustomerId: "",
+        doorUserSaleId: "",
+
+        doorDimensionsWidth: "",
+        doorDimensionsHeight: "",
+        doorDimensionsThickness: "",
+
+        doorType: "",
+        doorSurfaceMaterial: "",
+        doorSurfaceThickness: "",
+        doorCoreMaterial: "",
+
+        doorSurfaceTypeTop: "",
+        doorSurfaceTypeTopCode: "",
+        doorSurfaceTypeTopThickness: "",
+        doorSurfaceTypeTopDescription: "",
+
+        doorSurfaceTypeBottom: "",
+        doorSurfaceTypeBottomCode: "",
+        doorSurfaceTypeBottomThickness: "",
+        doorSurfaceTypeBottomDescription: "",
+
+        doorCreateBy: userId,
+
+        grooveLines: [],
+        hinges: [],
+        locks: [],
+        peepHole: undefined,
+        louvers: [],
+        glassPanels: [],
+        skeleton: undefined,
+      },
+      onSubmitHandler
+    );
 
   return (
     <>
@@ -27,6 +66,7 @@ export default function DoorCreate() {
         errors={errors}
         formData={formData}
         handleInputChange={handleChange}
+        setFormData={setFormData}
         operatedBy={userName}
       />
     </>

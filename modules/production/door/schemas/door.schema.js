@@ -32,11 +32,11 @@ const doorSkeletonMaterialTypeEnum = [
 const doorSkeletonLockSetSideEnum = ["Right", "Left", "BothSides"];
 
 const grooveLineSchema = z.object({
-  DoorGrooveLinesId: z.coerce.number().optional(),
-  DoorGrooveLinesDistanceFromTop: preprocessDouble("Please provide distance from top"),
-  DoorGrooveLinesDistanceFromLeft: preprocessDouble("Please provide distance from left"),
-  DoorGrooveLinesWidth: preprocessDouble("Please provide width"),
-  DoorGrooveLinesLength: preprocessDouble("Please provide length"),
+  doorGrooveLinesId: z.coerce.number().optional(),
+  doorGrooveLinesDistanceFromTop: preprocessDouble("Please provide distance from top"),
+  doorGrooveLinesDistanceFromLeft: preprocessDouble("Please provide distance from left"),
+  doorGrooveLinesWidth: preprocessDouble("Please provide width"),
+  doorGrooveLinesLength: preprocessDouble("Please provide length"),
 });
 
 const hingeSchema = z.object({

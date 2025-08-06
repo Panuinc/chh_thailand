@@ -1,7 +1,7 @@
 import { doorPutSchema } from "../schemas/door.schema";
 import { DoorService } from "../services/door.service";
-import { getLocalNow } from "@/lib/getLocalNow";
 import prisma from "@/lib/prisma";
+import { getLocalNow } from "@/lib/getLocalNow";
 
 export async function UpdateDoorUseCase(data) {
   const nestedFields = [
@@ -13,13 +13,12 @@ export async function UpdateDoorUseCase(data) {
     "peepHole",
     "skeleton",
   ];
-
-  for (const key of nestedFields) {
-    if (typeof data[key] === "string") {
+  for (const field of nestedFields) {
+    if (typeof data[field] === "string") {
       try {
-        data[key] = JSON.parse(data[key]);
+        data[field] = JSON.parse(data[field]);
       } catch {
-        data[key] = undefined;
+        data[field] = undefined;
       }
     }
   }
@@ -43,265 +42,172 @@ export async function UpdateDoorUseCase(data) {
     peepHole,
     skeleton,
     doorUpdateBy,
+    ...core
   } = parsed.data;
 
   const existing = await DoorService.getById(doorId);
-  if (!existing) {
-    throw { status: 404, message: "Door not found" };
-  }
+  if (!existing) throw { status: 404, message: "Door not found" };
 
-  const existingGrooveLines = await prisma.doorGrooveLines.findMany({
-    where: { DoorGrooveLinesDoorId: doorId },
+  const currentGrooves = await prisma.doorGrooveLines.findMany({
+    where: { doorId },
   });
-  const grooveLineIds = new Set(
-    grooveLines.map((x) => x.DoorGrooveLinesId).filter(Boolean)
+  const grooveIds = new Set(
+    grooveLines.map((g) => g.doorGrooveLinesId).filter((id) => id)
+  );
+  const groovesToDelete = currentGrooves.filter(
+    (g) => !grooveIds.has(g.doorGrooveLinesId)
   );
   await prisma.doorGrooveLines.deleteMany({
     where: {
-      DoorGrooveLinesDoorId: doorId,
-      DoorGrooveLinesId: { notIn: Array.from(grooveLineIds) },
+      doorGrooveLinesId: {
+        in: groovesToDelete.map((g) => g.doorGrooveLinesId),
+      },
     },
   });
   for (const g of grooveLines) {
-    if (g.DoorGrooveLinesId) {
+    if (g.doorGrooveLinesId) {
       await prisma.doorGrooveLines.update({
-        where: { DoorGrooveLinesId: g.DoorGrooveLinesId },
-        data: {
-          DoorGrooveLinesDistanceFromTop: g.DoorGrooveLinesDistanceFromTop,
-          DoorGrooveLinesDistanceFromLeft: g.DoorGrooveLinesDistanceFromLeft,
-          DoorGrooveLinesWidth: g.DoorGrooveLinesWidth,
-          DoorGrooveLinesLength: g.DoorGrooveLinesLength,
-        },
+        where: { doorGrooveLinesId: g.doorGrooveLinesId },
+        data: g,
       });
     } else {
-      await prisma.doorGrooveLines.create({
-        data: { ...g, DoorGrooveLinesDoorId: doorId },
-      });
+      await prisma.doorGrooveLines.create({ data: { ...g, doorId } });
     }
   }
 
-  const existingHinges = await prisma.doorHinges.findMany({
-    where: { doorHingesDoorId: doorId },
-  });
-  const hingeIds = new Set(hinges.map((x) => x.doorHingesId).filter(Boolean));
+  const currentHinges = await prisma.doorHinges.findMany({ where: { doorId } });
+  const hingeIds = new Set(
+    hinges.map((h) => h.doorHingesId).filter((id) => id)
+  );
+  const hingesToDelete = currentHinges.filter(
+    (h) => !hingeIds.has(h.doorHingesId)
+  );
   await prisma.doorHinges.deleteMany({
-    where: {
-      doorHingesDoorId: doorId,
-      doorHingesId: { notIn: Array.from(hingeIds) },
-    },
+    where: { doorHingesId: { in: hingesToDelete.map((h) => h.doorHingesId) } },
   });
   for (const h of hinges) {
     if (h.doorHingesId) {
       await prisma.doorHinges.update({
         where: { doorHingesId: h.doorHingesId },
-        data: {
-          doorHingesDistanceFromTop: h.doorHingesDistanceFromTop,
-          doorHingesSide: h.doorHingesSide,
-        },
+        data: h,
       });
     } else {
-      await prisma.doorHinges.create({
-        data: { ...h, doorHingesDoorId: doorId },
-      });
+      await prisma.doorHinges.create({ data: { ...h, doorId } });
     }
   }
 
-  const existingLocks = await prisma.doorLocks.findMany({
-    where: { doorLocksDoorId: doorId },
-  });
-  const lockIds = new Set(locks.map((x) => x.doorLocksId).filter(Boolean));
+  const currentLocks = await prisma.doorLocks.findMany({ where: { doorId } });
+  const lockIds = new Set(locks.map((l) => l.doorLocksId).filter((id) => id));
+  const locksToDelete = currentLocks.filter((l) => !lockIds.has(l.doorLocksId));
   await prisma.doorLocks.deleteMany({
-    where: {
-      doorLocksDoorId: doorId,
-      doorLocksId: { notIn: Array.from(lockIds) },
-    },
+    where: { doorLocksId: { in: locksToDelete.map((l) => l.doorLocksId) } },
   });
   for (const l of locks) {
     if (l.doorLocksId) {
       await prisma.doorLocks.update({
         where: { doorLocksId: l.doorLocksId },
-        data: {
-          doorLocksDistanceFromTop: l.doorLocksDistanceFromTop,
-          doorLocksDistanceFromEdge: l.doorLocksDistanceFromEdge,
-          doorLocksSide: l.doorLocksSide,
-          doorLocksType: l.doorLocksType,
-        },
+        data: l,
       });
     } else {
-      await prisma.doorLocks.create({
-        data: { ...l, doorLocksDoorId: doorId },
-      });
+      await prisma.doorLocks.create({ data: { ...l, doorId } });
     }
   }
 
-  const existingLouvers = await prisma.doorLouvers.findMany({
-    where: { doorLouversDoorId: doorId },
+  const currentLouvers = await prisma.doorLouvers.findMany({
+    where: { doorId },
   });
   const louverIds = new Set(
-    louvers.map((x) => x.doorLouversId).filter(Boolean)
+    louvers.map((x) => x.doorLouversId).filter((id) => id)
+  );
+  const louversToDelete = currentLouvers.filter(
+    (x) => !louverIds.has(x.doorLouversId)
   );
   await prisma.doorLouvers.deleteMany({
     where: {
-      doorLouversDoorId: doorId,
-      doorLouversId: { notIn: Array.from(louverIds) },
+      doorLouversId: { in: louversToDelete.map((x) => x.doorLouversId) },
     },
   });
-  for (const lv of louvers) {
-    if (lv.doorLouversId) {
+  for (const x of louvers) {
+    if (x.doorLouversId) {
       await prisma.doorLouvers.update({
-        where: { doorLouversId: lv.doorLouversId },
-        data: lv,
+        where: { doorLouversId: x.doorLouversId },
+        data: x,
       });
     } else {
-      await prisma.doorLouvers.create({
-        data: { ...lv, doorLouversDoorId: doorId },
-      });
+      await prisma.doorLouvers.create({ data: { ...x, doorId } });
     }
   }
 
-  const existingPanels = await prisma.doorGlassPanels.findMany({
-    where: { doorGlassPanelsDoorId: doorId },
+  const currentPanels = await prisma.doorGlassPanels.findMany({
+    where: { doorId },
   });
   const panelIds = new Set(
-    glassPanels.map((x) => x.doorGlassPanelsId).filter(Boolean)
+    glassPanels.map((x) => x.doorGlassPanelsId).filter((id) => id)
+  );
+  const panelsToDelete = currentPanels.filter(
+    (x) => !panelIds.has(x.doorGlassPanelsId)
   );
   await prisma.doorGlassPanels.deleteMany({
     where: {
-      doorGlassPanelsDoorId: doorId,
-      doorGlassPanelsId: { notIn: Array.from(panelIds) },
+      doorGlassPanelsId: { in: panelsToDelete.map((x) => x.doorGlassPanelsId) },
     },
   });
-  for (const gp of glassPanels) {
-    if (gp.doorGlassPanelsId) {
+  for (const x of glassPanels) {
+    if (x.doorGlassPanelsId) {
       await prisma.doorGlassPanels.update({
-        where: { doorGlassPanelsId: gp.doorGlassPanelsId },
-        data: gp,
+        where: { doorGlassPanelsId: x.doorGlassPanelsId },
+        data: x,
       });
     } else {
-      await prisma.doorGlassPanels.create({
-        data: { ...gp, doorGlassPanelsDoorId: doorId },
-      });
+      await prisma.doorGlassPanels.create({ data: { ...x, doorId } });
     }
   }
 
+  await prisma.doorPeepHole.deleteMany({ where: { doorId } });
   if (peepHole) {
-    const existingPeep = await prisma.doorPeepHole.findUnique({
-      where: { doorPeepHoleDoorId: doorId },
-    });
-    if (existingPeep) {
-      await prisma.doorPeepHole.update({
-        where: { doorPeepHoleId: existingPeep.doorPeepHoleId },
-        data: peepHole,
-      });
-    } else {
-      await prisma.doorPeepHole.create({
-        data: { ...peepHole, doorPeepHoleDoorId: doorId },
-      });
-    }
+    await prisma.doorPeepHole.create({ data: { ...peepHole, doorId } });
   }
+
+  await prisma.doorSkeletonLockSet.deleteMany({
+    where: { doorSkeleton: { doorId } },
+  });
+  await prisma.doorSkeletonRails.deleteMany({
+    where: { doorSkeleton: { doorId } },
+  });
+  await prisma.doorSkeletonStiles.deleteMany({
+    where: { doorSkeleton: { doorId } },
+  });
+  await prisma.doorSkeleton.deleteMany({ where: { doorId } });
 
   if (skeleton) {
-    const existingSkeleton = await prisma.doorSkeleton.findUnique({
-      where: { doorSkeletonDoorId: doorId },
+    const { rails = [], stiles = [], lockSet, ...sk } = skeleton;
+    const created = await prisma.doorSkeleton.create({
+      data: { ...sk, doorId },
     });
-    let skeletonId;
-    if (existingSkeleton) {
-      await prisma.doorSkeleton.update({
-        where: { doorSkeletonId: existingSkeleton.doorSkeletonId },
-        data: {
-          doorSkeletonMaterialType: skeleton.doorSkeletonMaterialType,
-          doorSkeletonRails: skeleton.doorSkeletonRails,
-          doorSkeletonStiles: skeleton.doorSkeletonStiles,
-        },
+
+    for (const r of rails) {
+      await prisma.doorSkeletonRails.create({
+        data: { ...r, doorSkeletonId: created.doorSkeletonId },
       });
-      skeletonId = existingSkeleton.doorSkeletonId;
-    } else {
-      const created = await prisma.doorSkeleton.create({
-        data: {
-          doorSkeletonDoorId: doorId,
-          doorSkeletonMaterialType: skeleton.doorSkeletonMaterialType,
-          doorSkeletonRails: skeleton.doorSkeletonRails,
-          doorSkeletonStiles: skeleton.doorSkeletonStiles,
-        },
-      });
-      skeletonId = created.doorSkeletonId;
     }
 
-    const existingRails = await prisma.doorSkeletonRails.findMany({
-      where: { doorSkeletonRailsDoorSkeletonId: skeletonId },
-    });
-    const railIds = new Set(
-      skeleton.rails?.map((x) => x.doorSkeletonRailsId).filter(Boolean)
-    );
-    await prisma.doorSkeletonRails.deleteMany({
-      where: {
-        doorSkeletonRailsDoorSkeletonId: skeletonId,
-        doorSkeletonRailsId: { notIn: Array.from(railIds) },
-      },
-    });
-    for (const r of skeleton.rails || []) {
-      if (r.doorSkeletonRailsId) {
-        await prisma.doorSkeletonRails.update({
-          where: { doorSkeletonRailsId: r.doorSkeletonRailsId },
-          data: r,
-        });
-      } else {
-        await prisma.doorSkeletonRails.create({
-          data: { ...r, doorSkeletonRailsDoorSkeletonId: skeletonId },
-        });
-      }
-    }
-
-    const existingStiles = await prisma.doorSkeletonStiles.findMany({
-      where: { doorSkeletonStilesDoorSkeletonId: skeletonId },
-    });
-    const stileIds = new Set(
-      skeleton.stiles?.map((x) => x.doorSkeletonStilesId).filter(Boolean)
-    );
-    await prisma.doorSkeletonStiles.deleteMany({
-      where: {
-        doorSkeletonStilesDoorSkeletonId: skeletonId,
-        doorSkeletonStilesId: { notIn: Array.from(stileIds) },
-      },
-    });
-    for (const s of skeleton.stiles || []) {
-      if (s.doorSkeletonStilesId) {
-        await prisma.doorSkeletonStiles.update({
-          where: { doorSkeletonStilesId: s.doorSkeletonStilesId },
-          data: s,
-        });
-      } else {
-        await prisma.doorSkeletonStiles.create({
-          data: { ...s, doorSkeletonStilesDoorSkeletonId: skeletonId },
-        });
-      }
-    }
-
-    if (skeleton.lockSet) {
-      const existingLockSet = await prisma.doorSkeletonLockSet.findUnique({
-        where: { doorSkeletonLockSetDoorSkeletonId: skeletonId },
+    for (const s of stiles) {
+      await prisma.doorSkeletonStiles.create({
+        data: { ...s, doorSkeletonId: created.doorSkeletonId },
       });
-      if (existingLockSet) {
-        await prisma.doorSkeletonLockSet.update({
-          where: {
-            doorSkeletonLockSetId: existingLockSet.doorSkeletonLockSetId,
-          },
-          data: skeleton.lockSet,
-        });
-      } else {
-        await prisma.doorSkeletonLockSet.create({
-          data: {
-            ...skeleton.lockSet,
-            doorSkeletonLockSetDoorSkeletonId: skeletonId,
-          },
-        });
-      }
+    }
+
+    if (lockSet) {
+      await prisma.doorSkeletonLockSet.create({
+        data: { ...lockSet, doorSkeletonId: created.doorSkeletonId },
+      });
     }
   }
 
   return DoorService.update(doorId, {
-    ...parsed.data,
-    doorProjectName: parsed.data.doorProjectName.trim().toLowerCase(),
+    ...core,
+    doorProjectName: core.doorProjectName.trim().toLowerCase(),
     doorUpdateAt: getLocalNow(),
+    updatedBy: { connect: { userId: doorUpdateBy } },
   });
 }

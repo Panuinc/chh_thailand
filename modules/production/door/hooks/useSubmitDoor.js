@@ -12,17 +12,13 @@ export function useSubmitDoor({ mode = "create", doorId, userId }) {
       form.append(byField, userId);
 
       if (formData.doorGrooveLines) {
-        const cleanedGrooveLines = formData.doorGrooveLines.map(
-          (GrooveLines) => ({
-            DoorGrooveLinesId: GrooveLines.DoorGrooveLinesId || undefined,
-            DoorGrooveLinesDistanceFromTop:
-              GrooveLines.DoorGrooveLinesDistanceFromTop,
-            DoorGrooveLinesDistanceFromLeft:
-              GrooveLines.DoorGrooveLinesDistanceFromLeft,
-            DoorGrooveLinesWidth: GrooveLines.DoorGrooveLinesWidth,
-            DoorGrooveLinesLength: GrooveLines.DoorGrooveLinesLength,
-          })
-        );
+        const cleanedGrooveLines = formData.doorGrooveLines.map((GrooveLines) => ({
+          doorGrooveLinesId: GrooveLines.doorGrooveLinesId || undefined,
+          doorGrooveLinesDistanceFromTop: GrooveLines.doorGrooveLinesDistanceFromTop,
+          doorGrooveLinesDistanceFromLeft: GrooveLines.doorGrooveLinesDistanceFromLeft,
+          doorGrooveLinesWidth: GrooveLines.doorGrooveLinesWidth,
+          doorGrooveLinesLength: GrooveLines.doorGrooveLinesLength,
+        }));
         form.append("grooveLines", JSON.stringify(cleanedGrooveLines));
       }
 
@@ -49,8 +45,7 @@ export function useSubmitDoor({ mode = "create", doorId, userId }) {
       if (formData.peepHole) {
         const cleanedPeepHole = {
           doorPeepHoleId: formData.peepHole.doorPeepHoleId || undefined,
-          doorPeepHoleDistanceFromBottom:
-            formData.peepHole.doorPeepHoleDistanceFromBottom,
+          doorPeepHoleDistanceFromBottom: formData.peepHole.doorPeepHoleDistanceFromBottom,
           doorPeepHoleDiameter: formData.peepHole.doorPeepHoleDiameter,
         };
         form.append("peepHole", JSON.stringify(cleanedPeepHole));
@@ -71,8 +66,7 @@ export function useSubmitDoor({ mode = "create", doorId, userId }) {
         const cleanedGlassPanels = formData.glassPanels.map((panel) => ({
           doorGlassPanelsId: panel.doorGlassPanelsId || undefined,
           doorGlassPanelsDistanceFromTop: panel.doorGlassPanelsDistanceFromTop,
-          doorGlassPanelsDistanceFromLeft:
-            panel.doorGlassPanelsDistanceFromLeft,
+          doorGlassPanelsDistanceFromLeft: panel.doorGlassPanelsDistanceFromLeft,
           doorGlassPanelsWidth: panel.doorGlassPanelsWidth,
           doorGlassPanelsHeight: panel.doorGlassPanelsHeight,
           doorGlassPanelsType: panel.doorGlassPanelsType,
@@ -99,23 +93,17 @@ export function useSubmitDoor({ mode = "create", doorId, userId }) {
             doorSkeletonStilesId: stile.doorSkeletonStilesId || undefined,
             doorSkeletonStilesWidth: stile.doorSkeletonStilesWidth,
             doorSkeletonStilesQuantity: stile.doorSkeletonStilesQuantity,
-            doorSkeletonStilesEquallySpaced:
-              stile.doorSkeletonStilesEquallySpaced,
-            doorSkeletonStilesPositionsFromLeft:
-              stile.doorSkeletonStilesPositionsFromLeft,
+            doorSkeletonStilesEquallySpaced: stile.doorSkeletonStilesEquallySpaced,
+            doorSkeletonStilesPositionsFromLeft: stile.doorSkeletonStilesPositionsFromLeft,
           })),
           lockSet: skeleton.lockSet
             ? {
-                doorSkeletonLockSetId:
-                  skeleton.lockSet.doorSkeletonLockSetId || undefined,
-                doorSkeletonLockSetWidth:
-                  skeleton.lockSet.doorSkeletonLockSetWidth,
-                doorSkeletonLockSetHeight:
-                  skeleton.lockSet.doorSkeletonLockSetHeight,
+                doorSkeletonLockSetId: skeleton.lockSet.doorSkeletonLockSetId || undefined,
+                doorSkeletonLockSetWidth: skeleton.lockSet.doorSkeletonLockSetWidth,
+                doorSkeletonLockSetHeight: skeleton.lockSet.doorSkeletonLockSetHeight,
                 doorSkeletonLockSetDistanceFromTopToCenter:
                   skeleton.lockSet.doorSkeletonLockSetDistanceFromTopToCenter,
-                doorSkeletonLockSetSide:
-                  skeleton.lockSet.doorSkeletonLockSetSide,
+                doorSkeletonLockSetSide: skeleton.lockSet.doorSkeletonLockSetSide,
               }
             : undefined,
         };

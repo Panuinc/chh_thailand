@@ -692,16 +692,16 @@ model Door {
 }
 
 model DoorGrooveLines {
-  DoorGrooveLinesId               Int   @id @default(autoincrement())
-  DoorGrooveLinesDoorId           Int
-  DoorGrooveLinesDistanceFromTop  Float
-  DoorGrooveLinesDistanceFromLeft Float
-  DoorGrooveLinesWidth            Float
-  DoorGrooveLinesLength           Float
+  doorGrooveLinesId               Int   @id @default(autoincrement())
+  doorGrooveLinesDoorId           Int
+  doorGrooveLinesDistanceFromTop  Float
+  doorGrooveLinesDistanceFromLeft Float
+  doorGrooveLinesWidth            Float
+  doorGrooveLinesLength           Float
 
-  doorGrooveLines Door @relation(fields: [DoorGrooveLinesDoorId], references: [doorId])
+  doorGrooveLines Door @relation(fields: [doorGrooveLinesDoorId], references: [doorId])
 
-  @@index([DoorGrooveLinesDoorId])
+  @@index([doorGrooveLinesDoorId])
 }
 
 model DoorHinges {

@@ -13,18 +13,65 @@ export default function DoorUpdate() {
   const { userId, userName } = useSessionUser();
   const { door, loading } = useFetchDoorById(doorId);
 
-  const onSubmitHandler = useSubmitDoor({
-    mode: "update",
-    doorId,
-    userId,
-  });
+  const {
+    formRef,
+    formData,
+    setFormData,
+    errors,
+    handleChange,
+    handleSubmit,
+  } = useFormHandler(
+    {
+      doorId: "",
+      doorProjectCode: "",
+      doorCode: "",
+      doorRevisionNumber: "",
+      doorProjectName: "",
+      doorCustomerId: "",
+      doorUserSaleId: "",
 
-  const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useFormHandler({ doorProjectName: "", doorStatus: "" }, onSubmitHandler);
+      doorDimensionsWidth: "",
+      doorDimensionsHeight: "",
+      doorDimensionsThickness: "",
+
+      doorType: "",
+      doorSurfaceMaterial: "",
+      doorSurfaceThickness: "",
+      doorCoreMaterial: "",
+
+      doorSurfaceTypeTop: "",
+      doorSurfaceTypeTopCode: "",
+      doorSurfaceTypeTopThickness: "",
+      doorSurfaceTypeTopDescription: "",
+
+      doorSurfaceTypeBottom: "",
+      doorSurfaceTypeBottomCode: "",
+      doorSurfaceTypeBottomThickness: "",
+      doorSurfaceTypeBottomDescription: "",
+
+      doorCreateBy: "",
+      doorStatus: "",
+      doorUpdateBy: userId,
+
+      grooveLines: [],
+      hinges: [],
+      locks: [],
+      peepHole: undefined,
+      louvers: [],
+      glassPanels: [],
+      skeleton: undefined,
+    },
+    useSubmitDoor({ mode: "update", doorId, userId })
+  );
 
   useEffect(() => {
-    if (door) setFormData(door);
-  }, [door, setFormData]);
+    if (door) {
+      setFormData({
+        ...door,
+        // เพิ่ม logic แปลง nested object ถ้ามีความซับซ้อน (optional)
+      });
+    }
+  }, [door]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -38,6 +85,7 @@ export default function DoorUpdate() {
         errors={errors}
         formData={formData}
         handleInputChange={handleChange}
+        setFormData={setFormData}
         operatedBy={userName}
         isUpdate
       />

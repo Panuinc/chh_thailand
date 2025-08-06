@@ -10,7 +10,7 @@ const UITable = dynamic(() => import("@/components/table/UITable"), {
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },
-  { name: "Door", uid: "name", sortable: true },
+  { name: "Door ProjectName", uid: "doorProjectName", sortable: true },
   { name: "Created", uid: "created" },
   { name: "Updated", uid: "updated" },
   { name: "Status", uid: "status", sortable: true },
@@ -29,7 +29,7 @@ export default function UIDoorList({
 }) {
   const doors = rawDoors.map((r) => ({
     id: r.doorId,
-    name: r.doorProjectName || "-",
+    doorProjectName: r.doorProjectName || "-",
     creator:
       [r.createdBy?.userFirstName, r.createdBy?.userLastName]
         .filter(Boolean)

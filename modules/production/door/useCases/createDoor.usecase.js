@@ -4,24 +4,51 @@ import { DoorValidator } from "../validators/door.validator";
 import { getLocalNow } from "@/lib/getLocalNow";
 
 export async function CreateDoorUseCase(data) {
-  const nestedFields = [
-    "grooveLines",
-    "hinges",
-    "locks",
-    "louvers",
-    "glassPanels",
-    "skeleton",
-    "peepHole",
-  ];
+  try {
+    data.grooveLines = typeof data.grooveLines === "string" ? JSON.parse(data.grooveLines) : data.grooveLines;
+  } catch {
+    data.grooveLines = [];
+  }
 
-  for (const key of nestedFields) {
-    if (typeof data[key] === "string") {
-      try {
-        data[key] = JSON.parse(data[key]);
-      } catch {
-        data[key] = undefined;
-      }
+  try {
+    data.hinges = typeof data.hinges === "string" ? JSON.parse(data.hinges) : data.hinges;
+  } catch {
+    data.hinges = [];
+  }
+
+  try {
+    data.locks = typeof data.locks === "string" ? JSON.parse(data.locks) : data.locks;
+  } catch {
+    data.locks = [];
+  }
+
+  try {
+    data.peepHole = typeof data.peepHole === "string" ? JSON.parse(data.peepHole) : data.peepHole;
+  } catch {
+    data.peepHole = undefined;
+  }
+
+  try {
+    data.louvers = typeof data.louvers === "string" ? JSON.parse(data.louvers) : data.louvers;
+  } catch {
+    data.louvers = [];
+  }
+
+  try {
+    data.glassPanels = typeof data.glassPanels === "string" ? JSON.parse(data.glassPanels) : data.glassPanels;
+  } catch {
+    data.glassPanels = [];
+  }
+
+  try {
+    data.skeleton = typeof data.skeleton === "string" ? JSON.parse(data.skeleton) : data.skeleton;
+    if (data.skeleton) {
+      data.skeleton.rails = typeof data.skeleton.rails === "string" ? JSON.parse(data.skeleton.rails) : data.skeleton.rails;
+      data.skeleton.stiles = typeof data.skeleton.stiles === "string" ? JSON.parse(data.skeleton.stiles) : data.skeleton.stiles;
+      data.skeleton.lockSet = typeof data.skeleton.lockSet === "string" ? JSON.parse(data.skeleton.lockSet) : data.skeleton.lockSet;
     }
+  } catch {
+    data.skeleton = undefined;
   }
 
   const parsed = doorPostSchema.safeParse(data);
@@ -34,9 +61,8 @@ export async function CreateDoorUseCase(data) {
   }
 
   const normalizedName = parsed.data.doorProjectName.trim().toLowerCase();
-  const duplicate = await DoorValidator.isDuplicateDoorProjectName(
-    normalizedName
-  );
+
+  const duplicate = await DoorValidator.isDuplicateDoorProjectName(normalizedName);
   if (duplicate) {
     throw {
       status: 409,
@@ -45,74 +71,36 @@ export async function CreateDoorUseCase(data) {
   }
 
   return DoorService.create({
-    ...parsed.data,
+    doorProjectCode: parsed.data.doorProjectCode.trim(),
+    doorCode: parsed.data.doorCode.trim(),
+    doorRevisionNumber: parsed.data.doorRevisionNumber,
     doorProjectName: normalizedName,
+    doorCustomerId: parsed.data.doorCustomerId,
+    doorUserSaleId: parsed.data.doorUserSaleId,
+    doorDimensionsWidth: parsed.data.doorDimensionsWidth,
+    doorDimensionsHeight: parsed.data.doorDimensionsHeight,
+    doorDimensionsThickness: parsed.data.doorDimensionsThickness,
+    doorType: parsed.data.doorType,
+    doorSurfaceMaterial: parsed.data.doorSurfaceMaterial,
+    doorSurfaceThickness: parsed.data.doorSurfaceThickness,
+    doorCoreMaterial: parsed.data.doorCoreMaterial,
+    doorSurfaceTypeTop: parsed.data.doorSurfaceTypeTop,
+    doorSurfaceTypeTopCode: parsed.data.doorSurfaceTypeTopCode.trim(),
+    doorSurfaceTypeTopThickness: parsed.data.doorSurfaceTypeTopThickness?.trim() ?? null,
+    doorSurfaceTypeTopDescription: parsed.data.doorSurfaceTypeTopDescription?.trim() ?? null,
+    doorSurfaceTypeBottom: parsed.data.doorSurfaceTypeBottom,
+    doorSurfaceTypeBottomCode: parsed.data.doorSurfaceTypeBottomCode.trim(),
+    doorSurfaceTypeBottomThickness: parsed.data.doorSurfaceTypeBottomThickness?.trim() ?? null,
+    doorSurfaceTypeBottomDescription: parsed.data.doorSurfaceTypeBottomDescription?.trim() ?? null,
+    doorCreateBy: parsed.data.doorCreateBy,
     doorCreateAt: getLocalNow(),
-    grooveLines: {
-      create:
-        parsed.data.grooveLines?.map((GrooveLines) => ({
-          ...GrooveLines,
-        })) ?? [],
-    },
-    hinges: {
-      create:
-        parsed.data.hinges?.map((Hinges) => ({
-          ...Hinges,
-        })) ?? [],
-    },
-    locks: {
-      create:
-        parsed.data.locks?.map((Locks) => ({
-          ...Locks,
-        })) ?? [],
-    },
-    louvers: {
-      create:
-        parsed.data.louvers?.map((Louvers) => ({
-          ...Louvers,
-        })) ?? [],
-    },
-    glassPanels: {
-      create:
-        parsed.data.glassPanels?.map((GlassPanels) => ({
-          ...GlassPanels,
-        })) ?? [],
-    },
-    peepHole: parsed.data.peepHole
-      ? {
-          create: {
-            ...parsed.data.peepHole,
-          },
-        }
-      : undefined,
-    skeleton: parsed.data.skeleton
-      ? {
-          create: {
-            doorSkeletonMaterialType:
-              parsed.data.skeleton.doorSkeletonMaterialType,
-            doorSkeletonRails: parsed.data.skeleton.doorSkeletonRails,
-            doorSkeletonStiles: parsed.data.skeleton.doorSkeletonStiles,
-            rails: {
-              create:
-                parsed.data.skeleton.rails?.map((Rails) => ({
-                  ...Rails,
-                })) ?? [],
-            },
-            stiles: {
-              create:
-                parsed.data.skeleton.stiles?.map((Stiles) => ({
-                  ...Stiles,
-                })) ?? [],
-            },
-            lockSet: parsed.data.skeleton.lockSet
-              ? {
-                  create: {
-                    ...parsed.data.skeleton.lockSet,
-                  },
-                }
-              : undefined,
-          },
-        }
-      : undefined,
+
+    grooveLines: parsed.data.grooveLines ?? [],
+    hinges: parsed.data.hinges ?? [],
+    locks: parsed.data.locks ?? [],
+    peepHole: parsed.data.peepHole ?? undefined,
+    louvers: parsed.data.louvers ?? [],
+    glassPanels: parsed.data.glassPanels ?? [],
+    skeleton: parsed.data.skeleton ?? undefined,
   });
 }
