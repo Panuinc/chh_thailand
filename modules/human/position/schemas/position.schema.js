@@ -18,7 +18,7 @@ export const positionPutSchema = z.object({
   positionName: preprocessString("Please provide the position name"),
   positionStatus: preprocessEnum(
     ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable'"
+    "Please provide status'"
   ),
   positionUpdateBy: preprocessInt("Please provide the updater's user ID"),
 });

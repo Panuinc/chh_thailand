@@ -55,7 +55,7 @@ export const customerPutSchema = z.object({
   ),
   customerStatus: preprocessEnum(
     ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable'"
+    "Please provide status'"
   ),
   customerUpdateBy: preprocessInt("Please provide the updater's user ID"),
   customerLeaders: z.array(customerLeaderSchema).optional(),

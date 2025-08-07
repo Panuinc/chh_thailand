@@ -17,7 +17,7 @@ export const departmentPutSchema = z.object({
   departmentName: preprocessString("Please provide the department name"),
   departmentStatus: preprocessEnum(
     ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable'"
+    "Please provide status'"
   ),
   departmentUpdateBy: preprocessInt("Please provide the updater's user ID"),
 });

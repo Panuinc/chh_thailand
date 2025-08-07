@@ -53,7 +53,7 @@ export const userPutSchema = z.object({
   ),
   userStatus: preprocessEnum(
     ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable"
+    "Please provide status"
   ),
 });
 

@@ -14,11 +14,24 @@ export default function StoreCreate() {
     userId,
   });
 
-  const { formRef, formData, errors, handleChange, handleSubmit } =
-    useFormHandler(
-      { storeCode: "", storeName: "", storeLocation: "", storeDescription: "" },
-      onSubmitHandler
-    );
+  const {
+    formRef,
+    formData,
+    setFormData,
+    errors,
+    setErrors,
+    handleChange,
+    handleNestedChange,
+    handleSubmit,
+  } = useFormHandler(
+    {
+      storeCode: "",
+      storeName: "",
+      storeDescription: "",
+      storeZones: [],
+    },
+    onSubmitHandler
+  );
 
   return (
     <>
@@ -28,9 +41,13 @@ export default function StoreCreate() {
         formRef={formRef}
         onSubmit={handleSubmit}
         errors={errors}
+        setErrors={setErrors}
         formData={formData}
+        setFormData={setFormData}
         handleInputChange={handleChange}
+        handleNestedChange={handleNestedChange}
         operatedBy={userName}
+        isUpdate={false}
       />
     </>
   );

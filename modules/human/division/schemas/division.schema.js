@@ -16,7 +16,7 @@ export const divisionPutSchema = z.object({
   divisionName: preprocessString("Please provide the division name"),
   divisionStatus: preprocessEnum(
     ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable'"
+    "Please provide status'"
   ),
   divisionUpdateBy: preprocessInt("Please provide the updater's user ID"),
 });

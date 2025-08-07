@@ -29,7 +29,7 @@ svg.lucide {
 }
 
 .border_custom {
-  @apply border border-dashed border-black;
+  @apply border border-black;
 }
 
 select {

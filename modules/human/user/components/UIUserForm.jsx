@@ -126,8 +126,8 @@ export default function UIUserForm({
           </div>
         </div>
         {isUpdate && (
-          <div className="flex flex-col lg:flex-row items-center justify-center w-full p-2 gap-2">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2">
+          <div className="flex flex-col lg:flex-row items-center justify-end w-full p-2 gap-2">
+            <div className="flex items-center justify-center w-full h-full lg:w-6/12 p-2 gap-2">
               <Select
                 name="userStatus"
                 label="User Status"

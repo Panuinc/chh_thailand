@@ -22,20 +22,28 @@ export default function StoreUpdate() {
     userId,
   });
 
-  const { formRef, formData, setFormData, errors, handleChange, handleSubmit } =
-    useFormHandler(
-      {
-        storeCode: "",
-        storeName: "",
-        storeLocation: "",
-        storeDescription: "",
-        storeStatus: "",
-      },
-      onSubmitHandler
-    );
+  const {
+    formRef,
+    formData,
+    setFormData,
+    errors,
+    setErrors,
+    handleChange,
+    handleNestedChange,
+    handleSubmit,
+  } = useFormHandler(
+    {
+      storeCode: "",
+      storeName: "",
+      storeDescription: "",
+      storeStatus: "",
+      storeZones: [],
+    },
+    onSubmitHandler
+  );
 
   useEffect(() => {
-    if (store) setFormData(store);
+    if (store) setFormData(structuredClone(store));
   }, [store, setFormData]);
 
   if (loading) return <div>Loading...</div>;
@@ -48,8 +56,11 @@ export default function StoreUpdate() {
         formRef={formRef}
         onSubmit={handleSubmit}
         errors={errors}
+        setErrors={setErrors}
         formData={formData}
+        setFormData={setFormData}
         handleInputChange={handleChange}
+        handleNestedChange={handleNestedChange}
         operatedBy={userName}
         isUpdate
       />

@@ -24,7 +24,7 @@ export const partnerPutSchema = z.object({
   partnerEmail: preprocessString("Please provide the email"),
   partnerStatus: preprocessEnum(
     ["Enable", "Disable"],
-    "Please provide 'Enable' or 'Disable'"
+    "Please provide status'"
   ),
   partnerUpdateBy: preprocessInt("Please provide the updater's user ID"),
 });

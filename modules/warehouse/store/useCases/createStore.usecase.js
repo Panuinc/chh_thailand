@@ -4,6 +4,14 @@ import { StoreValidator } from "../validators/store.validator";
 import { getLocalNow } from "@/lib/getLocalNow";
 
 export async function CreateStoreUseCase(data) {
+  if (typeof data.storeZones === "string") {
+    try {
+      data.storeZones = JSON.parse(data.storeZones);
+    } catch {
+      data.storeZones = [];
+    }
+  }
+
   const parsed = storePostSchema.safeParse(data);
   if (!parsed.success) {
     throw {
@@ -24,9 +32,17 @@ export async function CreateStoreUseCase(data) {
     };
   }
 
-  return StoreService.create({
-    ...parsed.data,
-    storeName: normalizedName,
-    storeCreateAt: getLocalNow(),
-  });
+return StoreService.create({
+  ...parsed.data,
+  storeName: normalizedName,
+  storeZones: {
+    create: parsed.data.storeZones?.map((z) => ({
+      ...z,
+      zoneCode: z.zoneCode.trim().toLowerCase(),
+      zoneName: z.zoneName.trim().toLowerCase(),
+    })),
+  },
+  storeCreateAt: getLocalNow(),
+});
+
 }

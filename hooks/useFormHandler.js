@@ -23,6 +23,29 @@ export function useFormHandler(initialData = {}, onSubmitHandler) {
     []
   );
 
+  const handleNestedChange = useCallback(
+    (path, field) => (eOrValue) => {
+      const value =
+        typeof eOrValue === "string" ? eOrValue : eOrValue?.target?.value ?? "";
+
+      setFormData((prev) => {
+        const newData = structuredClone(prev);
+        let target = newData;
+        for (let i = 0; i < path.length; i++) {
+          target = target[path[i]];
+        }
+        target[field] = value;
+        return newData;
+      });
+
+      setErrors((prev) => {
+        const { [field]: _, ...rest } = prev;
+        return rest;
+      });
+    },
+    []
+  );
+
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -39,6 +62,7 @@ export function useFormHandler(initialData = {}, onSubmitHandler) {
     errors,
     setErrors,
     handleChange,
+    handleNestedChange,
     handleSubmit,
   };
 }

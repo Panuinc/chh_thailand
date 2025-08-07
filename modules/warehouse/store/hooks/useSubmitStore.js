@@ -9,10 +9,14 @@ export function useSubmitStore({ mode = "create", storeId, userId }) {
     async (formRef, formData, setErrors) => {
       const form = new FormData(formRef);
       const byField = mode === "create" ? "storeCreateBy" : "storeUpdateBy";
-      form.append(byField, userId);
+      form.append(byField, String(userId));
+
+      form.append("storeZones", JSON.stringify(formData.storeZones || []));
 
       const url =
-        mode === "create" ? "/api/warehouse/store" : `/api/warehouse/store/${storeId}`;
+        mode === "create"
+          ? "/api/warehouse/store"
+          : `/api/warehouse/store/${storeId}`;
       const method = mode === "create" ? "POST" : "PUT";
 
       try {
