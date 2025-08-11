@@ -9,7 +9,21 @@ export const StoreRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
-        storeZones: true,
+        storeZones: {
+          include: {
+            zoneAisles: {
+              include: {
+                aisleRacks: {
+                  include: {
+                    rackLevels: {
+                      include: { levelBins: true },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     }),
 
@@ -21,7 +35,21 @@ export const StoreRepository = {
       include: {
         createdBy: { select: { userFirstName: true, userLastName: true } },
         updatedBy: { select: { userFirstName: true, userLastName: true } },
-        storeZones: true,
+        storeZones: {
+          include: {
+            zoneAisles: {
+              include: {
+                aisleRacks: {
+                  include: {
+                    rackLevels: {
+                      include: { levelBins: true },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     }),
 
@@ -31,10 +59,5 @@ export const StoreRepository = {
     }),
 
   create: (data) => prisma.store.create({ data }),
-
-  update: (storeId, data) =>
-    prisma.store.update({
-      where: { storeId },
-      data,
-    }),
+  update: (storeId, data) => prisma.store.update({ where: { storeId }, data }),
 };

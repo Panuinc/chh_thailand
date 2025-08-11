@@ -6,16 +6,6 @@
     "auditLog": "E:\\chh_thailand\\logs\\.audit.json",
     "files": [
         {
-            "date": 1753322891335,
-            "name": "E:\\chh_thailand\\logs\\application-2025-07-24.log",
-            "hash": "90faa4df0ac3930251836ed15b1326cdc661fa635d39284dd2be0cf800126f9d"
-        },
-        {
-            "date": 1753404367880,
-            "name": "E:\\chh_thailand\\logs\\application-2025-07-25.log",
-            "hash": "a1154b801cb3dc5a68b59d2f56677ce6ddcbe85eba86ce8bdc993dfa858f879c"
-        },
-        {
             "date": 1753836477008,
             "name": "E:\\chh_thailand\\logs\\application-2025-07-30.log",
             "hash": "c486c3171f2ffff3d8766e87eea2a895ba3efa8ebe5eccd201fb0b41145e3ce3"
@@ -49,6 +39,16 @@
             "date": 1754527752411,
             "name": "E:\\chh_thailand\\logs\\application-2025-08-07.log",
             "hash": "eac0634e41e18f66430096b2f466a0d4d48b378135f168d63be59a775e440104"
+        },
+        {
+            "date": 1754646342540,
+            "name": "E:\\chh_thailand\\logs\\application-2025-08-08.log",
+            "hash": "faf0dabea6074ded763f836bab2031368a2e4b9102777485e9e8e56ccdb8700f"
+        },
+        {
+            "date": 1754898396432,
+            "name": "E:\\chh_thailand\\logs\\application-2025-08-11.log",
+            "hash": "e410773aa25189254982e3674022abc0f4807dfe96717dd6e1ff7b0e94fa2ca9"
         }
     ],
     "hashType": "sha256"
